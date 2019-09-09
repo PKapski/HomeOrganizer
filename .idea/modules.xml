@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/services/api/api.iml" filepath="$PROJECT_DIR$/services/api/api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/homeorganizer.iml" filepath="$PROJECT_DIR$/homeorganizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/pet/pet.iml" filepath="$PROJECT_DIR$/services/api/pet/pet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/services.iml" filepath="$PROJECT_DIR$/services/services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swagger/swagger-codegen-maven-plugin.iml" filepath="$PROJECT_DIR$/swagger/swagger-codegen-maven-plugin.iml" />
+    </modules>
+  </component>
+</project>

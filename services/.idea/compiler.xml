@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="api" target="12" />
+      <module name="pet" target="12" />
+      <module name="services" target="12" />
+      <module name="swagger" target="12" />
+      <module name="swagger-spring" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api" options="-parameters" />
+      <module name="pet" options="-parameters" />
+      <module name="services" options="-parameters" />
+      <module name="swagger" options="-parameters" />
+      <module name="swagger-spring" options="" />
+    </option>
+  </component>
+</project>
