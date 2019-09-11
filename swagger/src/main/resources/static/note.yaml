@@ -1,0 +1,130 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Note API
+
+schemes:
+  - http
+basePath:
+  $ref: 'commons.yaml#/basePath'
+
+securityDefinitions:
+  $ref: 'commons.yaml#/securityDefinitions'
+
+consumes:
+  $ref: 'commons.yaml#/consumes'
+produces:
+  $ref: 'commons.yaml#/produces'
+
+
+paths:
+  /notes:
+    get:
+      summary: Gets notes
+      operationId: getNotes
+      description: Return list of notes
+      parameters:
+        - name: recipent
+          in: query
+          type: string
+        - name: creator
+          in: query
+          type: string
+
+      responses:
+        200:
+          description: List of notes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Note'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+    post:
+      summary: Creates a new note
+      operationId: createNote
+      parameters:
+        - name: note
+          in: body
+          description: Note to create
+          schema:
+            $ref: '#/definitions/Note'
+      responses:
+        204:
+          description: Counter succesfully created.
+        400:
+          description: Counter couldn't have been created.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+    delete:
+      summary: Deletes a note
+      operationId: deleteNote
+      parameters:
+        - name: id
+          in: path
+          description: Id of note to delete
+          type: string
+          required: true
+      responses:
+        204:
+          description: Note succesfully deleted.
+        400:
+          description: Note couldn't have been deleted.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+    patch:
+      summary: Modifies a note
+      operationId: modifyNote
+      parameters:
+        - name: id
+          in: path
+          description: Id of note to delete
+          type: string
+          required: true
+        - name: note
+          in: body
+          description: Modified note
+          schema:
+            $ref: '#/definitions/Note'
+      responses:
+        204:
+          description: Note succesfully modified.
+        400:
+          description: Note couldn't have been modified.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+
+definitions:
+  Note:
+    required:
+      - message
+    properties:
+      id:
+        description: Note Id providing uniqueness in database
+        type: string
+        readOnly: true
+      title:
+        description: Note tile
+        type: string
+        default: ""
+      recipent:
+        description: Username of a person that the message is written to, null means that it is to everyone
+        type: string
+      creator:
+        description: Username of a person that created the note
+        type: string
+      creationDate:
+        description: Date when the note was created
+        type: string
+        format: date
+      expirationDate:
+        description: Expiration date of a note
+        type: string
+        format: date
+
+
+

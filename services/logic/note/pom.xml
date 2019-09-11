@@ -2,35 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
+        <version>2.1.8.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <artifactId>services</artifactId>
     <groupId>pl.polsl</groupId>
+    <artifactId>note</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>services</name>
-    <description>Back-end part</description>
-    <packaging>pom</packaging>
+    <name>note</name>
+    <description>Note logic</description>
 
     <properties>
         <java.version>12</java.version>
-        <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
     </properties>
-
-    <modules>
-        <module>api</module>
-        <module>app</module>
-        <module>logic</module>
-    </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
         <dependency>
@@ -38,13 +29,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>pl.polsl.api</groupId>
+            <artifactId>note</artifactId>
+            <version>${project.version}</version>
         </dependency>
-    </dependencies>
 
+    </dependencies>
 
 
 </project>

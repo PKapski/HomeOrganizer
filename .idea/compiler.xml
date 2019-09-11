@@ -6,22 +6,32 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pet" />
+        <module name="app" />
         <module name="swagger-codegen-maven-plugin" />
+        <module name="note (1)" />
+        <module name="note" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="12" />
+      <module name="app" target="12" />
       <module name="homeorganizer" target="12" />
-      <module name="pet" target="1.7" />
+      <module name="logic" target="12" />
+      <module name="note" target="12" />
+      <module name="note (1)" target="1.8" />
+      <module name="pet" target="1.8" />
       <module name="services" target="12" />
       <module name="swagger-codegen-maven-plugin" target="12" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app" options="" />
       <module name="homeorganizer" options="-parameters" />
-      <module name="swagger-codegen-maven-plugin" options="-parameters" />
+      <module name="logic" options="" />
+      <module name="note" options="-parameters" />
+      <module name="note (1)" options="" />
+      <module name="swagger-codegen-maven-plugin" options="" />
     </option>
   </component>
 </project>

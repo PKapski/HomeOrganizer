@@ -4,7 +4,17 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic/note" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/swagger" charset="UTF-8" />
   </component>
 </project>

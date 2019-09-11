@@ -1,0 +1,28 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Common elements
+  description: Shared elements in all API
+
+basePath: /
+
+produces:
+  - application/json
+consumes:
+  - application/json
+
+paths: {}
+
+responses:
+  Standard500ErrorResponse:
+    description: An unexpected error occured.
+    schema:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
