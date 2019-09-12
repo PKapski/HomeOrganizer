@@ -44,7 +44,7 @@ public interface NotesApi {
         @ApiResponse(code = 204, message = "Note succesfully deleted."),
         @ApiResponse(code = 400, message = "Note couldn't have been deleted."),
         @ApiResponse(code = 500, message = "") })
-    @RequestMapping(value = "/notes",
+    @RequestMapping(value = "/notes/{id}",
         method = RequestMethod.DELETE)
     default ResponseEntity<Void> deleteNote(@ApiParam(value = "Id of note to delete",required=true) @PathVariable("id") String id) {
         return getDelegate().deleteNote(id);
@@ -67,7 +67,7 @@ public interface NotesApi {
         @ApiResponse(code = 204, message = "Note succesfully modified."),
         @ApiResponse(code = 400, message = "Note couldn't have been modified."),
         @ApiResponse(code = 500, message = "") })
-    @RequestMapping(value = "/notes",
+    @RequestMapping(value = "/notes/{id}",
         method = RequestMethod.PATCH)
     default ResponseEntity<Void> modifyNote(@ApiParam(value = "Id of note to delete",required=true) @PathVariable("id") String id,@ApiParam(value = "Modified note"  )  @Valid @RequestBody Note note) {
         return getDelegate().modifyNote(id, note);
