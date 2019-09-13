@@ -57,7 +57,7 @@ paths:
           description: Counter couldn't have been created.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
-
+  /notes/{id}:
     delete:
       summary: Deletes a note
       operationId: deleteNote
