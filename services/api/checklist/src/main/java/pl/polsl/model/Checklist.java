@@ -6,24 +6,27 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Note
+ * Checklist
  */
 @Validated
 
-public class Note   {
+public class Checklist   {
   @JsonProperty("id")
   private String id = null;
 
   @JsonProperty("title")
   private String title = "";
 
-  @JsonProperty("message")
-  private String message = "";
+  @JsonProperty("itemList")
+  @Valid
+  private List<String> itemList = new ArrayList<>();
 
   @JsonProperty("recipent")
   private String recipent = null;
@@ -37,16 +40,16 @@ public class Note   {
   @JsonProperty("expirationDate")
   private LocalDate expirationDate = null;
 
-  public Note id(String id) {
+  public Checklist id(String id) {
     this.id = id;
     return this;
   }
 
   /**
-   * Note Id providing uniqueness in database
+   * Checklist Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database",hidden = true)
+  @ApiModelProperty(readOnly = true, value = "Checklist Id providing uniqueness in database", hidden = true)
 
 
   public String getId() {
@@ -57,16 +60,16 @@ public class Note   {
     this.id = id;
   }
 
-  public Note title(String title) {
+  public Checklist title(String title) {
     this.title = title;
     return this;
   }
 
   /**
-   * Note tile
+   * Checklist tile
    * @return title
   **/
-  @ApiModelProperty(value = "Note tile")
+  @ApiModelProperty(value = "Checklist tile")
 
 
   public String getTitle() {
@@ -77,37 +80,42 @@ public class Note   {
     this.title = title;
   }
 
-  public Note message(String message) {
-    this.message = message;
+  public Checklist itemList(List<String> itemList) {
+    this.itemList = itemList;
+    return this;
+  }
+
+  public Checklist addItemListItem(String itemListItem) {
+    this.itemList.add(itemListItem);
     return this;
   }
 
   /**
-   * Note message
-   * @return message
+   * List of items added to the checklist
+   * @return itemList
   **/
-  @ApiModelProperty(required = true, value = "Note message")
+  @ApiModelProperty(required = true, value = "List of items added to the checklist")
   @NotNull
 
 
-  public String getMessage() {
-    return message;
+  public List<String> getItemList() {
+    return itemList;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setItemList(List<String> itemList) {
+    this.itemList = itemList;
   }
 
-  public Note recipent(String recipent) {
+  public Checklist recipent(String recipent) {
     this.recipent = recipent;
     return this;
   }
 
   /**
-   * Username of a person that the message is written to, null means that it is to everyone
+   * Username of a person that the checklist is intender for, null means that it is to everyone
    * @return recipent
   **/
-  @ApiModelProperty(value = "Username of a person that the message is written to, null means that it is to everyone")
+  @ApiModelProperty(value = "Username of a person that the checklist is intender for, null means that it is to everyone")
 
 
   public String getRecipent() {
@@ -118,16 +126,16 @@ public class Note   {
     this.recipent = recipent;
   }
 
-  public Note creator(String creator) {
+  public Checklist creator(String creator) {
     this.creator = creator;
     return this;
   }
 
   /**
-   * Username of a person that created the note
+   * Username of a person that created the checklist
    * @return creator
   **/
-  @ApiModelProperty(value = "Username of a person that created the note")
+  @ApiModelProperty(value = "Username of a person that created the checklist")
 
 
   public String getCreator() {
@@ -138,16 +146,16 @@ public class Note   {
     this.creator = creator;
   }
 
-  public Note creationDate(LocalDate creationDate) {
+  public Checklist creationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
     return this;
   }
 
   /**
-   * Date when the note was created
+   * Date when the checklist was created
    * @return creationDate
   **/
-  @ApiModelProperty(value = "Date when the note was created")
+  @ApiModelProperty(value = "Date when the checklist was created")
 
   @Valid
 
@@ -159,16 +167,16 @@ public class Note   {
     this.creationDate = creationDate;
   }
 
-  public Note expirationDate(LocalDate expirationDate) {
+  public Checklist expirationDate(LocalDate expirationDate) {
     this.expirationDate = expirationDate;
     return this;
   }
 
   /**
-   * Expiration date of a note
+   * Expiration date of a checklist
    * @return expirationDate
   **/
-  @ApiModelProperty(value = "Expiration date of a note")
+  @ApiModelProperty(value = "Expiration date of a checklist")
 
   @Valid
 
@@ -189,29 +197,29 @@ public class Note   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Note note = (Note) o;
-    return Objects.equals(this.id, note.id) &&
-        Objects.equals(this.title, note.title) &&
-        Objects.equals(this.message, note.message) &&
-        Objects.equals(this.recipent, note.recipent) &&
-        Objects.equals(this.creator, note.creator) &&
-        Objects.equals(this.creationDate, note.creationDate) &&
-        Objects.equals(this.expirationDate, note.expirationDate);
+    Checklist checklist = (Checklist) o;
+    return Objects.equals(this.id, checklist.id) &&
+        Objects.equals(this.title, checklist.title) &&
+        Objects.equals(this.itemList, checklist.itemList) &&
+        Objects.equals(this.recipent, checklist.recipent) &&
+        Objects.equals(this.creator, checklist.creator) &&
+        Objects.equals(this.creationDate, checklist.creationDate) &&
+        Objects.equals(this.expirationDate, checklist.expirationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, message, recipent, creator, creationDate, expirationDate);
+    return Objects.hash(id, title, itemList, recipent, creator, creationDate, expirationDate);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Note {\n");
+    sb.append("class Checklist {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
     sb.append("    recipent: ").append(toIndentedString(recipent)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");

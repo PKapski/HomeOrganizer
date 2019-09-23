@@ -1,6 +1,6 @@
 package pl.polsl.api;
 
-import pl.polsl.model.Note;
+import pl.polsl.model.Checklist;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A delegate to be called by the {@link NotesApiController}}.
+ * A delegate to be called by the {@link ChecklistsApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
 
-public interface NotesApiDelegate {
+public interface ChecklistsApiDelegate {
 
-    Logger log = LoggerFactory.getLogger(NotesApi.class);
+    Logger log = LoggerFactory.getLogger(ChecklistsApi.class);
 
     default Optional<ObjectMapper> getObjectMapper() {
         return Optional.empty();
@@ -36,55 +36,54 @@ public interface NotesApiDelegate {
     }
 
     /**
-     * @see NotesApi#createNote
+     * @see ChecklistsApi#createChecklist
      */
-    default ResponseEntity<Void> createNote(Note note) {
+    default ResponseEntity<Void> createChecklist(Checklist checklist) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
-     * @see NotesApi#deleteNote
+     * @see ChecklistsApi#deleteChecklist
      */
-    default ResponseEntity<Void> deleteNote(String id) {
+    default ResponseEntity<Void> deleteChecklist(String id) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
-     * @see NotesApi#getNotes
+     * @see ChecklistsApi#getChecklists
      */
-    default ResponseEntity<List<Note>> getNotes(String recipent,
-        String creator) {
+    default ResponseEntity<List<Checklist>> getChecklists(String creator) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"itemList\" : [ \"itemList\", \"itemList\" ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"itemList\" : [ \"itemList\", \"itemList\" ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
         } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
-     * @see NotesApi#modifyNote
+     * @see ChecklistsApi#modifyChecklist
      */
-    default ResponseEntity<Void> modifyNote(String id,
-        Note note) {
+    default ResponseEntity<Void> modifyChecklist(String id,
+        Checklist checklist) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
