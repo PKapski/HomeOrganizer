@@ -57,8 +57,8 @@ public interface ChecklistsApi {
         @ApiResponse(code = 500, message = "") })
     @RequestMapping(value = "/checklists",
         method = RequestMethod.GET)
-    default ResponseEntity<List<Checklist>> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "creator", required = false) String creator) {
-        return getDelegate().getChecklists(creator);
+    default ResponseEntity<List<Checklist>> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "creator", required = false) String creator,@ApiParam(value = "") @Valid @RequestParam(value = "recipent", required = false) String recipent) {
+        return getDelegate().getChecklists(creator, recipent);
     }
 
 

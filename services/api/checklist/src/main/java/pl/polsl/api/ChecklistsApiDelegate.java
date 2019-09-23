@@ -60,7 +60,8 @@ public interface ChecklistsApiDelegate {
     /**
      * @see ChecklistsApi#getChecklists
      */
-    default ResponseEntity<List<Checklist>> getChecklists(String creator) {
+    default ResponseEntity<List<Checklist>> getChecklists(String creator,
+        String recipent) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {

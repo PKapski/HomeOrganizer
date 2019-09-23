@@ -1,4 +1,4 @@
-package pl.polsl.note;
+package pl.polsl.checklist;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
@@ -8,58 +8,58 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import pl.polsl.api.NotesApiDelegate;
-import pl.polsl.model.Note;
+import pl.polsl.api.ChecklistsApiDelegate;
+import pl.polsl.model.Checklist;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NoteApiDelegateImpl implements NotesApiDelegate {
+public class ChecklistApiDelegateImpl implements ChecklistsApiDelegate {
 
-    private final NoteMongoRepository repository;
+    private final ChecklistMongoRepository repository;
     private final MongoTemplate mongoTemplate;
 
-    public NoteApiDelegateImpl(NoteMongoRepository repository, MongoTemplate mongoTemplate) {
+    public ChecklistApiDelegateImpl(ChecklistMongoRepository repository, MongoTemplate mongoTemplate) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
     }
 
     @Override
-    public ResponseEntity<Void> createNote(Note note) {
-        repository.save(note);
+    public ResponseEntity<Void> createChecklist(Checklist checklist) {
+        repository.save(checklist);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> deleteNote(String id) {
-        Optional<Note> note = repository.findById(id);
-        if (note.isEmpty()) {
+    public ResponseEntity<Void> deleteChecklist(String id) {
+        Optional<Checklist> checklist = repository.findById(id);
+        if (checklist.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        repository.delete(note.get());
+        repository.delete(checklist.get());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<List<Note>> getNotes(String recipent, String creator) {
+    public ResponseEntity<List<Checklist>> getChecklists(String creator, String recipent) {
         Query query = new Query();
         query.with(new Sort(Sort.Direction.DESC, "creationDate"));
         if (StringUtils.isNotEmpty(recipent))
             query.addCriteria(Criteria.where("recipent").is(recipent));
         if (StringUtils.isNotEmpty(creator))
             query.addCriteria(Criteria.where("creator").is(creator));
-        return new ResponseEntity<>(mongoTemplate.find(query, Note.class), HttpStatus.OK);
+        return new ResponseEntity<>(mongoTemplate.find(query, Checklist.class), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> modifyNote(String id, Note newNote) {
-        Optional<Note> note = repository.findById(id);
-        if (note.isEmpty()) {
+    public ResponseEntity<Void> modifyChecklist(String id, Checklist newChecklist) {
+        Optional<Checklist> checklist = repository.findById(id);
+        if (checklist.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        newNote.setId(note.get().getId());
-        repository.save(newNote);
+        newChecklist.setId(checklist.get().getId());
+        repository.save(newChecklist);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

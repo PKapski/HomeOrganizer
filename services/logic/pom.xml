@@ -12,5 +12,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>note</module>
+        <module>checklist</module>
     </modules>
 </project>
