@@ -111,6 +111,10 @@ definitions:
         description: Note tile
         type: string
         default: ""
+      message:
+        description: Note message
+        type: string
+        default: ""
       recipent:
         description: Username of a person that the message is written to, null means that it is to everyone
         type: string

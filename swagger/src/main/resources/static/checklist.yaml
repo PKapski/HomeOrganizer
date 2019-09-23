@@ -1,0 +1,125 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Checklist API
+
+schemes:
+  - http
+basePath:
+  $ref: 'commons.yaml#/basePath'
+
+securityDefinitions:
+  $ref: 'commons.yaml#/securityDefinitions'
+
+consumes:
+  $ref: 'commons.yaml#/consumes'
+produces:
+  $ref: 'commons.yaml#/produces'
+
+
+paths:
+  /checklists:
+    get:
+      summary: Get all checklists
+      operationId: getChecklists
+      description: Return list of checklists
+      parameters:
+        - name: creator
+          in: query
+          type: string
+      responses:
+        200:
+          description: List of checklists
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Checklist'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+    post:
+      summary: Creates a new checklist
+      operationId: createChecklist
+      parameters:
+        - name: checklist
+          in: body
+          description: checklist to create
+          schema:
+            $ref: '#/definitions/Checklist'
+      responses:
+        204:
+          description: Checklist succesfully created.
+        400:
+          description: Checklist couldn't have been created.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+  /checklists/{id}:
+    delete:
+      summary: Deletes a checklist
+      operationId: deleteChecklist
+      parameters:
+        - name: id
+          in: path
+          description: Id of checklist to delete
+          type: string
+          required: true
+      responses:
+        204:
+          description: Checklist succesfully deleted.
+        400:
+          description: Checklist couldn't have been deleted.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+    patch:
+      summary: Modifies a checklist
+      operationId: modifyChecklist
+      parameters:
+        - name: id
+          in: path
+          description: Id of checklist to delete
+          type: string
+          required: true
+        - name: checklist
+          in: body
+          description: Modified checklist
+          schema:
+            $ref: '#/definitions/Checklist'
+      responses:
+        204:
+          description: Checklist succesfully modified.
+        400:
+          description: Checklist couldn't have been modified.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+definitions:
+  Checklist:
+    required:
+      - itemList
+    properties:
+      id:
+        description: Checklist Id providing uniqueness in database
+        type: string
+        readOnly: true
+      title:
+        description: Checklist tile
+        type: string
+        default: ""
+      itemList:
+        description: List of items added to the checklist
+        type: array
+        items:
+          type: string
+      recipent:
+        description: Username of a person that the checklist is intender for, null means that it is to everyone
+        type: string
+      creator:
+        description: Username of a person that created the checklist
+        type: string
+      creationDate:
+        description: Date when the checklist was created
+        type: string
+        format: date
+      expirationDate:
+        description: Expiration date of a checklist
+        type: string
+        format: date
