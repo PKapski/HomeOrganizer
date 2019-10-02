@@ -1,0 +1,125 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Note API
+
+schemes:
+  - http
+basePath:
+  $ref: 'commons.yaml#/basePath'
+
+securityDefinitions:
+  $ref: 'commons.yaml#/securityDefinitions'
+
+consumes:
+  $ref: 'commons.yaml#/consumes'
+produces:
+  $ref: 'commons.yaml#/produces'
+
+
+paths:
+  /user:
+    post:
+      summary: Creates a new user
+      operationId: createUser
+      description: New user
+      parameters:
+        - name: user
+          in: body
+          description: User to create
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        204:
+          description: User succesfully created.
+        400:
+          description: User couldn't have been created.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+  /user/{username}:
+    get:
+      summary: Gets user information
+      operationId: getUser
+      description: Returns user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          $ref: '#/definitions/User'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+    delete:
+      summary: Deletes a user
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          type: string
+          required: true
+      responses:
+        204:
+          description: User succesfully deleted.
+        400:
+          description: User couldn't have been deleted.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+  /user/{householdId}:
+    get:
+      summary: Gets users belonging to given household
+      operationId: getHouseholdUsers
+      parameters:
+        - name: householdId
+          in: path
+          type: string
+          required: true
+      responses:
+        200:
+          description: List of household users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+
+definitions:
+  User:
+    required:
+      - username
+      - password
+      - email
+    properties:
+      id:
+        description: Note Id providing uniqueness in database
+        type: string
+        readOnly: true
+      username:
+        description: Nickname of user, has to be unique
+        type: string
+      password:
+        description: User password to his account
+        type: string
+        format: password
+      email:
+        description: User email, has to be unique
+        type: string
+        format: email
+      firstName:
+        description: User first name
+        type: string
+      lastName:
+        description: User last name
+        type: string
+      phoneNumber:
+        description: User phone number
+        type: string
+      householdId:
+        description: Household id
+        type: string
+
+

@@ -30,7 +30,6 @@ paths:
         - name: creator
           in: query
           type: string
-
       responses:
         200:
           description: List of notes
