@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ChecklistApiDelegateImpl implements ChecklistsApiDelegate {
+public class ChecklistsApiDelegateImpl implements ChecklistsApiDelegate {
 
-    private final ChecklistMongoRepository repository;
+    private final ChecklistsMongoRepository repository;
     private final MongoTemplate mongoTemplate;
 
-    public ChecklistApiDelegateImpl(ChecklistMongoRepository repository, MongoTemplate mongoTemplate) {
+    public ChecklistsApiDelegateImpl(ChecklistsMongoRepository repository, MongoTemplate mongoTemplate) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
     }

@@ -13,5 +13,8 @@
     <modules>
         <module>note</module>
         <module>checklist</module>
+        <module>user</module>
+        <module>household</module>
+        <module>commons</module>
     </modules>
 </project>

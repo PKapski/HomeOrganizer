@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NoteApiDelegateImpl implements NotesApiDelegate {
+public class NotesApiDelegateImpl implements NotesApiDelegate {
 
-    private final NoteMongoRepository repository;
+    private final NotesMongoRepository repository;
     private final MongoTemplate mongoTemplate;
 
-    public NoteApiDelegateImpl(NoteMongoRepository repository, MongoTemplate mongoTemplate) {
+    public NotesApiDelegateImpl(NotesMongoRepository repository, MongoTemplate mongoTemplate) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
     }

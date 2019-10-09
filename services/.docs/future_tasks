@@ -1,5 +1,6 @@
-*User backend
-*HouseholdDefinition api and backend
+*User backend - todo: delete, get, modify
+*HouseholdDefinition backend
+*Change Note and Checklist to more service-oriented architecture
 *Calendar
 *Authorization and authentication
 *Mongo indexes

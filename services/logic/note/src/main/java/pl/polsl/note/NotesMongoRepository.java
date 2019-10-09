@@ -5,6 +5,6 @@ import pl.polsl.model.Note;
 
 import java.util.Optional;
 
-public interface NoteMongoRepository extends MongoRepository<Note, String> {
+public interface NotesMongoRepository extends MongoRepository<Note, String> {
     Optional<Note> findById(String id);
 }

@@ -32,6 +32,18 @@
             <artifactId>checklist</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>pl.polsl</groupId>
+            <artifactId>user</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.polsl</groupId>
+            <artifactId>household</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

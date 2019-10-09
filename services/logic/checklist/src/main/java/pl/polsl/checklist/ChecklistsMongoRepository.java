@@ -5,6 +5,6 @@ import pl.polsl.model.Checklist;
 
 import java.util.Optional;
 
-public interface ChecklistMongoRepository extends MongoRepository<Checklist,String> {
+public interface ChecklistsMongoRepository extends MongoRepository<Checklist,String> {
     Optional<Checklist> findById(String id);
 }
