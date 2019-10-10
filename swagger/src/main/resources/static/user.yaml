@@ -18,7 +18,7 @@ produces:
 
 
 paths:
-  /user:
+  /users:
     post:
       summary: Creates a new user
       operationId: createUser
@@ -37,7 +37,7 @@ paths:
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
-  /user/{username}:
+  /users/{username}:
     get:
       summary: Gets user information
       operationId: getUser
@@ -49,7 +49,11 @@ paths:
           type: string
       responses:
         200:
-          $ref: '#/definitions/User'
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: User not found
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
     delete:
@@ -67,7 +71,28 @@ paths:
           description: User couldn't have been deleted.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
-  /user/{householdId}:
+    patch:
+      summary: Modifies the user
+      operationId: modifyUser
+      parameters:
+        - name: username
+          in: path
+          type: string
+          required: true
+        - name: user
+          in: body
+          description: Modified user
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        204:
+          description: User succesfully modified.
+        400:
+          description: User couldn't have been modified.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+  /users/household/{householdId}:
     get:
       summary: Gets users belonging to given household
       operationId: getHouseholdUsers

@@ -51,13 +51,13 @@ public interface HouseholdsApi {
     }
 
 
-    @ApiOperation(value = "Gets household information", nickname = "getHousehold", notes = "Returns household", tags={  })
+    @ApiOperation(value = "Gets household information", nickname = "getHousehold", notes = "Returns household", response = Household.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = ""),
+        @ApiResponse(code = 200, message = "OK", response = Household.class),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/households/{householdId}",
         method = RequestMethod.GET)
-    default ResponseEntity<Void> getHousehold(@ApiParam(value = "",required=true) @PathVariable("householdId") String householdId) {
+    default ResponseEntity<Household> getHousehold(@ApiParam(value = "",required=true) @PathVariable("householdId") String householdId) {
         return getDelegate().getHousehold(householdId);
     }
 

@@ -60,8 +60,16 @@ public interface HouseholdsApiDelegate {
     /**
      * @see HouseholdsApi#getHousehold
      */
-    default ResponseEntity<Void> getHousehold( String  householdId) {
+    default ResponseEntity<Household> getHousehold( String  householdId) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"image\" : \"\",  \"name\" : \"name\",  \"description\" : \"description\",  \"id\" : \"id\"}", Household.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default HouseholdsApi interface so no example is generated");
         }

@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Note API
+
+schemes:
+  - http
+basePath:
+  $ref: 'commons.yaml#/basePath'
+
+securityDefinitions:
+  $ref: 'commons.yaml#/securityDefinitions'
+
+consumes:
+  $ref: 'commons.yaml#/consumes'
+produces:
+  $ref: 'commons.yaml#/produces'
+
+
+paths:
+  /households:
+    post:
+      summary: Creates a new household
+      operationId: createHousehold
+      description: New household
+      parameters:
+        - name: household
+          in: body
+          description: Household to create
+          schema:
+            $ref: '#/definitions/Household'
+      responses:
+        204:
+          description: Household succesfully created.
+        400:
+          description: Household couldn't have been created.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+  /households/{householdId}:
+    get:
+      summary: Gets household information
+      operationId: getHousehold
+      description: Returns household
+      parameters:
+        - name: householdId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Household'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+    delete:
+      summary: Deletes a household
+      operationId: deleteHousehold
+      parameters:
+        - name: householdId
+          in: path
+          type: string
+          required: true
+      responses:
+        204:
+          description: Household succesfully deleted.
+        400:
+          description: Household couldn't have been deleted.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+    patch:
+      summary: Modifies the household
+      operationId: modifyHousehold
+      parameters:
+        - name: householdId
+          in: path
+          type: string
+          required: true
+        - name: household
+          in: body
+          description: Modified household
+          schema:
+            $ref: '#/definitions/Household'
+      responses:
+        204:
+          description: Household succesfully modified.
+        400:
+          description: Household couldn't have been modified.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+
+definitions:
+  Household:
+    required:
+      - name
+    properties:
+      id:
+        description: Household Id providing uniqueness in database
+        type: string
+        readOnly: true
+      name:
+        description: Name of the household, doesn't have to be unique
+        type: string
+        maxLength: 20
+      description:
+        description: Description of a household
+        type: string
+        maxLength: 250
+      image:
+        description: Household image
+        type: string
+        format: binary

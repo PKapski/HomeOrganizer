@@ -18,7 +18,7 @@ public class HouseholdsApiDelegateImpl implements HouseholdsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> getHousehold(String householdId) {
+    public ResponseEntity<Household> getHousehold(String householdId) {
         return null;
     }
 

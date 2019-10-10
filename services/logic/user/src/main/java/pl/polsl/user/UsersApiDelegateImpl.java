@@ -25,7 +25,11 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteUser(String username) {
-        return null;
+        if (service.deleteUser(username)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
@@ -35,12 +39,20 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> getUser(String username) {
-        return null;
+    public ResponseEntity<User> getUser(String username) {
+        User user = service.getUser(username);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+
     }
 
     @Override
     public ResponseEntity<Void> modifyUser(String username, User user) {
-        return null;
+        if (service.modifyUser(username, user)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

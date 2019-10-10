@@ -62,13 +62,14 @@ public interface UsersApi {
     }
 
 
-    @ApiOperation(value = "Gets user information", nickname = "getUser", notes = "Returns user", tags={  })
+    @ApiOperation(value = "Gets user information", nickname = "getUser", notes = "Returns user", response = User.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = ""),
+        @ApiResponse(code = 200, message = "OK", response = User.class),
+        @ApiResponse(code = 404, message = "User not found"),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/users/{username}",
         method = RequestMethod.GET)
-    default ResponseEntity<Void> getUser(@ApiParam(value = "",required=true) @PathVariable("username") String username) {
+    default ResponseEntity<User> getUser(@ApiParam(value = "",required=true) @PathVariable("username") String username) {
         return getDelegate().getUser(username);
     }
 
