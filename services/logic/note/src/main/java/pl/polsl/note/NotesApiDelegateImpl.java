@@ -19,15 +19,17 @@ public class NotesApiDelegateImpl implements NotesApiDelegate {
 
     private final NotesMongoRepository repository;
     private final MongoTemplate mongoTemplate;
+    private final NotesService service;
 
-    public NotesApiDelegateImpl(NotesMongoRepository repository, MongoTemplate mongoTemplate) {
+    public NotesApiDelegateImpl(NotesMongoRepository repository, MongoTemplate mongoTemplate, NotesService service) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
+        this.service = service;
     }
 
     @Override
     public ResponseEntity<Void> createNote(Note note) {
-        repository.save(note);
+        service.saveNote(note);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
