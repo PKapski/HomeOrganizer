@@ -8,18 +8,33 @@ import { FooterComponent } from './footer/footer.component';
 import { NotesComponent } from './notes/notes.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NotesService} from "./notes/notes.service";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NotesComponent
+    NotesComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatButtonModule
   ],
   providers: [NotesService],
   bootstrap: [AppComponent]
