@@ -10,6 +10,10 @@ import {
   Validators
 } from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
+import {UserService} from "../_services/user.service";
+import {first} from "rxjs/operators";
+import {Router} from "@angular/router";
+import {log} from "util";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -31,20 +35,26 @@ export const passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): Valid
 })
 export class RegisterComponent implements OnInit {
 
-
+  loading=false;
   minPwLength=8;
   formGroup: FormGroup;
+  errorText=null;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
+      username: ['',[Validators.required]],
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(this.minPwLength)]],
       password2: ['', [Validators.required]]
     }, {validator: passwordMatchValidator});
   }
 
+  get username() {return this.formGroup.get('username');}
   get email() {return this.formGroup.get('email');}
   get password() { return this.formGroup.get('password'); }
   get password2() { return this.formGroup.get('password2'); }
@@ -56,6 +66,22 @@ export class RegisterComponent implements OnInit {
       this.password2.setErrors(null);
   }
 
+  onSubmit(){
+    if (this.formGroup.invalid){
+      return;
+    }
+    this.loading=true;
+    this.userService.postUser(this.formGroup.value).pipe(first()).subscribe(
+      data=>{
+        this.router.navigate(['/login']);
+      },
+      error => {
+        this.loading=false;
+        this.errorText="Username and/or email are already taken!"
+        //#FIXME: this.errorText=error.toString(); always returns the same message
+      }
+    )
+  }
   matcher = new MyErrorStateMatcher();
 
 }

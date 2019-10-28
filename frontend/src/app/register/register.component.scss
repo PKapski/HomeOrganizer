@@ -1,25 +1,30 @@
 $background: #454245;
 $text-white: #E3E2E0;
-$secoundary-blue: #A5C3C6;
+$secondary-blue: #A5C3C6;
 $brown: #A49989;
 $white-2: #E3E2E0;
+$error: #f44336;
 
-.example-form {
+
+.register-form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
   margin: auto;
-  margin-top: 50px;
   padding: 50px;
-  background-color: $secoundary-blue;
+  background-color: $secondary-blue;
   border: 2px solid $background;
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 
-.example-full-width {
-  width: 100%;
+.register-form h1{
+  margin: 0;
+}
 
+.register-full-width {
+  width: 100%;
 }
 
 td {
@@ -72,3 +77,22 @@ h1{
   opacity: 1;
   right: 0;
 }
+.spinner{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.error-text {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+}
+.error-text a{
+  color: $error;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $secondary-blue inset;
+}
+

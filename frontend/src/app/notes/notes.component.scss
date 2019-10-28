@@ -1,0 +1,54 @@
+img{
+
+}
+
+.list{
+  //position: relative;
+  background-image: url('../../assets/img/note-image.png');
+  background-size: contain;
+  //max-width: 250px;
+  //max-height: 250px;
+  height: max-content;
+  min-height: 250px;
+  max-width: 300px;
+  //max-height: 250px;
+  //max-width: 300px;
+  padding: 60px 30px 0 30px;
+
+}
+.text-block{
+ // position: absolute;
+}
+.container{
+  position: relative;
+  text-align: left;
+  display: inline-block;
+  overflow: hidden;
+}
+.text{
+  position: absolute;
+  top: 8px;
+}
+.text a{
+  color: darkblue;
+}
+.container img{
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+}
+.inner-grid{
+  //display: inline-grid;
+  //grid-template-columns: repeat(auto-fill,auto);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.note{
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 250px;
+  background-color: red;
+  margin: 5px;
+  text-decoration: underline;
+}

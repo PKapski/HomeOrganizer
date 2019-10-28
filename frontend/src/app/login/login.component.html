@@ -1,0 +1,21 @@
+<div class="background">
+  <form class="login-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <h1>Sign in!</h1>
+    <p>
+      <mat-form-field class="login-full-width">
+        <input matInput placeholder="Username" formControlName="username">
+        <mat-error *ngIf="username.hasError('required')">Username is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="login-full-width">
+        <input matInput type="password" placeholder="Password" formControlName="password">
+        <mat-error *ngIf="password.hasError('required')">Password is <strong>required</strong></mat-error>
+      </mat-form-field>
+    </p>
+    <button class="button"><span>Login! </span></button>
+    <mat-spinner class="spinner" diameter=30 *ngIf="loading"></mat-spinner>
+    <div class="sign-in-text">
+      <a>Don't have account yet? </a><a class="link" routerLink="/register" routerLinkActive="active"><strong>Join us</strong></a><a> now!</a>
+    </div>
+  </form>
+
+</div>

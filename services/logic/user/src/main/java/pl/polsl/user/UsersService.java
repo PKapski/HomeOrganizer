@@ -1,8 +1,10 @@
 package pl.polsl.user;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.polsl.exceptions.ItemNotUniqueException;
 import pl.polsl.model.User;
+import pl.polsl.security.configuration.PasswordEncoder;
 
 import java.util.List;
 
@@ -10,13 +12,16 @@ import java.util.List;
 public class UsersService {
 
     private final UsersMongoRepository repository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsersService(UsersMongoRepository repository) {
+    public UsersService(UsersMongoRepository repository, BCryptPasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     void validateAndSaveUser(User user) {
         validateUser(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }
 

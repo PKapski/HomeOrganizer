@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Note} from "./note";
+import {Note} from "../notes/note";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
 
@@ -15,7 +15,7 @@ export class NotesService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-    })}
+    })};
 
     GetNotes(): Observable<Note>
     {

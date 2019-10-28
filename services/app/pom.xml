@@ -44,6 +44,12 @@
             <artifactId>household</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>pl.polsl</groupId>
+            <artifactId>security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

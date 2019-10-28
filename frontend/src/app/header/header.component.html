@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://kit.fontawesome.com/c46cf0f792.js" crossorigin="anonymous"></script>
-  <title></title>
-</head>
-<body>
 <div class="header">
-
   <a routerLink="/" class="logo">
     <fa-icon [icon]="faHome"></fa-icon>
     HomeOrganizer</a>
+  <div class="header-left">
+    <a routerLink="/notes">Notes</a>
+    <a routerLink="/">Checkbox</a>
+  </div>
   <div class="header-right">
     <nav>
       <a routerLink="/login" routerLinkActive="active" class="login">Login</a>
@@ -17,6 +13,3 @@
     </nav>
   </div>
 </div>
-</body>
-
-</html>

@@ -1,16 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import get = Reflect.get;
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 
@@ -22,9 +11,23 @@ import get = Reflect.get;
 })
 export class LoginComponent implements OnInit {
 
-  constructor(){}
+  loading=false;
+  formGroup: FormGroup;
 
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder) {
   }
 
+  ngOnInit() {
+    this.formGroup = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
+  }
+
+  get username() {return this.formGroup.get('username');}
+  get password() { return this.formGroup.get('password'); }
+
+  onSubmit(){
+    this.loading=true;
+  }
 }
