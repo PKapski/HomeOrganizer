@@ -27,7 +27,8 @@
     "font-awesome": "^4.7.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@fortawesome/free-regular-svg-icons": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.10",

@@ -1,0 +1,11 @@
+@import "src/app/_commons/commons";
+
+.snack-bar{
+  text-align: center;
+}
+.revert-button{
+  color: $secondary-blue;
+}
+.revert-button:hover{
+  cursor: pointer;
+}

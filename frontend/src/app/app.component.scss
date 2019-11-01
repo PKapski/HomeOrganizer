@@ -1,11 +1,28 @@
-$brown: #D2CDC4;
+@import "src/app/_commons/commons";
 
-.grid-container{
-  display: grid;
-  height: 100%;
-  background-color: $brown;
-  grid-template-columns: 100%;
-  grid-auto-rows: max-content;
-  row-gap: 50px;
+//.grid-container{
+//  display: block;
+//  min-height: 100%;
+//  height: auto;
+//  background-color: $brown2;
+//  grid-template-columns: 100%;
+//  grid-auto-rows: max-content;
+//  row-gap: 50px;
+//  overflow: auto;
+//}
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  background-color: $brown2;
+  /* Direction of the items, can be row or column */
+  flex-direction: column;
 }
 
+header,
+footer {
+}
+
+main {
+  flex: 1;
+  padding-top: 50px;
+}

@@ -1,4 +1,4 @@
-
+@import "src/app/_commons/commons";
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -34,5 +34,10 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.my-panel .mat-dialog-container{
+  background-color: $secondary-blue;
+  border: 2px solid $background;
+  border-radius: 4px;
 }
 

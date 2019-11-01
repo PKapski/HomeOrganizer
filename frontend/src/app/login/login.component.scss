@@ -1,8 +1,4 @@
-$background: #454245;
-$text-white: #E3E2E0;
-$secondary-blue: #A5C3C6;
-$brown: #A49989;
-$white-2: #E3E2E0;
+@import "src/app/_commons/commons";
 
 .login-form {
   min-width: 150px;
@@ -15,9 +11,10 @@ $white-2: #E3E2E0;
   border-radius: 4px;
   overflow: hidden;
   position: relative;
+
 }
 
-.login-form h1{
+.add-note-form h1{
   margin: 0;
 }
 
@@ -96,4 +93,5 @@ h1{
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px $secondary-blue inset;
 }
-
+.background{
+}

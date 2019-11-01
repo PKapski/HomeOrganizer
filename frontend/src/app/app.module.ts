@@ -16,6 +16,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './register/register.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { SnackbarComponent } from './snackbar/snackbar.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -24,7 +30,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     FooterComponent,
     NotesComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SnackbarComponent,
+    AddNoteDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,15 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatSelectModule
+  ],
+  entryComponents:[
+    SnackbarComponent,
+    AddNoteDialogComponent
   ],
   providers: [NotesService],
   bootstrap: [AppComponent]
