@@ -31,6 +31,9 @@ public class Note   {
   @JsonProperty("creator")
   private String creator = null;
 
+  @JsonProperty("householdId")
+  private String householdId = "testGroup";
+
   @JsonProperty("creationDate")
   private LocalDate creationDate = null;
 
@@ -46,7 +49,7 @@ public class Note   {
    * Note Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database",hidden = true)
+  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database")
 
 
   public String getId() {
@@ -138,6 +141,26 @@ public class Note   {
     this.creator = creator;
   }
 
+  public Note householdId(String householdId) {
+    this.householdId = householdId;
+    return this;
+  }
+
+  /**
+   * Household id that the note is written to
+   * @return householdId
+  **/
+  @ApiModelProperty(value = "Household id that the note is written to")
+
+
+  public String getHouseholdId() {
+    return householdId;
+  }
+
+  public void setHouseholdId(String householdId) {
+    this.householdId = householdId;
+  }
+
   public Note creationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
     return this;
@@ -195,13 +218,14 @@ public class Note   {
         Objects.equals(this.message, note.message) &&
         Objects.equals(this.recipent, note.recipent) &&
         Objects.equals(this.creator, note.creator) &&
+        Objects.equals(this.householdId, note.householdId) &&
         Objects.equals(this.creationDate, note.creationDate) &&
         Objects.equals(this.expirationDate, note.expirationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, message, recipent, creator, creationDate, expirationDate);
+    return Objects.hash(id, title, message, recipent, creator, householdId, creationDate, expirationDate);
   }
 
   @Override
@@ -214,6 +238,7 @@ public class Note   {
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    recipent: ").append(toIndentedString(recipent)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
+    sb.append("    householdId: ").append(toIndentedString(householdId)).append("\n");
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
     sb.append("}");

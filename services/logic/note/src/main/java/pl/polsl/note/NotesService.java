@@ -12,7 +12,7 @@ public class NotesService {
         this.repository = repository;
     }
 
-    void saveNote(Note note){
-        repository.save(note);
+    String saveNote(Note note){
+        return repository.save(note).getId();
     }
 }

@@ -22,6 +22,8 @@ import { AddNoteDialogComponent } from './notes/add-note-dialog/add-note-dialog.
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {MatSelectModule} from "@angular/material/select";
     MatSnackBarModule,
     MatTooltipModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents:[
     SnackbarComponent,

@@ -28,9 +28,9 @@ public class NotesApiDelegateImpl implements NotesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> createNote(Note note) {
-        service.saveNote(note);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> createNote(Note note) {
+        String noteId = service.saveNote(note);
+        return new ResponseEntity<>(noteId,HttpStatus.OK);
     }
 
     @Override

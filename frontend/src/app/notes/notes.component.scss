@@ -43,8 +43,13 @@
 .from-to-div{
 
 }
+.text-block{
+  overflow-wrap: break-word;
+
+}
 .text-block:focus{
   outline: none;
+
 }
 .text-block[contenteditable=true]{
   background-color: lighten($secondary-blue,15%);
@@ -81,6 +86,7 @@
   max-width: 350px;
   background-color: $secondary-blue;
   margin: 5px;
+  //overflow: hidden;
   position: relative;
 }
 

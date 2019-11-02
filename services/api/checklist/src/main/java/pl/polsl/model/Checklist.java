@@ -34,6 +34,9 @@ public class Checklist   {
   @JsonProperty("creator")
   private String creator = null;
 
+  @JsonProperty("householdId")
+  private String householdId = "testGroup";
+
   @JsonProperty("creationDate")
   private LocalDate creationDate = null;
 
@@ -146,6 +149,26 @@ public class Checklist   {
     this.creator = creator;
   }
 
+  public Checklist householdId(String householdId) {
+    this.householdId = householdId;
+    return this;
+  }
+
+  /**
+   * Household id that the note is written to
+   * @return householdId
+  **/
+  @ApiModelProperty(value = "Household id that the note is written to")
+
+
+  public String getHouseholdId() {
+    return householdId;
+  }
+
+  public void setHouseholdId(String householdId) {
+    this.householdId = householdId;
+  }
+
   public Checklist creationDate(LocalDate creationDate) {
     this.creationDate = creationDate;
     return this;
@@ -203,13 +226,14 @@ public class Checklist   {
         Objects.equals(this.itemList, checklist.itemList) &&
         Objects.equals(this.recipent, checklist.recipent) &&
         Objects.equals(this.creator, checklist.creator) &&
+        Objects.equals(this.householdId, checklist.householdId) &&
         Objects.equals(this.creationDate, checklist.creationDate) &&
         Objects.equals(this.expirationDate, checklist.expirationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, itemList, recipent, creator, creationDate, expirationDate);
+    return Objects.hash(id, title, itemList, recipent, creator, householdId, creationDate, expirationDate);
   }
 
   @Override
@@ -222,6 +246,7 @@ public class Checklist   {
     sb.append("    itemList: ").append(toIndentedString(itemList)).append("\n");
     sb.append("    recipent: ").append(toIndentedString(recipent)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
+    sb.append("    householdId: ").append(toIndentedString(householdId)).append("\n");
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
     sb.append("}");

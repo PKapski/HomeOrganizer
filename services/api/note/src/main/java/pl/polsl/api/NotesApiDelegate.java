@@ -38,8 +38,16 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#createNote
      */
-    default ResponseEntity<Void> createNote(Note note) {
+    default ResponseEntity<String> createNote( Note  note) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
         }
@@ -49,7 +57,7 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#deleteNote
      */
-    default ResponseEntity<Void> deleteNote(String id) {
+    default ResponseEntity<Void> deleteNote( String  id) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
@@ -60,12 +68,12 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#getNotes
      */
-    default ResponseEntity<List<Note>> getNotes(String recipent,
-        String creator) {
+    default ResponseEntity<List<Note>> getNotes( String  recipent,
+         String  creator) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,8 +88,8 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#modifyNote
      */
-    default ResponseEntity<Void> modifyNote(String id,
-        Note note) {
+    default ResponseEntity<Void> modifyNote( String  id,
+         Note  note) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");

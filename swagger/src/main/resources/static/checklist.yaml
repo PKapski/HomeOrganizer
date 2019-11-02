@@ -118,6 +118,10 @@ definitions:
       creator:
         description: Username of a person that created the checklist
         type: string
+      householdId:
+        description: Household id that the note is written to
+        type: string
+        default: "testGroup"
       creationDate:
         description: Date when the checklist was created
         type: string

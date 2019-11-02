@@ -1,0 +1,19 @@
+@import "src/app/_commons/commons";
+
+h1{
+  font-size: 30px;
+  color: $background;
+}
+mat-form-field{
+  width: 100%;
+}
+button{
+  font-size: 23px;
+  color: $background;
+}
+.mat-dialog-actions{
+  justify-content: flex-end;
+}
+textarea{
+  height: auto;
+}

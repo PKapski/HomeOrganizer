@@ -5,7 +5,9 @@ export class Note {
   private _recipent: string;
   private _creator: string;
   private _creationDate: string;
+  private _householdId: string;
   private _expirationDate: string;
+
 
   get id(): string {
     return this._id;
@@ -53,6 +55,14 @@ export class Note {
 
   set creationDate(value: string) {
     this._creationDate = value;
+  }
+
+  get householdId(): string {
+    return this._householdId;
+  }
+
+  set householdId(value: string) {
+    this._householdId = value;
   }
 
   get expirationDate(): string {

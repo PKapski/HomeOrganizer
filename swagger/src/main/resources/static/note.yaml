@@ -50,8 +50,10 @@ paths:
           schema:
             $ref: '#/definitions/Note'
       responses:
-        204:
+        201:
           description: Counter succesfully created.
+          schema:
+            type: string
         400:
           description: Counter couldn't have been created.
         500:
@@ -120,6 +122,10 @@ definitions:
       creator:
         description: Username of a person that created the note
         type: string
+      householdId:
+        description: Household id that the note is written to
+        type: string
+        default: "testGroup"
       creationDate:
         description: Date when the note was created
         type: string

@@ -7,11 +7,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {SnackbarComponent} from "../snackbar/snackbar.component";
 import {MatDialog} from "@angular/material/dialog";
 import {AddNoteDialogComponent} from "./add-note-dialog/add-note-dialog.component";
+import {log} from "util";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.scss']
+  styleUrls: ['./notes.component.scss'],
+  providers: [DatePipe]
 })
 export class NotesComponent implements OnInit {
   notesList: any = [];
@@ -25,12 +28,14 @@ export class NotesComponent implements OnInit {
   currentlyEditedNote: string;
   snackBarDuration = 5000;//in seconds
   recentlyDeletedNote: Note;
+  testNote: Note;
 
   @ViewChild('text-block', {static: false}) textBox: ElementRef;
 
   constructor(public notesService: NotesService,
               private snackBar: MatSnackBar,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -95,6 +100,17 @@ export class NotesComponent implements OnInit {
   }
 
   openPopup() {
-    this.dialog.open(AddNoteDialogComponent, {panelClass: 'my-panel'} );
+    this.dialog.open(AddNoteDialogComponent, {panelClass: 'my-panel', width: '600px'}).afterClosed().subscribe(data=>this.addNewNote(data));
+  }
+
+  addNewNote(data: any){
+    if (data==null){
+      return;
+    }
+    let note = data["data"] as Note;
+    note.creator="Paula"; //#FIXME
+    note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd');
+    this.notesService.postNote(note).subscribe(id=>note.id=id);
+    this.notesList.push(note);
   }
 }
