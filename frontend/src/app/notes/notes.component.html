@@ -11,28 +11,35 @@
 <div class="inner-grid">
 
   <div class="note" *ngFor="let note of notesList">
-    <div id="title-{{note.id}}" class="title-div" >
+    <div id="title-{{note.id}}" class="title-div">
       <a>{{note.title}}<br></a>
     </div>
     <div class="from-to-div">
-      <a>
-        From: {{note.creator}}<br>
-        To: {{note.recipent}}<br>
-      </a>
+      <a *ngIf="note.creator">From: {{note.creator}}<br></a>
+      <a *ngIf="note.recipent">To: {{note.recipent}}<br></a>
+      <a *ngIf="note.expirationDate">Expires: {{note.expirationDate}}</a>
     </div>
 
     <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">
-<!--      <textarea [attr.readonly]="!editMode"> [attr.contenteditable]="editMode"-->
-<!--        {{note.message}}-->
-<!--      </textarea> -->
+      <!--      <textarea [attr.readonly]="!editMode"> [attr.contenteditable]="editMode"-->
+      <!--        {{note.message}}-->
+      <!--      </textarea> -->
       <span>
         {{note.message}}
       </span>
     </div>
 
-    <div class="control-buttons">
-      <fa-icon id="edit-{{note.id}}" (click)="changeEditMode(note)" [icon]="currentlyEditedNote==note.id ? applyIcon:editIcon "  matTooltip="Edit the note"></fa-icon>
-      <fa-icon (click)="deleteNote(note); openSnackBar(note.title)" [icon]="deleteIcon" matTooltip="Delete a note"></fa-icon>
+    <br>
+    <div class="note-footer">
+      <div class="created-text">
+        <a>Created: {{dateFromObjectId(note.id)}}</a>
+      </div>
+      <div class="control-buttons">
+        <fa-icon id="edit-{{note.id}}" (click)="changeEditMode(note)"
+                 [icon]="currentlyEditedNote==note.id ? applyIcon:editIcon " matTooltip="Edit the note"></fa-icon>
+        <fa-icon (click)="deleteNote(note); openSnackBar(note.title)" [icon]="deleteIcon"
+                 matTooltip="Delete a note"></fa-icon>
+      </div>
     </div>
   </div>
 

@@ -34,15 +34,11 @@
   border: 2px solid $background;
   border-radius: 4px;
 }
-.from-to-div a{
 
-}
 .title-text{
   font-size: 25px;
 }
-.from-to-div{
 
-}
 .text-block{
   overflow-wrap: break-word;
 
@@ -53,6 +49,8 @@
 }
 .text-block[contenteditable=true]{
   background-color: lighten($secondary-blue,15%);
+}
+.text-block span{
 }
 
 .container{
@@ -82,22 +80,46 @@
 
 .note{
   min-height: 200px;
-  min-width: 200px;
-  max-width: 350px;
+  min-width: 250px;
+  max-width: 450px;
   background-color: $secondary-blue;
   margin: 5px;
   //overflow: hidden;
   position: relative;
+  height: fit-content;
 }
 
 .control-buttons fa-icon:hover{
   background-color: darken($secondary-blue,10%);
   cursor: pointer;
 }
-.control-buttons{
+//.control-buttons{
+//  position: absolute;
+//  bottom: 2px;
+//  right: 2px;
+//}
+.note-footer{
   position: absolute;
   bottom: 2px;
-  right: 2px;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  display: table;
+
+}
+.created-text{
+  float: left;
+  display: table-cell;
+  overflow: hidden;
+  position: relative;
+}
+.created-text a{
+  font-size: 14px;
+  font-style: italic;
+}
+.control-buttons{
+  float: right;
+  display: table-cell;
 }
 .control-buttons fa-icon{
   margin: 2px;

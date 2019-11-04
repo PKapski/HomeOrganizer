@@ -100,7 +100,7 @@ export class NotesComponent implements OnInit {
   }
 
   openPopup() {
-    this.dialog.open(AddNoteDialogComponent, {panelClass: 'my-panel', width: '600px'}).afterClosed().subscribe(data=>this.addNewNote(data));
+    this.dialog.open(AddNoteDialogComponent, {panelClass: 'my-panel', width: '600px', autoFocus: false}).afterClosed().subscribe(data=>this.addNewNote(data));
   }
 
   addNewNote(data: any){
@@ -109,9 +109,16 @@ export class NotesComponent implements OnInit {
     }
     let note = data["data"] as Note;
     note.creator="Me"; //#FIXME
-    note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd');
-    console.log(note.id);
-    this.notesService.postNote(note).subscribe(id=>note.id=id);
-    this.notesList.push(note);
+    note.expirationDate=this.datePipe.transform(note.expirationDate,'yyyy-MM-dd');
+    //note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd', 'GMT+2');
+    this.notesService.postNote(note).subscribe(id=>{
+      note.id=id;
+      this.notesList.push(note);
+    });
+
+  }
+
+  dateFromObjectId(objectId: string): string{
+    return this.datePipe.transform(new Date(parseInt(objectId.substring(0,8),16)*1000),'yyyy-MM-dd HH:mm:ss');
   }
 }

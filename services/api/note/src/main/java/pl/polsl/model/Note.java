@@ -1,6 +1,8 @@
 package pl.polsl.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -33,9 +35,6 @@ public class Note   {
 
   @JsonProperty("householdId")
   private String householdId = "testGroup";
-
-  @JsonProperty("creationDate")
-  private LocalDate creationDate = null;
 
   @JsonProperty("expirationDate")
   private LocalDate expirationDate = null;
@@ -161,27 +160,6 @@ public class Note   {
     this.householdId = householdId;
   }
 
-  public Note creationDate(LocalDate creationDate) {
-    this.creationDate = creationDate;
-    return this;
-  }
-
-  /**
-   * Date when the note was created
-   * @return creationDate
-  **/
-  @ApiModelProperty(value = "Date when the note was created")
-
-  @Valid
-
-  public LocalDate getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(LocalDate creationDate) {
-    this.creationDate = creationDate;
-  }
-
   public Note expirationDate(LocalDate expirationDate) {
     this.expirationDate = expirationDate;
     return this;
@@ -219,13 +197,12 @@ public class Note   {
         Objects.equals(this.recipent, note.recipent) &&
         Objects.equals(this.creator, note.creator) &&
         Objects.equals(this.householdId, note.householdId) &&
-        Objects.equals(this.creationDate, note.creationDate) &&
         Objects.equals(this.expirationDate, note.expirationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, message, recipent, creator, householdId, creationDate, expirationDate);
+    return Objects.hash(id, title, message, recipent, creator, householdId, expirationDate);
   }
 
   @Override
@@ -239,7 +216,6 @@ public class Note   {
     sb.append("    recipent: ").append(toIndentedString(recipent)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    householdId: ").append(toIndentedString(householdId)).append("\n");
-    sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {Note} from "../note";
+
+
 
 @Component({
   selector: 'app-add-note-dialog',
@@ -22,7 +24,7 @@ export class AddNoteDialogComponent implements OnInit {
       title: ['', [Validators.required]],
       recipent: [],
       expirationDate: [],
-      message: ['',[Validators.required]]
+      message: ['',[Validators.required]],
     });
   }
 
@@ -34,9 +36,8 @@ export class AddNoteDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formGroup.invalid){
-      return;
+    if (this.formGroup.valid){
+      this.dialogRef.close({data: this.formGroup.value});
     }
-    this.dialogRef.close({data: this.formGroup.value});
   }
 }

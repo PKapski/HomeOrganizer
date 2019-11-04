@@ -126,10 +126,6 @@ definitions:
         description: Household id that the note is written to
         type: string
         default: "testGroup"
-      creationDate:
-        description: Date when the note was created
-        type: string
-        format: date
       expirationDate:
         description: Expiration date of a note
         type: string
