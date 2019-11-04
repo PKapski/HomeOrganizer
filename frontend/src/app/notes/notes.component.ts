@@ -108,8 +108,9 @@ export class NotesComponent implements OnInit {
       return;
     }
     let note = data["data"] as Note;
-    note.creator="Paula"; //#FIXME
+    note.creator="Me"; //#FIXME
     note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd');
+    console.log(note.id);
     this.notesService.postNote(note).subscribe(id=>note.id=id);
     this.notesList.push(note);
   }

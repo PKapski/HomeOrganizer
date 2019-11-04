@@ -6,8 +6,10 @@
 <!--    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias autem cupiditate fuga maiores quas quia quisquam rerum temporibus voluptate. Dolor et iste labore libero molestias perferendis quas ratione vel.-->
 <!--  </div>-->
 <!--</div>-->
+<h1 *ngIf="notesList.length==0">Don't have any notes yet. Add some!</h1>
 
 <div class="inner-grid">
+
   <div class="note" *ngFor="let note of notesList">
     <div id="title-{{note.id}}" class="title-div" >
       <a>{{note.title}}<br></a>

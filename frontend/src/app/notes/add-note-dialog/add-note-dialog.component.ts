@@ -22,11 +22,12 @@ export class AddNoteDialogComponent implements OnInit {
       title: ['', [Validators.required]],
       recipent: [],
       expirationDate: [],
-      message: []
+      message: ['',[Validators.required]]
     });
   }
 
   get title() {return this.formGroup.get('title');}
+  get message() {return this.formGroup.get('message');}
 
   onCancel(): void {
     this.dialogRef.close();
