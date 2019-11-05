@@ -36,7 +36,7 @@ export const passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): Valid
 export class RegisterComponent implements OnInit {
 
   loading = false;
-  minPwLength = 8;
+  minPwLength = 5;
   formGroup: FormGroup;
   errorText = null;
 
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(this.minPwLength)]],
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(this.minPwLength)]],
       password2: ['', [Validators.required]]

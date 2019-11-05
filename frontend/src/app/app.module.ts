@@ -26,6 +26,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {AuthInterceptor} from "./interceptor/auth-interceptor";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
   ],
   entryComponents:[
     SnackbarComponent,

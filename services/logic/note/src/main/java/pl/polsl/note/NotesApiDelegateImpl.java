@@ -1,10 +1,5 @@
 package pl.polsl.note;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,40 +13,32 @@ import java.util.Optional;
 public class NotesApiDelegateImpl implements NotesApiDelegate {
 
     private final NotesMongoRepository repository;
-    private final MongoTemplate mongoTemplate;
     private final NotesService service;
 
-    public NotesApiDelegateImpl(NotesMongoRepository repository, MongoTemplate mongoTemplate, NotesService service) {
+    public NotesApiDelegateImpl(NotesMongoRepository repository, NotesService service) {
         this.repository = repository;
-        this.mongoTemplate = mongoTemplate;
         this.service = service;
     }
 
     @Override
     public ResponseEntity<String> createNote(Note note) {
         String noteId = service.saveNote(note);
-        return new ResponseEntity<>(noteId,HttpStatus.OK);
+        return new ResponseEntity<>(noteId, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> deleteNote(String id) {
-        Optional<Note> note = repository.findById(id);
-        if (note.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (service.deleteNote(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        repository.delete(note.get());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Override
-    public ResponseEntity<List<Note>> getNotes(String recipent, String creator) {
-        Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC, "creationDate"));
-        if (StringUtils.isNotEmpty(recipent))
-            query.addCriteria(Criteria.where("recipent").is(recipent));
-        if (StringUtils.isNotEmpty(creator))
-            query.addCriteria(Criteria.where("creator").is(creator));
-        return new ResponseEntity<>(mongoTemplate.find(query, Note.class), HttpStatus.OK);
+    public ResponseEntity<List<Note>> getNotes(String username, String householdId, String sortingDirection) {
+        List<Note> notes = service.getFilteredNotes(username,householdId,sortingDirection);
+        return new ResponseEntity<>(notes, HttpStatus.OK);
     }
 
     @Override

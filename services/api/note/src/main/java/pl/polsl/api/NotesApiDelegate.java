@@ -68,12 +68,13 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#getNotes
      */
-    default ResponseEntity<List<Note>> getNotes( String  recipent,
-         String  creator) {
+    default ResponseEntity<List<Note>> getNotes( String  username,
+         String  householdId,
+         String  sortingDirection) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

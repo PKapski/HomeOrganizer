@@ -7,7 +7,7 @@
 <!--  </div>-->
 <!--</div>-->
 <h1 *ngIf="notesList.length==0">Don't have any notes yet. Add some!</h1>
-
+<h1 *ngIf="notesList.length>0">'{{getHousehold()}}' household notes:</h1>
 <div class="inner-grid">
 
   <div class="note" *ngFor="let note of notesList">
@@ -15,9 +15,9 @@
       <a>{{note.title}}<br></a>
     </div>
     <div class="from-to-div">
-      <a *ngIf="note.creator">From: {{note.creator}}<br></a>
-      <a *ngIf="note.recipent">To: {{note.recipent}}<br></a>
-      <a *ngIf="note.expirationDate">Expires: {{note.expirationDate}}</a>
+      <a>From: {{note.creator}}</a><br>
+      <a>To: {{note.recipent ? note.recipent: '-'}}</a><br>
+      <a>Expires: {{note.expirationDate ? note.expirationDate: '-'}}</a>
     </div>
 
     <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">

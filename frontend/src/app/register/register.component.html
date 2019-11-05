@@ -5,6 +5,7 @@
       <mat-form-field class="register-full-width">
         <input matInput placeholder="Username" formControlName="username">
         <mat-error *ngIf="username.hasError('required')">Username is <strong>required</strong></mat-error>
+        <mat-error *ngIf="username.hasError('minlength')">Username must have at least {{minPwLength}} characters</mat-error>
       </mat-form-field>
       <mat-form-field class="register-full-width">
         <input matInput placeholder="Email" formControlName="email"
@@ -19,8 +20,7 @@
       <mat-form-field class="register-full-width">
         <input matInput type="password" placeholder="Password" formControlName="password" (input)="onPasswordInput()">
         <mat-error *ngIf="password.hasError('required')">Password is <strong>required</strong></mat-error>
-        <mat-error *ngIf="password.hasError('minlength')">Password must have at least {{minPwLength}}characters
-        </mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">Password must have at least {{minPwLength}} characters</mat-error>
       </mat-form-field>
       <mat-form-field class="register-full-width">
         <input matInput type="password" placeholder="Repeat password" formControlName="password2"

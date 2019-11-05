@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
-import {Note} from "../note";
-
+import {UserService} from "../../_services/user.service";
+import {User} from "../../user/user";
 
 
 @Component({
@@ -11,33 +11,50 @@ import {Note} from "../note";
   styleUrls: ['./add-note-dialog.component.scss']
 })
 export class AddNoteDialogComponent implements OnInit {
-  usersList=["abs","bcd","cds", "Pati"];
+  usersList = [];
 
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              public dialogRef: MatDialogRef<AddNoteDialogComponent>) {
+              public dialogRef: MatDialogRef<AddNoteDialogComponent>,
+              private usersService: UserService) {
   }
 
   ngOnInit() {
-    this.formGroup=this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
       recipent: [],
+      visibleToEveryone: [true],
       expirationDate: [],
-      message: ['',[Validators.required]],
+      message: ['', [Validators.required]],
     });
+
+    this.usersService.getHouseholdUsers(localStorage.getItem("current_household")).subscribe(
+      data => {
+        this.usersList=data.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
+      });
   }
 
-  get title() {return this.formGroup.get('title');}
-  get message() {return this.formGroup.get('message');}
+  get title() {
+    return this.formGroup.get('title');
+  }
 
+  get message() {
+    return this.formGroup.get('message');
+  }
+
+  get recipent(){
+    return this.formGroup.get('recipent');
+  }
   onCancel(): void {
     this.dialogRef.close();
   }
 
   onSubmit() {
-    if (this.formGroup.valid){
+    console.log(this.formGroup.value);
+    if (this.formGroup.valid) {
       this.dialogRef.close({data: this.formGroup.value});
     }
+    console.log(this.recipent);
   }
 }

@@ -7,8 +7,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {SnackbarComponent} from "../snackbar/snackbar.component";
 import {MatDialog} from "@angular/material/dialog";
 import {AddNoteDialogComponent} from "./add-note-dialog/add-note-dialog.component";
-import {log} from "util";
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-notes',
@@ -35,7 +35,8 @@ export class NotesComponent implements OnInit {
   constructor(public notesService: NotesService,
               private snackBar: MatSnackBar,
               public dialog: MatDialog,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -43,9 +44,15 @@ export class NotesComponent implements OnInit {
   }
 
   loadNotes() {
-    return this.notesService.getNotes().subscribe((data: {}) => {
-      this.notesList = data;
-    })
+    return this.notesService.getNotes(localStorage.getItem('current_user'),localStorage.getItem('current_household'),'ASC').subscribe(
+      data => {
+        this.notesList = data;
+      },
+      error => {
+          if (error.toString()=="403"){
+            this.router.navigate(['/login']);
+          }
+      })
   }
 
 
@@ -100,25 +107,33 @@ export class NotesComponent implements OnInit {
   }
 
   openPopup() {
-    this.dialog.open(AddNoteDialogComponent, {panelClass: 'my-panel', width: '600px', autoFocus: false}).afterClosed().subscribe(data=>this.addNewNote(data));
+    this.dialog.open(AddNoteDialogComponent, {
+      panelClass: 'my-panel',
+      width: '600px',
+      autoFocus: false
+    }).afterClosed().subscribe(data => this.addNewNote(data));
   }
 
-  addNewNote(data: any){
-    if (data==null){
+  addNewNote(data: any) {
+    if (data == null) {
       return;
     }
     let note = data["data"] as Note;
-    note.creator="Me"; //#FIXME
-    note.expirationDate=this.datePipe.transform(note.expirationDate,'yyyy-MM-dd');
+    note.creator = localStorage.getItem("current_user");
+    note.expirationDate = this.datePipe.transform(note.expirationDate, 'yyyy-MM-dd');
     //note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd', 'GMT+2');
-    this.notesService.postNote(note).subscribe(id=>{
-      note.id=id;
+    this.notesService.postNote(note).subscribe(id => {
+      note.id = id;
       this.notesList.push(note);
     });
 
   }
 
-  dateFromObjectId(objectId: string): string{
-    return this.datePipe.transform(new Date(parseInt(objectId.substring(0,8),16)*1000),'yyyy-MM-dd HH:mm:ss');
+  dateFromObjectId(objectId: string): string {
+    return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
+  }
+
+  getHousehold(): string{
+    return localStorage.getItem("current_household");
   }
 }

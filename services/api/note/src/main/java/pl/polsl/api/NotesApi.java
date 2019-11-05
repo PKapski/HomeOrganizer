@@ -57,8 +57,8 @@ public interface NotesApi {
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/notes",
         method = RequestMethod.GET)
-    default ResponseEntity<List<Note>> getNotes(@ApiParam(value = "") @Valid @RequestParam(value = "recipent", required = false) String recipent,@ApiParam(value = "") @Valid @RequestParam(value = "creator", required = false) String creator) {
-        return getDelegate().getNotes(recipent, creator);
+    default ResponseEntity<List<Note>> getNotes(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection) {
+        return getDelegate().getNotes(username, householdId, sortingDirection);
     }
 
 

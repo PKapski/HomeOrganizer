@@ -1,4 +1,11 @@
 export class Note {
+  get visibleToEveryone(): boolean {
+    return this._visibleToEveryone;
+  }
+
+  set visibleToEveryone(value: boolean) {
+    this._visibleToEveryone = value;
+  }
   private _id: string;
   private _title: string;
   private _message: string;
@@ -6,6 +13,7 @@ export class Note {
   private _creator: string;
   private _creationDate: string;
   private _householdId: string;
+  private _visibleToEveryone: boolean;
   private _expirationDate: string;
 
 

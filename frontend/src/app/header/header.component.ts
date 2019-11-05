@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faAngleDown, faTasks, faUser, faSignInAlt,faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {faStickyNote, faCalendarAlt} from "@fortawesome/free-regular-svg-icons";
 import {AuthService} from "../_services/auth.service";
 
 @Component({
@@ -10,9 +11,19 @@ import {AuthService} from "../_services/auth.service";
 })
 export class HeaderComponent implements OnInit {
   faHome = faHome;
+  faAngleDown = faAngleDown;
+  faNote=faStickyNote;
+  faChecklist = faTasks;
+  faCalendar = faCalendarAlt;
+  faUser=faUser;
+  faLogin=faSignInAlt;
+  faRegister=faUserPlus;
+
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
   }
-
+  getUsername(): string{
+    return localStorage.getItem("current_user");
+  }
 }

@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Add note</h1>
-  <form autocomplete="off" class="add-note-form"  [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <form autocomplete="off" class="add-note-form"  [formGroup]="formGroup">
     <mat-form-field class="title">
       <input matInput placeholder="Title" formControlName="title">
           <mat-error *ngIf="title.hasError('required')">Title is <strong>required</strong></mat-error>
@@ -7,13 +7,15 @@
     <br>
     <mat-form-field>
       <mat-select placeholder="Receiver" formControlName="recipent">
-        <mat-option>&lt;Empty&gt;</mat-option>
+        <mat-option>&lt;Household&gt;</mat-option>
         <div *ngFor="let user of usersList">
           <mat-option value="{{user}}">{{user}}</mat-option>
         </div>
       </mat-select>
     </mat-form-field>
     <br>
+    <mat-checkbox [disabled]="recipent.value==null" labelPosition="before" checked="checked" formControlName="visibleToEveryone">Visible to everyone in household</mat-checkbox>
+    <br><br>
     <mat-form-field>
       <input  matInput [matDatepicker]="picker" placeholder="Choose an expiration date" formControlName="expirationDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

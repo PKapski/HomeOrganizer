@@ -24,12 +24,18 @@ paths:
       operationId: getNotes
       description: Return list of notes
       parameters:
-        - name: recipent
+        - name: username
           in: query
           type: string
-        - name: creator
+        - name: householdId
           in: query
           type: string
+        - name: sortingDirection
+          in: query
+          type: string
+          enum:
+            - ASC
+            - DESC
       responses:
         200:
           description: List of notes
@@ -130,6 +136,10 @@ definitions:
         description: Expiration date of a note
         type: string
         format: date
+      visibleToEveryone:
+        description: Describes if note can be seen by anyone in household
+        type: boolean
+        default: true
 
 
 

@@ -1,8 +1,6 @@
 package pl.polsl.model;
 
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -38,6 +36,9 @@ public class Note   {
 
   @JsonProperty("expirationDate")
   private LocalDate expirationDate = null;
+
+  @JsonProperty("visibleToEveryone")
+  private Boolean visibleToEveryone = true;
 
   public Note id(String id) {
     this.id = id;
@@ -181,6 +182,26 @@ public class Note   {
     this.expirationDate = expirationDate;
   }
 
+  public Note visibleToEveryone(Boolean visibleToEveryone) {
+    this.visibleToEveryone = visibleToEveryone;
+    return this;
+  }
+
+  /**
+   * Describes if note can be seen by anyone in household
+   * @return visibleToEveryone
+  **/
+  @ApiModelProperty(value = "Describes if note can be seen by anyone in household")
+
+
+  public Boolean isVisibleToEveryone() {
+    return visibleToEveryone;
+  }
+
+  public void setVisibleToEveryone(Boolean visibleToEveryone) {
+    this.visibleToEveryone = visibleToEveryone;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -197,12 +218,13 @@ public class Note   {
         Objects.equals(this.recipent, note.recipent) &&
         Objects.equals(this.creator, note.creator) &&
         Objects.equals(this.householdId, note.householdId) &&
-        Objects.equals(this.expirationDate, note.expirationDate);
+        Objects.equals(this.expirationDate, note.expirationDate) &&
+        Objects.equals(this.visibleToEveryone, note.visibleToEveryone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, message, recipent, creator, householdId, expirationDate);
+    return Objects.hash(id, title, message, recipent, creator, householdId, expirationDate, visibleToEveryone);
   }
 
   @Override
@@ -217,6 +239,7 @@ public class Note   {
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    householdId: ").append(toIndentedString(householdId)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
+    sb.append("    visibleToEveryone: ").append(toIndentedString(visibleToEveryone)).append("\n");
     sb.append("}");
     return sb.toString();
   }

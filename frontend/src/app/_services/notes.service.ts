@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Note} from "../notes/note";
 import {Observable, throwError} from "rxjs";
-import {catchError, map, retry} from "rxjs/operators";
-import {log} from "util";
+import {catchError, retry} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +19,24 @@ export class NotesService {
     })
   };
 
+  httpHeader= new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
-  httpOptionsText= {
+  httpOptionsText = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     }),
     responseType: 'text' as 'text'
   };
 
-  getNotes(): Observable<Note> {
-    return this.http.get<Note>(this.baseurl, this.httpOptions)
+  getNotes(username: string, householdId: string, sortingDirection: string): Observable<Note> {
+    const params = new HttpParams()
+      .set('username',username)
+      .set('householdId',householdId)
+      .set('sortingDirection',sortingDirection);
+
+    return this.http.get<Note>(this.baseurl, {headers: this.httpHeader, params: params})
       .pipe(
         retry(1),
         catchError(this.errorHandler)
@@ -41,7 +48,7 @@ export class NotesService {
   }
 
   postNote(note: Note): Observable<string> {
-    return this.http.post(this.baseurl, note, this.httpOptionsText).pipe( retry(1), catchError(this.errorHandler));
+    return this.http.post(this.baseurl, note, this.httpOptionsText).pipe(retry(1), catchError(this.errorHandler));
   }
 
   errorHandler(error) {
@@ -54,6 +61,6 @@ export class NotesService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error.status);
   }
 }
