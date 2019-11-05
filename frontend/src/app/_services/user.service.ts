@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {User} from "../user/user";
 import {catchError, retry} from "rxjs/operators";
@@ -32,8 +32,9 @@ export class UserService {
   }
 
   getHouseholdUsers(householdId: string): Observable<User[]> {
-    return this.http.get<User[]>(this.baseurl + '/household/' + householdId, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.get<User[]>(this.baseurl + 'household/' + householdId, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
   }
+
 
   errorHandler(error: HttpErrorResponse) {
     let errorMessage = '';

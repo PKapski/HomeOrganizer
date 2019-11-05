@@ -28,7 +28,8 @@
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1",
-    "@fortawesome/free-regular-svg-icons": "latest"
+    "@fortawesome/free-regular-svg-icons": "latest",
+    "moment": "^2.14.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.10",

@@ -2,14 +2,21 @@
   <a routerLink="/" class="logo">
     <fa-icon [icon]="faHome"></fa-icon>
     HomeOrganizer</a>
-  <div class="header-left">
+  <div class="header-left" *ngIf="auth.isLoggedIn()">
     <a routerLink="/notes">Notes</a>
     <a routerLink="/">Checkbox</a>
   </div>
   <div class="header-right">
-    <nav>
+    <nav *ngIf="auth.isLoggedOut()">
       <a routerLink="/login" routerLinkActive="active" class="login">Login</a>
       <a routerLink="/register" routerLinkActive="active">Register</a>
+    </nav>
+    <nav *ngIf="auth.isLoggedIn()">
+      <a [matMenuTriggerFor]="menu">My Account</a>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item>Account</button>
+        <button mat-menu-item (click)="auth.logout()" routerLink="/" routerLinkActive="active">Logout</button>
+      </mat-menu>
     </nav>
   </div>
 </div>

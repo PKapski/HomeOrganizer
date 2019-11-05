@@ -30,11 +30,6 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>pl.polsl</groupId>
-            <artifactId>security</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
     
 </project>

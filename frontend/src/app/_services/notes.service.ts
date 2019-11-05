@@ -20,7 +20,6 @@ export class NotesService {
     })
   };
 
-  headers= new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
 
   httpOptionsText= {
     headers: new HttpHeaders({

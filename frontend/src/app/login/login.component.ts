@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from "../_services/user.service";
+import {AuthService} from "../_services/auth.service";
+import {Router} from "@angular/router";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 
@@ -12,9 +15,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loading=false;
+  error=false;
   formGroup: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder,
+                private authService: AuthService,
+                private router: Router) {
   }
 
   ngOnInit() {
@@ -29,5 +35,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     this.loading=true;
+    this.authService.authenticate(this.formGroup.value).subscribe(
+      data=>{
+        this.router.navigate(['/notes']);
+      },
+      error=>{
+        this.error=true;
+        this.loading=false;
+      }
+    );
   }
 }

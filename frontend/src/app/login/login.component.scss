@@ -11,7 +11,13 @@
   border-radius: 4px;
   overflow: hidden;
   position: relative;
+  text-align: center;
 
+}
+.login-error-text{
+position: absolute;
+  bottom: 2em;
+  color: $error;
 }
 
 .add-note-form h1{

@@ -12,9 +12,14 @@
       </mat-form-field>
     </p>
     <button class="button"><span>Login! </span></button>
+
+    <a class="login-error-text" *ngIf="error">Invalid username or password!</a>
+
     <mat-spinner class="spinner" diameter=30 *ngIf="loading"></mat-spinner>
+
     <div class="sign-in-text">
       <a>Don't have account yet? </a><a class="link" routerLink="/register" routerLinkActive="active"><strong>Join us</strong></a><a> now!</a>
     </div>
   </form>
+
 </div>

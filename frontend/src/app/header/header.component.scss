@@ -16,6 +16,16 @@
   line-height: 25px;
   border-radius: 4px;
 }
+.mat-menu-content{
+  background: $brown2 !important;
+}
+.mat-menu-item{
+  color: $background;
+  font-size: 16px;
+}
+.mat-menu-panel {
+  width: 100%!important;
+}
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
@@ -35,7 +45,9 @@
   color: #454245;
   letter-spacing: 2px;
 }
-
+.header-right a:hover{
+  cursor: pointer;
+}
 /* Float the link section to the right */
 .header-right {
   float: right;

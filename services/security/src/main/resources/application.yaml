@@ -1,0 +1,7 @@
+security:
+  jwt:
+    token:
+      expire-length: 3600000
+      auth-login-url: /users/authenticate;
+      jwt-secret: 9287a33a455a429fb737edc53bdac483
+

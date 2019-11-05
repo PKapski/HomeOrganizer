@@ -1,10 +1,17 @@
 package pl.polsl.model;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,7 +21,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
-public class User   {
+public class User implements UserDetails {
   @JsonProperty("id")
   private String id = null;
 
@@ -76,6 +83,30 @@ public class User   {
     return username;
   }
 
+  @JsonIgnore
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @JsonIgnore
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @JsonIgnore
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @JsonIgnore
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
+
   public void setUsername(String username) {
     this.username = username;
   }
@@ -83,6 +114,12 @@ public class User   {
   public User password(String password) {
     this.password = password;
     return this;
+  }
+
+  @JsonIgnore
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return Collections.singletonList(new SimpleGrantedAuthority("user"));
   }
 
   /**
