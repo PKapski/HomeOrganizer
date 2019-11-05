@@ -83,6 +83,10 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true;
+
+    this.formGroup.patchValue({username: this.username.value.toString().toLowerCase()});
+    console.log(this.formGroup);
+
     this.userService.postUser(this.formGroup.value).pipe(first()).subscribe(
       data => {
         this.router.navigate(['/login']);
