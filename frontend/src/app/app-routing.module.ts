@@ -3,13 +3,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {NotesComponent} from "./notes/notes.component";
+import {ChecklistsComponent} from "./checklists/checklists.component";
 
 
 const routes: Routes = [
 
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'notes', component: NotesComponent, runGuardsAndResolvers: 'always'}
+  {path: 'notes', component: NotesComponent, runGuardsAndResolvers: 'always'},
+  {path: 'checklists',component: ChecklistsComponent}
 ];
 
 @NgModule({

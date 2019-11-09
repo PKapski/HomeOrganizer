@@ -1,104 +1,71 @@
 @import "src/app/_commons/commons";
 
-.list{
-  //position: relative;
-  background-image: url('../../assets/img/note-image.png');
-  background-size: contain;
-  //max-width: 250px;
-  //max-height: 250px;
-  height: max-content;
-  min-height: 250px;
-  max-width: 300px;
-  //max-height: 250px;
-  //max-width: 300px;
-  padding: 60px 30px 0 30px;
 
-}
-
-.title-div{
-
+.title-div {
   text-align: center;
   text-decoration: none;
-  background: $background;
-  border: 2px solid $background;
+  background: $dark;
+  border: 2px solid $dark;
   border-radius: 4px;
 }
-.title-div a{
+
+.title-div a {
   color: $white-2;
   font-size: 25px;
 }
-.title-div[contenteditable=true]{
-  background-color: lighten($background,15%);
+
+.title-div[contenteditable=true] {
+  background-color: lighten($dark, 15%);
 }
-.from-to-div{
-  border: 2px solid $background;
+
+.from-to-div {
+  border: 2px solid $dark;
   border-radius: 4px;
 }
 
-.title-text{
-  font-size: 25px;
-}
-
-.text-block{
+.text-block {
   overflow-wrap: break-word;
 
 }
-.text-block:focus{
+
+.text-block:focus {
   outline: none;
 
 }
-.text-block[contenteditable=true]{
-  background-color: lighten($secondary-blue,15%);
-}
-.text-block span{
+
+.text-block[contenteditable=true] {
+  background-color: lighten($blue, 15%);
 }
 
-.container{
-  position: relative;
-  text-align: left;
-  display: inline-block;
-  overflow: hidden;
-}
-.text{
-  position: absolute;
-  top: 8px;
-}
-.text a{
-  color: darkblue;
-}
-.container img{
+
+.container img {
   width: 100%;
   max-width: 350px;
   height: 100%;
 }
-.inner-grid{
-  //display: inline-grid;
-  //grid-template-columns: repeat(auto-fill,auto);
+
+.flex-container {
   display: flex;
   flex-wrap: wrap;
 }
 
-.note{
+.note {
   min-height: 200px;
   min-width: 250px;
   max-width: 450px;
-  background-color: $secondary-blue;
+  background-color: $blue;
   margin: 5px;
   //overflow: hidden;
   position: relative;
   height: fit-content;
 }
 
-.control-buttons fa-icon:hover{
-  background-color: darken($secondary-blue,10%);
+.control-buttons fa-icon:hover {
+  background-color: darken($blue, 10%);
   cursor: pointer;
 }
-//.control-buttons{
-//  position: absolute;
-//  bottom: 2px;
-//  right: 2px;
-//}
-.note-footer{
+
+.note-footer {
   position: absolute;
   bottom: 2px;
   width: 100%;
@@ -107,28 +74,33 @@
   display: table;
 
 }
-.created-text{
+
+.created-text {
   float: left;
   display: table-cell;
   overflow: hidden;
   position: relative;
 }
-.created-text a{
+
+.created-text a {
   font-size: 14px;
   font-style: italic;
 }
-.control-buttons{
+
+.control-buttons {
   float: right;
   display: table-cell;
 }
-.control-buttons fa-icon{
+
+.control-buttons fa-icon {
   margin: 2px;
 }
 
 
-.inner-grid fa-icon{
+.flex-container fa-icon {
   width: 100%;
 }
+
 .add-new {
   min-height: 200px;
   min-width: 200px;
@@ -139,14 +111,14 @@
   align-items: center;
 }
 
-.add-new fa-icon{
+.add-new fa-icon {
   font-size: 60px;
-  color: $background;
+  color: $dark;
   cursor: pointer;
 }
 
-h1{
+h1 {
   margin-left: 20px;
-  color: $background;
+  color: $dark;
 }
 

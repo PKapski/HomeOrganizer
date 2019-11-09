@@ -40,15 +40,4 @@ public class NotesApiDelegateImpl implements NotesApiDelegate {
         List<Note> notes = service.getFilteredNotes(username,householdId,sortingDirection);
         return new ResponseEntity<>(notes, HttpStatus.OK);
     }
-
-    @Override
-    public ResponseEntity<Void> modifyNote(String id, Note newNote) {
-        Optional<Note> note = repository.findById(id);
-        if (note.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        newNote.setId(note.get().getId());
-        repository.save(newNote);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

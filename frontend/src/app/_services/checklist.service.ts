@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Note} from "../notes/note";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
+import {Checklist} from "../checklists/checklist";
 
 @Injectable({
   providedIn: 'root'
 })
-export class NotesService {
-  baseurl = 'http://localhost:8080/notes';
+export class ChecklistService {
+
+  baseurl = 'http://localhost:8080/checklists';
 
   constructor(private http: HttpClient) {
   }
@@ -22,21 +23,21 @@ export class NotesService {
     responseType: 'text' as 'text'
   };
 
-  getNotes(username: string, householdId: string, sortingDirection: string): Observable<Note> {
+  getChecklists(username: string, householdId: string, sortingDirection: string): Observable<Checklist> {
     const params = new HttpParams()
       .set('username', username)
       .set('householdId', householdId)
       .set('sortingDirection', sortingDirection);
 
-    return this.http.get<Note>(this.baseurl, {headers: this.httpHeader, params: params}).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.get<Checklist>(this.baseurl, {headers: this.httpHeader, params: params}).pipe(retry(1), catchError(this.errorHandler));
   }
 
-  deleteNote(id: string) {
+  deleteChecklist(id: string) {
     return this.http.delete(this.baseurl + '/' + id, {headers: this.httpHeader}).pipe(retry(1), catchError(this.errorHandler));
   }
 
-  postNote(note: Note): Observable<string> {
-    return this.http.post(this.baseurl, note, this.httpOptionsText).pipe(retry(1), catchError(this.errorHandler));
+  saveChecklist(checklist: Checklist): Observable<string> {
+    return this.http.post(this.baseurl, checklist, this.httpOptionsText).pipe(retry(1), catchError(this.errorHandler));
   }
 
   errorHandler(error) {
@@ -51,4 +52,5 @@ export class NotesService {
     console.log(errorMessage);
     return throwError(error.status);
   }
+
 }

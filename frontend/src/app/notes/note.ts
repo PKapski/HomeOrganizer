@@ -1,11 +1,4 @@
 export class Note {
-  get visibleToEveryone(): boolean {
-    return this._visibleToEveryone;
-  }
-
-  set visibleToEveryone(value: boolean) {
-    this._visibleToEveryone = value;
-  }
   private _id: string;
   private _title: string;
   private _message: string;
@@ -71,6 +64,14 @@ export class Note {
 
   set householdId(value: string) {
     this._householdId = value;
+  }
+
+  get visibleToEveryone(): boolean {
+    return this._visibleToEveryone;
+  }
+
+  set visibleToEveryone(value: boolean) {
+    this._visibleToEveryone = value;
   }
 
   get expirationDate(): string {

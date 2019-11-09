@@ -19,47 +19,32 @@ public class ChecklistsApiDelegateImpl implements ChecklistsApiDelegate {
 
     private final ChecklistsMongoRepository repository;
     private final MongoTemplate mongoTemplate;
+    private final ChecklistsService service;
 
-    public ChecklistsApiDelegateImpl(ChecklistsMongoRepository repository, MongoTemplate mongoTemplate) {
+    public ChecklistsApiDelegateImpl(ChecklistsMongoRepository repository, MongoTemplate mongoTemplate, ChecklistsService service) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
+        this.service = service;
     }
 
     @Override
-    public ResponseEntity<Void> createChecklist(Checklist checklist) {
-        repository.save(checklist);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> saveChecklist(Checklist checklist) {
+        String id = service.saveChecklist(checklist);
+        return new ResponseEntity<>(id,HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> deleteChecklist(String id) {
-        Optional<Checklist> checklist = repository.findById(id);
-        if (checklist.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (service.deleteChecklist(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        repository.delete(checklist.get());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Override
-    public ResponseEntity<List<Checklist>> getChecklists(String creator, String recipent) {
-        Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC, "creationDate"));
-        if (StringUtils.isNotEmpty(recipent))
-            query.addCriteria(Criteria.where("recipent").is(recipent));
-        if (StringUtils.isNotEmpty(creator))
-            query.addCriteria(Criteria.where("creator").is(creator));
-        return new ResponseEntity<>(mongoTemplate.find(query, Checklist.class), HttpStatus.OK);
+    public ResponseEntity<List<Checklist>> getChecklists(String username, String householdId, String sortingDirection) {
+        List<Checklist> checklists = service.getFilteredNotes(username,householdId,sortingDirection);
+        return new ResponseEntity<>(checklists, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Void> modifyChecklist(String id, Checklist newChecklist) {
-        Optional<Checklist> checklist = repository.findById(id);
-        if (checklist.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        newChecklist.setId(checklist.get().getId());
-        repository.save(newChecklist);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

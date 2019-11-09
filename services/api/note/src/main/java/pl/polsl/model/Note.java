@@ -32,7 +32,7 @@ public class Note   {
   private String creator = null;
 
   @JsonProperty("householdId")
-  private String householdId = "testGroup";
+  private String householdId = "testHousehold";
 
   @JsonProperty("expirationDate")
   private LocalDate expirationDate = null;
@@ -49,7 +49,7 @@ public class Note   {
    * Note Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database")
+  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database",hidden = true)
 
 
   public String getId() {

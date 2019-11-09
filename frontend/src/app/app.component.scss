@@ -13,7 +13,7 @@
 .wrapper {
   min-height: 100vh;
   display: flex;
-  background-color: $brown2;
+  background-color: $background-brown;
   /* Direction of the items, can be row or column */
   flex-direction: column;
 }
@@ -24,5 +24,5 @@ footer {
 
 main {
   flex: 1;
-  padding-top: 50px;
+  padding-top: 20px;
 }

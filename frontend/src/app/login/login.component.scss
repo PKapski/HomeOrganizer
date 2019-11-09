@@ -6,8 +6,8 @@
   width: 100%;
   margin: auto;
   padding: 60px;
-  background-color: $secondary-blue;
-  border: 2px solid $background;
+  background-color: $blue;
+  border: 2px solid $dark;
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -35,14 +35,14 @@ td {
 h1{
   margin: auto;
   text-align: center;
-  color: $background;
+  color: $dark;
   font-size: 45px;
   letter-spacing: 5px;
 }
 .button {
   display: inline-block;
   border-radius: 4px;
-  background-color: $background;
+  background-color: $dark;
   border: none;
   color: $white-2;
   text-align: center;
@@ -90,14 +90,14 @@ h1{
   bottom: 5px;
 }
 .sign-in-text a{
-  color: $background;
+  color: $dark;
 }
 .link{
   color: $brown;
   text-decoration: none;
 }
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px $secondary-blue inset;
+  -webkit-box-shadow: 0 0 0 1000px $blue inset;
 }
 .background{
 }

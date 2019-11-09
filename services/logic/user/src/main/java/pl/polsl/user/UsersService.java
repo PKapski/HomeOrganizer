@@ -26,7 +26,6 @@ public class UsersService implements UserDetailsService {
     void validateAndSaveUser(User user) {
         validateUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setHouseholdId("testGroup"); //#FIXME
         repository.save(user);
     }
 

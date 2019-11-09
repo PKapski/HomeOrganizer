@@ -1,0 +1,133 @@
+@import "src/app/_commons/commons";
+
+h1 {
+  margin-left: 20px;
+  color: $dark;
+}
+
+.checklist {
+  min-height: 200px;
+  min-width: 250px;
+  max-width: 250px;
+  background-color: $blue;
+  margin: 5px;
+  //overflow: hidden;
+  position: relative;
+  height: fit-content;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.add-new {
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 350px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-new fa-icon {
+  font-size: 60px;
+  color: $dark;
+  cursor: pointer;
+}
+.title-div {
+  text-align: center;
+  text-decoration: none;
+  background: $dark;
+  border: 2px solid $dark;
+  border-radius: 4px;
+}
+
+.title-div a {
+  color: $white-2;
+  font-size: 25px;
+}
+
+.title-div[contenteditable=true] {
+  background-color: lighten($dark, 15%);
+}
+
+.from-to-div {
+  margin-bottom: 10px;
+}
+
+.checklist-item{
+  text-align: center;
+  //background: $dark;
+  border: 2px solid $dark;
+  border-bottom: none;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+.checklist-item:hover {
+  cursor: pointer;
+  background-color: darken($blue,10%);
+}
+.checklist-item-text a[isChecked=true]{
+  text-decoration: line-through;
+}
+.checklist-item-text{
+  margin: auto;
+}
+.checklist-item-menu{
+  justify-self: flex-end;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.note-footer {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  display: table;
+
+}
+
+.created-text {
+  float: left;
+  display: table-cell;
+  overflow: hidden;
+  position: relative;
+}
+
+.created-text a {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.control-buttons {
+  float: right;
+  display: table-cell;
+}
+
+.control-buttons fa-icon {
+  margin: 2px;
+}
+
+.control-buttons fa-icon:hover{
+  cursor: pointer;
+  background-color: darken($blue, 10%);
+}
+
+.add-new-checklist-item{
+  text-align: center;
+  border-top: 2px solid $dark;
+}
+
+.add-new-checklist-item mat-icon{
+  font-size: 31px;
+}
+
+.add-new-checklist-item mat-icon:hover{
+  cursor: pointer;
+
+}

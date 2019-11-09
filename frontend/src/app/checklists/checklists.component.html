@@ -1,0 +1,54 @@
+<h1 *ngIf="checklistsArray.length==0">Don't have any checklists yet. Add some!</h1>
+<h1 *ngIf="checklistsArray.length>0">'{{getHousehold()}}' household checklists:</h1>
+<div class="flex-container">
+  <div class="checklist" *ngFor="let checklist of checklistsArray">
+    <div id="title-{{checklist.id}}" class="title-div">
+      <a>{{checklist.title}}<br></a>
+    </div>
+    <div class="from-to-div">
+      <a>From: {{checklist.creator}}</a><br>
+      <a>To: {{checklist.recipent ? checklist.recipent : '-'}}</a><br>
+      <a>Expires: {{checklist.expirationDate ? checklist.expirationDate : '-'}}</a>
+    </div>
+
+    <div class="checklist-item" *ngFor="let item of checklist.itemList" (click)="changeIsChecked(item)">
+      <div class="checklist-item-text" >
+        <a [attr.isChecked]="item.isChecked">{{item.message}}</a>
+      </div>
+      <div class="checklist-item-menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu=matMenu>
+          <button mat-menu-item >
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="deleteChecklistItem(checklist,item)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="add-new-checklist-item">
+        <mat-icon>playlist_add</mat-icon>
+    </div>
+    <br>
+    <div class="checklist-footer">
+      <div class="created-text">
+        <a>Created: {{dateFromObjectId(checklist.id)}}</a>
+      </div>
+      <div class="control-buttons">
+        <fa-icon id="edit-{{checklist.id}}" (click)="changeEditMode(checklist)"
+                 [icon]="currentlyEditedChecklist==checklist.id ? applyIcon:editIcon "
+                 [matTooltip]="getTooltipEditMessage(checklist.creator)"></fa-icon>
+        <fa-icon (click)="deleteChecklist(checklist)" [icon]="deleteIcon"
+                 [matTooltip]="getTooltipDeleteMessage(checklist.creator)"></fa-icon>
+      </div>
+    </div>
+  </div>
+  <div class="add-new">
+    <span (click)="openPopup()"><fa-icon [icon]="addIcon"></fa-icon></span>
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
 .header {
   overflow: hidden;
-  background-color: $background;
+  background-color: $dark;
   padding: 20px 10px;
 }
 /* Style the header links */
@@ -17,10 +17,10 @@
   border-radius: 4px;
 }
 .mat-menu-content{
-  background: $brown2 !important;
+  background: $background-brown !important;
 }
 .mat-menu-item{
-  color: $background;
+  color: $dark;
   font-size: 16px;
 }
 .mat-menu-panel {
@@ -31,7 +31,7 @@
 .header a.logo {
   font-size: 25px;
   font-weight: bold;
-  color: $secondary-blue;
+  color: $blue;
 }
 
 /* Change the background color on mouse-over */
@@ -46,7 +46,7 @@
   letter-spacing: 2px;
 }
 .header-right a.login:hover{
-  background-color: lighten($secondary-blue,15%);
+  background-color: lighten($blue,15%);
 }
 .header-right a:hover{
   cursor: pointer;
@@ -83,5 +83,5 @@
 
 .account-dropdown a:hover{
   color: $text-white!important;
-  background-color: $background!important;
+  background-color: $dark !important;
 }

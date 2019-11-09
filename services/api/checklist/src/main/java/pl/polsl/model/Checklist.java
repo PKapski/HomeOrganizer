@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import pl.polsl.model.ChecklistItem;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -26,7 +27,7 @@ public class Checklist   {
 
   @JsonProperty("itemList")
   @Valid
-  private List<String> itemList = new ArrayList<>();
+  private List<ChecklistItem> itemList = new ArrayList<>();
 
   @JsonProperty("recipent")
   private String recipent = null;
@@ -35,13 +36,16 @@ public class Checklist   {
   private String creator = null;
 
   @JsonProperty("householdId")
-  private String householdId = "testGroup";
+  private String householdId = "testHousehold";
 
   @JsonProperty("creationDate")
   private LocalDate creationDate = null;
 
   @JsonProperty("expirationDate")
   private LocalDate expirationDate = null;
+
+  @JsonProperty("visibleToEveryone")
+  private Boolean visibleToEveryone = true;
 
   public Checklist id(String id) {
     this.id = id;
@@ -83,12 +87,12 @@ public class Checklist   {
     this.title = title;
   }
 
-  public Checklist itemList(List<String> itemList) {
+  public Checklist itemList(List<ChecklistItem> itemList) {
     this.itemList = itemList;
     return this;
   }
 
-  public Checklist addItemListItem(String itemListItem) {
+  public Checklist addItemListItem(ChecklistItem itemListItem) {
     this.itemList.add(itemListItem);
     return this;
   }
@@ -100,12 +104,13 @@ public class Checklist   {
   @ApiModelProperty(required = true, value = "List of items added to the checklist")
   @NotNull
 
+  @Valid
 
-  public List<String> getItemList() {
+  public List<ChecklistItem> getItemList() {
     return itemList;
   }
 
-  public void setItemList(List<String> itemList) {
+  public void setItemList(List<ChecklistItem> itemList) {
     this.itemList = itemList;
   }
 
@@ -155,10 +160,10 @@ public class Checklist   {
   }
 
   /**
-   * Household id that the note is written to
+   * Household id that the checklist is written to
    * @return householdId
   **/
-  @ApiModelProperty(value = "Household id that the note is written to")
+  @ApiModelProperty(value = "Household id that the checklist is written to")
 
 
   public String getHouseholdId() {
@@ -211,6 +216,26 @@ public class Checklist   {
     this.expirationDate = expirationDate;
   }
 
+  public Checklist visibleToEveryone(Boolean visibleToEveryone) {
+    this.visibleToEveryone = visibleToEveryone;
+    return this;
+  }
+
+  /**
+   * Describes if note can be seen by anyone in household
+   * @return visibleToEveryone
+  **/
+  @ApiModelProperty(value = "Describes if note can be seen by anyone in household")
+
+
+  public Boolean isVisibleToEveryone() {
+    return visibleToEveryone;
+  }
+
+  public void setVisibleToEveryone(Boolean visibleToEveryone) {
+    this.visibleToEveryone = visibleToEveryone;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -228,12 +253,13 @@ public class Checklist   {
         Objects.equals(this.creator, checklist.creator) &&
         Objects.equals(this.householdId, checklist.householdId) &&
         Objects.equals(this.creationDate, checklist.creationDate) &&
-        Objects.equals(this.expirationDate, checklist.expirationDate);
+        Objects.equals(this.expirationDate, checklist.expirationDate) &&
+        Objects.equals(this.visibleToEveryone, checklist.visibleToEveryone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, itemList, recipent, creator, householdId, creationDate, expirationDate);
+    return Objects.hash(id, title, itemList, recipent, creator, householdId, creationDate, expirationDate, visibleToEveryone);
   }
 
   @Override
@@ -249,6 +275,7 @@ public class Checklist   {
     sb.append("    householdId: ").append(toIndentedString(householdId)).append("\n");
     sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
+    sb.append("    visibleToEveryone: ").append(toIndentedString(visibleToEveryone)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -5,14 +5,14 @@
 }
 h1{
   font-size: 30px;
-  color: $background;
+  color: $dark;
 }
 mat-form-field{
   width: 100%;
 }
 button{
   font-size: 23px;
-  color: $background;
+  color: $dark;
 }
 .mat-dialog-actions{
   justify-content: flex-end;
@@ -25,10 +25,10 @@ textarea{
   left: 0;
 }
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: $background !important;
+  background-color: $dark !important;
 }
 
 // overwrite the ripple overlay on hover and click
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-  background-color: $background !important;
+  background-color: $dark !important;
 }

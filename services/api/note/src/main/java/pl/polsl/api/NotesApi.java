@@ -61,16 +61,4 @@ public interface NotesApi {
         return getDelegate().getNotes(username, householdId, sortingDirection);
     }
 
-
-    @ApiOperation(value = "Modifies a note", nickname = "modifyNote", notes = "", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "Note succesfully modified."),
-        @ApiResponse(code = 400, message = "Note couldn't have been modified."),
-        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/notes/{id}",
-        method = RequestMethod.PATCH)
-    default ResponseEntity<Void> modifyNote(@ApiParam(value = "Id of note to delete",required=true) @PathVariable("id") String id,@ApiParam(value = "Modified note"  )  @Valid @RequestBody Note note) {
-        return getDelegate().modifyNote(id, note);
-    }
-
 }

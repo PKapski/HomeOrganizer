@@ -24,12 +24,18 @@ paths:
       operationId: getChecklists
       description: Return list of checklists
       parameters:
-        - name: creator
+        - name: username
           in: query
           type: string
-        - name: recipent
+        - name: householdId
           in: query
           type: string
+        - name: sortingDirection
+          in: query
+          type: string
+          enum:
+            - ASC
+            - DESC
       responses:
         200:
           description: List of checklists
@@ -39,22 +45,26 @@ paths:
               $ref: '#/definitions/Checklist'
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
     post:
-      summary: Creates a new checklist
-      operationId: createChecklist
+      summary: Creates or modifies checklist
+      operationId: saveChecklist
       parameters:
         - name: checklist
           in: body
-          description: checklist to create
+          description: checklist to save
           schema:
             $ref: '#/definitions/Checklist'
       responses:
-        204:
-          description: Checklist succesfully created.
+        201:
+          description: Counter succesfully created.
+          schema:
+            type: string
         400:
-          description: Checklist couldn't have been created.
+          description: Checklist couldn't have been saved.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
   /checklists/{id}:
     delete:
       summary: Deletes a checklist
@@ -73,27 +83,27 @@ paths:
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
-    patch:
-      summary: Modifies a checklist
-      operationId: modifyChecklist
-      parameters:
-        - name: id
-          in: path
-          description: Id of checklist to delete
-          type: string
-          required: true
-        - name: checklist
-          in: body
-          description: Modified checklist
-          schema:
-            $ref: '#/definitions/Checklist'
-      responses:
-        204:
-          description: Checklist succesfully modified.
-        400:
-          description: Checklist couldn't have been modified.
-        500:
-          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+#    patch:
+#      summary: Modifies a checklist
+#      operationId: modifyChecklist
+#      parameters:
+#        - name: id
+#          in: path
+#          description: Id of checklist to delete
+#          type: string
+#          required: true
+#        - name: checklist
+#          in: body
+#          description: Modified checklist
+#          schema:
+#            $ref: '#/definitions/Checklist'
+#      responses:
+#        204:
+#          description: Checklist succesfully modified.
+#        400:
+#          description: Checklist couldn't have been modified.
+#        500:
+#          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 definitions:
   Checklist:
     required:
@@ -111,7 +121,7 @@ definitions:
         description: List of items added to the checklist
         type: array
         items:
-          type: string
+          $ref: '#/definitions/ChecklistItem'
       recipent:
         description: Username of a person that the checklist is intender for, null means that it is to everyone
         type: string
@@ -119,9 +129,9 @@ definitions:
         description: Username of a person that created the checklist
         type: string
       householdId:
-        description: Household id that the note is written to
+        description: Household id that the checklist is written to
         type: string
-        default: "testGroup"
+        default: "testHousehold"
       creationDate:
         description: Date when the checklist was created
         type: string
@@ -130,3 +140,21 @@ definitions:
         description: Expiration date of a checklist
         type: string
         format: date
+      visibleToEveryone:
+        description: Describes if note can be seen by anyone in household
+        type: boolean
+        default: true
+
+
+  ChecklistItem:
+    required:
+      - message
+      - isChecked
+    properties:
+      message:
+        description: Certain checklist item message
+        type: string
+      isChecked:
+        description: Describes if item is done or not
+        type: boolean
+        default: false

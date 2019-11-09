@@ -74,24 +74,12 @@ public interface NotesApiDelegate {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    /**
-     * @see NotesApi#modifyNote
-     */
-    default ResponseEntity<Void> modifyNote( String  id,
-         Note  note) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
         }

@@ -1,29 +1,17 @@
-<!--<div class="container">-->
-<!--  <img src="/assets/img/note-image.png" alt="note">-->
-<!--  <div class="text">-->
-<!--    Lorem ipsum dolor sit amet, consectetur adipisicing elit. At autem dolore exercitationem explicabo, fugiat harum iste mollitia natus porro praesentium quo repudiandae saepe sapiente! Ad asperiores dolorum repellendus sequi voluptatum!-->
-<!--    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet autem, corporis culpa delectus distinctio dolore eius est facere ipsum labore libero nemo nostrum obcaecati quam quo similique tempora unde.-->
-<!--    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias autem cupiditate fuga maiores quas quia quisquam rerum temporibus voluptate. Dolor et iste labore libero molestias perferendis quas ratione vel.-->
-<!--  </div>-->
-<!--</div>-->
-<h1 *ngIf="notesList.length==0">Don't have any notes yet. Add some!</h1>
-<h1 *ngIf="notesList.length>0">'{{getHousehold()}}' household notes:</h1>
-<div class="inner-grid">
-
-  <div class="note" *ngFor="let note of notesList">
+<h1 *ngIf="notesArray.length==0">Don't have any notes yet. Add some!</h1>
+<h1 *ngIf="notesArray.length>0">'{{getHousehold()}}' household notes:</h1>
+<div class="flex-container">
+  <div class="note" *ngFor="let note of notesArray">
     <div id="title-{{note.id}}" class="title-div">
       <a>{{note.title}}<br></a>
     </div>
     <div class="from-to-div">
       <a>From: {{note.creator}}</a><br>
-      <a>To: {{note.recipent ? note.recipent: '-'}}</a><br>
-      <a>Expires: {{note.expirationDate ? note.expirationDate: '-'}}</a>
+      <a>To: {{note.recipent ? note.recipent : '-'}}</a><br>
+      <a>Expires: {{note.expirationDate ? note.expirationDate : '-'}}</a>
     </div>
 
     <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">
-      <!--      <textarea [attr.readonly]="!editMode"> [attr.contenteditable]="editMode"-->
-      <!--        {{note.message}}-->
-      <!--      </textarea> -->
       <span>
         {{note.message}}
       </span>
@@ -36,9 +24,10 @@
       </div>
       <div class="control-buttons">
         <fa-icon id="edit-{{note.id}}" (click)="changeEditMode(note)"
-                 [icon]="currentlyEditedNote==note.id ? applyIcon:editIcon " matTooltip="Edit the note"></fa-icon>
-        <fa-icon (click)="deleteNote(note); openSnackBar(note.title)" [icon]="deleteIcon"
-                 matTooltip="Delete a note"></fa-icon>
+                 [icon]="currentlyEditedNote==note.id ? applyIcon:editIcon "
+                 [matTooltip]="getTooltipEditMessage(note.creator)"></fa-icon>
+        <fa-icon (click)="deleteNote(note)" [icon]="deleteIcon"
+                 [matTooltip]="getTooltipDeleteMessage(note.creator)"></fa-icon>
       </div>
     </div>
   </div>

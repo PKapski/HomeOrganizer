@@ -36,17 +36,6 @@ public interface ChecklistsApiDelegate {
     }
 
     /**
-     * @see ChecklistsApi#createChecklist
-     */
-    default ResponseEntity<Void> createChecklist( Checklist  checklist) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    /**
      * @see ChecklistsApi#deleteChecklist
      */
     default ResponseEntity<Void> deleteChecklist( String  id) {
@@ -60,12 +49,13 @@ public interface ChecklistsApiDelegate {
     /**
      * @see ChecklistsApi#getChecklists
      */
-    default ResponseEntity<List<Checklist>> getChecklists( String  creator,
-         String  recipent) {
+    default ResponseEntity<List<Checklist>> getChecklists( String  username,
+         String  householdId,
+         String  sortingDirection) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"itemList\" : [ \"itemList\", \"itemList\" ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testGroup\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"itemList\" : [ \"itemList\", \"itemList\" ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"itemList\" : [ {    \"message\" : \"message\",    \"isChecked\" : false  }, {    \"message\" : \"message\",    \"isChecked\" : false  } ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"itemList\" : [ {    \"message\" : \"message\",    \"isChecked\" : false  }, {    \"message\" : \"message\",    \"isChecked\" : false  } ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,11 +68,18 @@ public interface ChecklistsApiDelegate {
     }
 
     /**
-     * @see ChecklistsApi#modifyChecklist
+     * @see ChecklistsApi#saveChecklist
      */
-    default ResponseEntity<Void> modifyChecklist( String  id,
-         Checklist  checklist) {
+    default ResponseEntity<String> saveChecklist( Checklist  checklist) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default ChecklistsApi interface so no example is generated");
         }

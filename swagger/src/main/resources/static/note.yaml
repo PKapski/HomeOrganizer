@@ -82,27 +82,27 @@ paths:
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
-    patch:
-      summary: Modifies a note
-      operationId: modifyNote
-      parameters:
-        - name: id
-          in: path
-          description: Id of note to delete
-          type: string
-          required: true
-        - name: note
-          in: body
-          description: Modified note
-          schema:
-            $ref: '#/definitions/Note'
-      responses:
-        204:
-          description: Note succesfully modified.
-        400:
-          description: Note couldn't have been modified.
-        500:
-          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+#    patch:
+#      summary: Modifies a note
+#      operationId: modifyNote
+#      parameters:
+#        - name: id
+#          in: path
+#          description: Id of note to delete
+#          type: string
+#          required: true
+#        - name: note
+#          in: body
+#          description: Modified note
+#          schema:
+#            $ref: '#/definitions/Note'
+#      responses:
+#        204:
+#          description: Note succesfully modified.
+#        400:
+#          description: Note couldn't have been modified.
+#        500:
+#          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
 
 definitions:
@@ -131,7 +131,7 @@ definitions:
       householdId:
         description: Household id that the note is written to
         type: string
-        default: "testGroup"
+        default: "testHousehold"
       expirationDate:
         description: Expiration date of a note
         type: string

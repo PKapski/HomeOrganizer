@@ -27,18 +27,6 @@ public interface ChecklistsApi {
 
     ChecklistsApiDelegate getDelegate();
 
-    @ApiOperation(value = "Creates a new checklist", nickname = "createChecklist", notes = "", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "Checklist succesfully created."),
-        @ApiResponse(code = 400, message = "Checklist couldn't have been created."),
-        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/checklists",
-        method = RequestMethod.POST)
-    default ResponseEntity<Void> createChecklist(@ApiParam(value = "checklist to create"  )  @Valid @RequestBody Checklist checklist) {
-        return getDelegate().createChecklist(checklist);
-    }
-
-
     @ApiOperation(value = "Deletes a checklist", nickname = "deleteChecklist", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "Checklist succesfully deleted."),
@@ -57,20 +45,20 @@ public interface ChecklistsApi {
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/checklists",
         method = RequestMethod.GET)
-    default ResponseEntity<List<Checklist>> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "creator", required = false) String creator,@ApiParam(value = "") @Valid @RequestParam(value = "recipent", required = false) String recipent) {
-        return getDelegate().getChecklists(creator, recipent);
+    default ResponseEntity<List<Checklist>> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection) {
+        return getDelegate().getChecklists(username, householdId, sortingDirection);
     }
 
 
-    @ApiOperation(value = "Modifies a checklist", nickname = "modifyChecklist", notes = "", tags={  })
+    @ApiOperation(value = "Creates or modifies checklist", nickname = "saveChecklist", notes = "", response = String.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "Checklist succesfully modified."),
-        @ApiResponse(code = 400, message = "Checklist couldn't have been modified."),
+        @ApiResponse(code = 201, message = "Counter succesfully created.", response = String.class),
+        @ApiResponse(code = 400, message = "Checklist couldn't have been saved."),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/checklists/{id}",
-        method = RequestMethod.PATCH)
-    default ResponseEntity<Void> modifyChecklist(@ApiParam(value = "Id of checklist to delete",required=true) @PathVariable("id") String id,@ApiParam(value = "Modified checklist"  )  @Valid @RequestBody Checklist checklist) {
-        return getDelegate().modifyChecklist(id, checklist);
+    @RequestMapping(value = "/checklists",
+        method = RequestMethod.POST)
+    default ResponseEntity<String> saveChecklist(@ApiParam(value = "checklist to save"  )  @Valid @RequestBody Checklist checklist) {
+        return getDelegate().saveChecklist(checklist);
     }
 
 }

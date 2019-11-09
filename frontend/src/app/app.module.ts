@@ -27,6 +27,9 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {AuthInterceptor} from "./interceptor/auth-interceptor";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ChecklistsComponent } from './checklists/checklists.component';
+import {MatIconModule} from "@angular/material/icon";
+import {ChecklistService} from "./_services/checklist.service";
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     RegisterComponent,
     SnackbarComponent,
     AddNoteDialogComponent,
+    ChecklistsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule
   ],
   entryComponents:[
     SnackbarComponent,
@@ -69,7 +74,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
       useClass: AuthInterceptor,
       multi: true
     },
-    NotesService
+    NotesService,
+    ChecklistService
   ],
   bootstrap: [AppComponent]
 })

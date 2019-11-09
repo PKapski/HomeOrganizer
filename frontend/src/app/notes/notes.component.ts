@@ -17,7 +17,7 @@ import {Router} from "@angular/router";
   providers: [DatePipe]
 })
 export class NotesComponent implements OnInit {
-  notesList: any = [];
+  notesArray: any = [];
   editMode = false;
   messageHTMLElement: HTMLElement;
   titleHTMLElement: HTMLElement;
@@ -28,7 +28,6 @@ export class NotesComponent implements OnInit {
   currentlyEditedNote: string;
   snackBarDuration = 5000;//in seconds
   recentlyDeletedNote: Note;
-  testNote: Note;
 
   @ViewChild('text-block', {static: false}) textBox: ElementRef;
 
@@ -44,19 +43,22 @@ export class NotesComponent implements OnInit {
   }
 
   loadNotes() {
-    return this.notesService.getNotes(localStorage.getItem('current_user'),localStorage.getItem('current_household'),'ASC').subscribe(
+    return this.notesService.getNotes(localStorage.getItem('current_user'), localStorage.getItem('current_household'), 'ASC').subscribe(
       data => {
-        this.notesList = data;
+        this.notesArray = data;
       },
       error => {
-          if (error.toString()=="403"){
-            this.router.navigate(['/login']);
-          }
+        if (error.toString() == "403") {
+          this.router.navigate(['/login']);
+        }
       })
   }
 
 
   changeEditMode(note: Note) {
+    if (note.creator != localStorage.getItem('current_user')) {
+      return;
+    }
     this.editMode = !this.editMode;
     this.messageHTMLElement = this.changeElementEditMode("msg-" + note.id);
     this.titleHTMLElement = this.changeElementEditMode("title-" + note.id);
@@ -79,7 +81,11 @@ export class NotesComponent implements OnInit {
   }
 
   deleteNote(note: Note) {
-    this.notesList = this.notesList.filter(n => n !== note);
+    if (note.creator != localStorage.getItem('current_user')) {
+      return;
+    }
+    this.openSnackBar(note.title);
+    this.notesArray = this.notesArray.filter(n => n !== note);
     this.notesService.deleteNote(note.id).subscribe();
     this.recentlyDeletedNote = note;
   }
@@ -96,7 +102,7 @@ export class NotesComponent implements OnInit {
   reverseNoteDeletion() {
     console.log(this.recentlyDeletedNote);
     this.notesService.postNote(this.recentlyDeletedNote).subscribe();
-    this.notesList.push(this.recentlyDeletedNote);
+    this.notesArray.push(this.recentlyDeletedNote);
   }
 
 
@@ -121,10 +127,9 @@ export class NotesComponent implements OnInit {
     let note = data["data"] as Note;
     note.creator = localStorage.getItem("current_user");
     note.expirationDate = this.datePipe.transform(note.expirationDate, 'yyyy-MM-dd');
-    //note.creationDate=this.datePipe.transform(new Date(),'yyyy-MM-dd', 'GMT+2');
     this.notesService.postNote(note).subscribe(id => {
       note.id = id;
-      this.notesList.push(note);
+      this.notesArray.push(note);
     });
 
   }
@@ -133,7 +138,22 @@ export class NotesComponent implements OnInit {
     return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
   }
 
-  getHousehold(): string{
+  getHousehold(): string {
     return localStorage.getItem("current_household");
   }
+
+  getTooltipEditMessage(creator: string): string {
+    if (creator == localStorage.getItem('current_user')) {
+      return 'Edit the note'
+    } else {
+      return 'Only creator can edit a note!';
+    }
+  }
+
+  getTooltipDeleteMessage(creator: string): string {
+    if (creator == localStorage.getItem('current_user')) {
+      return 'Delete the note'
+    } else {
+      return 'Only creator can delete a note!';
+    }  }
 }
