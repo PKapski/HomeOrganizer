@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {NotesComponent} from "./notes/notes.component";
 import {ChecklistsComponent} from "./checklists/checklists.component";
+import {HouseholdsComponent} from "./households/households.component";
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'notes', component: NotesComponent, runGuardsAndResolvers: 'always'},
-  {path: 'checklists',component: ChecklistsComponent}
+  {path: 'checklists',component: ChecklistsComponent},
+  {path: 'myhousehold',component: HouseholdsComponent}
 ];
 
 @NgModule({

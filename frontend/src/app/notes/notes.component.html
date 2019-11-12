@@ -21,7 +21,8 @@
                  id="edit-{{note.id}}" (click)="changeEditMode(note)"
                  [icon]="editIcon"
                  [matTooltip]="getTooltipEditMessage(note.creator)"></fa-icon>
-        <fa-icon id="apply-{{note.id}}" (click)="changeEditMode(note)" [icon]="applyIcon" style="display: none"></fa-icon>
+        <fa-icon id="apply-{{note.id}}" (click)="changeEditMode(note)" [icon]="applyIcon"
+                 style="display: none"></fa-icon>
         <fa-icon (click)="deleteNote(note)" [icon]="deleteIcon"
                  [matTooltip]="getTooltipDeleteMessage(note.creator)"></fa-icon>
       </div>

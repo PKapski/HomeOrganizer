@@ -32,6 +32,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {ChecklistService} from "./_services/checklist.service";
 import { AddChecklistDialogComponent } from './checklists/add-checklist-dialog/add-checklist-dialog.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { HouseholdsComponent } from './households/households.component';
+import { FindHouseholdComponent } from './households/find-household/find-household.component';
+import { NewHouseholdComponent } from './households/new-household/new-household.component';
+import { MyHouseholdComponent } from './households/my-household/my-household.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -45,6 +51,10 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     AddNoteDialogComponent,
     ChecklistsComponent,
     AddChecklistDialogComponent,
+    HouseholdsComponent,
+    FindHouseholdComponent,
+    NewHouseholdComponent,
+    MyHouseholdComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +76,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatMenuModule,
     MatCheckboxModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatTableModule
   ],
   entryComponents:[
     SnackbarComponent,
