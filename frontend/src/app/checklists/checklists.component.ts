@@ -84,6 +84,7 @@ export class ChecklistsComponent implements OnInit {
     checklist.creator = localStorage.getItem("current_user");
     checklist.expirationDate = this.datePipe.transform(checklist.expirationDate, 'yyyy-MM-dd');
     checklist.householdId = localStorage.getItem("current_household");
+    checklist.itemList = [];
     this.service.saveChecklist(checklist).subscribe(id => {
       checklist.id = id;
       this.checklistsArray.push(checklist);
@@ -94,7 +95,6 @@ export class ChecklistsComponent implements OnInit {
   deleteChecklistItem(checklist: Checklist, item: ChecklistItem) {
     checklist.itemList = checklist.itemList.filter(i => i !== item);
     this.service.saveChecklist(checklist).subscribe();
-
   }
 
   dateFromObjectId(objectId: string): string {
@@ -102,19 +102,37 @@ export class ChecklistsComponent implements OnInit {
   }
 
   changeItemEditMode(checklist: Checklist, item: ChecklistItem) {
-    if (checklist.creator != localStorage.getItem('current_user')) {
+    if ((checklist.creator != localStorage.getItem('current_user') && (checklist.recipent != localStorage.getItem('current_user')))) {
       return;
     }
     let itemHTMLElement = this.changeElementEditMode("item-" + checklist.id + "-" + checklist.itemList.indexOf(item));
-    this.changeMenuIcon(itemHTMLElement.isContentEditable,checklist,item);
+    let menuIcon = document.getElementById("edit-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+    let applyIcon = document.getElementById("apply-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+    this.changeMenuIcon(itemHTMLElement.isContentEditable,menuIcon,applyIcon);
     if (!itemHTMLElement.isContentEditable){
       item.message=itemHTMLElement.innerText;
-      this.service.saveChecklist(checklist).subscribe();
+      if (item.message.trim() === ''){
+        this.deleteChecklistItem(checklist,item);
+      }else{
+        this.service.saveChecklist(checklist).subscribe();
+      }
     }
   }
 
   changeChecklistEditMode(checklist: Checklist) {
+    if (checklist.creator != localStorage.getItem('current_user')) {
+      return;
+    }
 
+    let checklistHTMLElement = this.changeElementEditMode("title-"+checklist.id);
+    let editIcon = document.getElementById("edit-" + checklist.id);
+    let applyIcon = document.getElementById("apply-" + checklist.id);
+    this.changeMenuIcon(checklistHTMLElement.isContentEditable,editIcon,applyIcon);
+    if (!checklistHTMLElement.isContentEditable){
+      checklist.title=checklistHTMLElement.innerText;
+      checklistHTMLElement.innerText=checklist.title;
+      this.service.saveChecklist(checklist).subscribe();
+    }
   }
 
   changeElementEditMode(id: string): HTMLElement {
@@ -124,15 +142,13 @@ export class ChecklistsComponent implements OnInit {
     return element;
   }
 
-  changeMenuIcon(editMode:boolean, checklist: Checklist, item: ChecklistItem) {
-    let menuIcon = document.getElementById("menu-" + checklist.id + "-" + checklist.itemList.indexOf(item));
-    let applyIcon = document.getElementById("apply-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+  changeMenuIcon(editMode:boolean, nonEditIcon: HTMLElement, editIcon: HTMLElement) {
     if(editMode){
-      menuIcon.style.display="none";
-      applyIcon.style.display="inline-block";
+      nonEditIcon.style.display="none";
+      editIcon.style.display="inline-block";
     }else{
-      menuIcon.style.display="inline-block";
-      applyIcon.style.display="none";
+      nonEditIcon.style.display="inline-block";
+      editIcon.style.display="none";
     }
   }
 
@@ -188,7 +204,7 @@ export class ChecklistsComponent implements OnInit {
 
   createNewChecklistItem(checklist: Checklist) {
     let checklistItem = new ChecklistItem();
-    checklistItem.message="item";
+    checklistItem.message=" ";
     checklistItem.isChecked=false;
     checklist.itemList.push(checklistItem);
     this.service.saveChecklist(checklist).subscribe(

@@ -18,14 +18,10 @@ import {Router} from "@angular/router";
 })
 export class NotesComponent implements OnInit {
   notesArray: any = [];
-  editMode = false;
-  messageHTMLElement: HTMLElement;
-  titleHTMLElement: HTMLElement;
   editIcon = faEdit;
   deleteIcon = faTrashAlt;
   addIcon = faPlusSquare;
   applyIcon = faCheck;
-  currentlyEditedNote: string;
   snackBarDuration = 5000;//in seconds
   recentlyDeletedNote: Note;
 
@@ -72,28 +68,35 @@ export class NotesComponent implements OnInit {
     if (note.creator != localStorage.getItem('current_user')) {
       return;
     }
-    this.editMode = !this.editMode;
-    this.messageHTMLElement = this.changeElementEditMode("msg-" + note.id);
-    this.titleHTMLElement = this.changeElementEditMode("title-" + note.id);
-    if (this.editMode) {
-      this.currentlyEditedNote = note.id;
-    } else {
-      note.title = this.titleHTMLElement.innerText;
-      this.titleHTMLElement.innerText=note.title;
-      note.message = this.messageHTMLElement.innerText;
-      this.messageHTMLElement.innerText=note.message;
-      this.notesService.postNote(note).subscribe(
-      );
-      this.currentlyEditedNote = null;
+    let messageHTMLElement = this.changeElementEditMode("msg-" + note.id);
+    let titleHTMLElement = this.changeElementEditMode("title-" + note.id);
+    let editIcon = document.getElementById("edit-" + note.id);
+    let applyIcon = document.getElementById("apply-" + note.id)
+    this.changeMenuIcon(messageHTMLElement.isContentEditable,editIcon,applyIcon);
+    if (!messageHTMLElement.isContentEditable) {
+      note.title = titleHTMLElement.innerText;
+      titleHTMLElement.innerText=note.title;
+      note.message = messageHTMLElement.innerText;
+      messageHTMLElement.innerText=note.message;
+      this.notesService.postNote(note).subscribe();
     }
   }
 
   changeElementEditMode(id: string): HTMLElement {
-    let element;
-    element = document.getElementById(id);
-    element.contentEditable = String(this.editMode);
+    let element = document.getElementById(id);
+    element.contentEditable = String(!element.isContentEditable);
     element.focus();
     return element;
+  }
+
+  changeMenuIcon(editMode:boolean, nonEditIcon: HTMLElement, editIcon: HTMLElement) {
+    if(editMode){
+      nonEditIcon.style.display="none";
+      editIcon.style.display="initial";
+    }else{
+      nonEditIcon.style.display="initial";
+      editIcon.style.display="none";
+    }
   }
 
   deleteNote(note: Note) {

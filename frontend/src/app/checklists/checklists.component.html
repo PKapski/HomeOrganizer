@@ -2,7 +2,7 @@
 <h1 *ngIf="checklistsArray.length>0">'{{getHousehold()}}' household checklists:</h1>
 <div class="flex-container">
   <div class="checklist" *ngFor="let checklist of checklistsArray" [attr.disabled]="checkIfDisabled(checklist)">
-    <div id="title-{{checklist.id}}" class="title-div">{{checklist.title}} </div>
+    <div id="title-{{checklist.id}}" class="title-div" (keydown.enter)="changeChecklistEditMode(checklist)">{{checklist.title}}</div>
 
     <div class="from-to-div">
       <a>From: {{checklist.creator}}</a><br>
@@ -14,10 +14,10 @@
       <div id="item-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" [attr.isChecked]="item.isChecked" class="checklist-item-text" (keydown.enter)="changeItemEditMode(checklist,item)">{{item.message}}</div>
 
       <div class="checklist-item-menu">
-        <button  mat-icon-button id="menu-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}-item" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button  mat-icon-button id="edit-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
-        <button mat-icon-button id="apply-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}-item" style="display: none" (click)="changeItemEditMode(checklist,item)">
+        <button mat-icon-button id="apply-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" style="display: none" (click)="changeItemEditMode(checklist,item)">
           <mat-icon>check</mat-icon>
         </button>
         <mat-menu #menu=matMenu>
@@ -46,11 +46,13 @@
       </div>
       <div class="control-buttons">
         <fa-icon *ngIf="!checkIfDisabled(checklist)"
-                 id="edit-{{checklist.id}}" (click)="changeChecklistEditMode(checklist)"
-                 [icon]="currentlyEditedChecklist==checklist.id ? applyIcon:editIcon "
-                 [matTooltip]="getTooltipEditMessage(checklist.creator)"></fa-icon>
+                 id="edit-{{checklist.id}}"
+                 (click)="changeChecklistEditMode(checklist)"
+                 [icon]="editIcon" [matTooltip]="getTooltipEditMessage(checklist.creator)"></fa-icon>
+        <fa-icon id="apply-{{checklist.id}}" (click)="changeChecklistEditMode(checklist)" [icon]="applyIcon" style="display: none"></fa-icon>
+
         <fa-icon (click)="deleteChecklist(checklist)" [icon]="deleteIcon"
-                 [matTooltip]="getTooltipDeleteMessage(checklist.creator)"></fa-icon>
+                 [matTooltip]="getTooltipDeleteMessage(checklist.creator)" ></fa-icon>
       </div>
     </div>
   </div>

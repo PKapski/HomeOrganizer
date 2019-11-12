@@ -31,6 +31,7 @@ import { ChecklistsComponent } from './checklists/checklists.component';
 import {MatIconModule} from "@angular/material/icon";
 import {ChecklistService} from "./_services/checklist.service";
 import { AddChecklistDialogComponent } from './checklists/add-checklist-dialog/add-checklist-dialog.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AddChecklistDialogComponent } from './checklists/add-checklist-dialog/a
     MatNativeDateModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule
   ],
   entryComponents:[
     SnackbarComponent,
