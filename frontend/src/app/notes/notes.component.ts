@@ -55,6 +55,19 @@ export class NotesComponent implements OnInit {
   }
 
 
+  sort_by(field, ascending, primer) {
+    var key = function (x) {
+      return primer ? primer(x[field]) : x[field]
+    };
+
+    return function (a, b) {
+      var A = key(a), B = key(b);
+      return ((A < B) ? -1 : ((A > B) ? 1 : 0)) * [-1, 1][+!!ascending];
+    }
+  };
+
+
+
   changeEditMode(note: Note) {
     if (note.creator != localStorage.getItem('current_user')) {
       return;
@@ -66,8 +79,11 @@ export class NotesComponent implements OnInit {
       this.currentlyEditedNote = note.id;
     } else {
       note.title = this.titleHTMLElement.innerText;
+      this.titleHTMLElement.innerText=note.title;
       note.message = this.messageHTMLElement.innerText;
-      this.notesService.postNote(note).subscribe();
+      this.messageHTMLElement.innerText=note.message;
+      this.notesService.postNote(note).subscribe(
+      );
       this.currentlyEditedNote = null;
     }
   }
@@ -100,9 +116,9 @@ export class NotesComponent implements OnInit {
   }
 
   reverseNoteDeletion() {
-    console.log(this.recentlyDeletedNote);
     this.notesService.postNote(this.recentlyDeletedNote).subscribe();
     this.notesArray.push(this.recentlyDeletedNote);
+    this.notesArray.sort(this.sort_by("id", true, null));
   }
 
 
@@ -127,6 +143,7 @@ export class NotesComponent implements OnInit {
     let note = data["data"] as Note;
     note.creator = localStorage.getItem("current_user");
     note.expirationDate = this.datePipe.transform(note.expirationDate, 'yyyy-MM-dd');
+    note.householdId=localStorage.getItem("current_household");
     this.notesService.postNote(note).subscribe(id => {
       note.id = id;
       this.notesArray.push(note);
@@ -156,4 +173,12 @@ export class NotesComponent implements OnInit {
     } else {
       return 'Only creator can delete a note!';
     }  }
+
+  checkIfDisabled(note: Note): boolean {
+    let currDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    return currDate> note.expirationDate;
+  }
+
+
+
 }

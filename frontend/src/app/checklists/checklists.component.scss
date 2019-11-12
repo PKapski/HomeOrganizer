@@ -15,7 +15,9 @@ h1 {
   position: relative;
   height: fit-content;
 }
-
+.checklist[disabled=true]{
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.35);
+}
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -42,6 +44,11 @@ h1 {
   background: $dark;
   border: 2px solid $dark;
   border-radius: 4px;
+  color: $white-2;
+  font-size: 25px;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 
 .title-div a {
@@ -56,7 +63,9 @@ h1 {
 .from-to-div {
   margin-bottom: 10px;
 }
-
+.from-to-div a[disabled=true]{
+  color: $error;
+}
 .checklist-item{
   text-align: center;
   //background: $dark;
@@ -66,15 +75,20 @@ h1 {
   display: flex;
   justify-content: center;
 }
-.checklist-item:hover {
-  cursor: pointer;
-  background-color: darken($blue,10%);
-}
-.checklist-item-text a[isChecked=true]{
+//.checklist-item-text:hover {
+//  cursor: pointer;
+//  background-color: darken($blue,10%);
+//}
+.checklist-item-text[isChecked=true]{
   text-decoration: line-through;
 }
 .checklist-item-text{
   margin: auto;
+  height: 100%;
+  width: 100%;
+};
+.checklist-item-text[contenteditable=true]{
+    background-color: lighten($blue, 15%);
 }
 .checklist-item-menu{
   justify-self: flex-end;

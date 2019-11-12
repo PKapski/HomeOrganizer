@@ -6,31 +6,54 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="app" />
+        <module name="household" />
+        <module name="user (1) (pl.polsl)" />
         <module name="swagger-codegen-maven-plugin" />
-        <module name="note (1)" />
         <module name="note" />
+        <module name="security" />
+        <module name="checklist (2) (pl.polsl)" />
+        <module name="user" />
+        <module name="app" />
+        <module name="household (1) (pl.polsl)" />
+        <module name="note (1) (pl.polsl.api)" />
+        <module name="note (2) (pl.polsl)" />
+        <module name="note (1)" />
+        <module name="commons" />
+        <module name="checklist (1) (pl.polsl.api)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="12" />
       <module name="app" target="12" />
+      <module name="checklist (1) (pl.polsl.api)" target="1.8" />
+      <module name="checklist (2) (pl.polsl)" target="12" />
+      <module name="common" target="1.8" />
+      <module name="commons" target="12" />
       <module name="homeorganizer" target="12" />
+      <module name="household" target="1.8" />
+      <module name="household (1) (pl.polsl)" target="12" />
       <module name="logic" target="12" />
       <module name="note" target="12" />
       <module name="note (1)" target="1.8" />
+      <module name="note (1) (pl.polsl.api)" target="1.8" />
+      <module name="note (2) (pl.polsl)" target="12" />
       <module name="pet" target="1.8" />
+      <module name="security" target="12" />
       <module name="services" target="12" />
       <module name="swagger-codegen-maven-plugin" target="12" />
+      <module name="user" target="1.8" />
+      <module name="user (1) (pl.polsl)" target="12" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="app" options="" />
+      <module name="common" options="" />
       <module name="homeorganizer" options="-parameters" />
       <module name="logic" options="" />
       <module name="note" options="-parameters" />
       <module name="note (1)" options="" />
+      <module name="note (2) (pl.polsl)" options="-parameters" />
       <module name="swagger-codegen-maven-plugin" options="" />
     </option>
   </component>

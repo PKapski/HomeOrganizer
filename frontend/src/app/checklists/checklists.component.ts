@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChecklistService} from "../_services/checklist.service";
 import {Router} from "@angular/router";
 import {ChecklistItem} from "./checklistItem";
@@ -6,6 +6,10 @@ import {Checklist} from "./checklist";
 import {faEdit, faPlusSquare, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
 import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import {DatePipe} from "@angular/common";
+import {AddChecklistDialogComponent} from "./add-checklist-dialog/add-checklist-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SnackbarComponent} from "../snackbar/snackbar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-checklists',
@@ -13,6 +17,8 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./checklists.component.scss'],
   providers: [DatePipe]
 })
+
+
 export class ChecklistsComponent implements OnInit {
 
   checklistsArray: any = [];
@@ -21,25 +27,41 @@ export class ChecklistsComponent implements OnInit {
   editIcon = faEdit;
   deleteIcon = faTrashAlt;
   applyIcon = faCheck;
+  recentlyDeletedChecklist: Checklist;
+  snackBarDuration = 5000;
 
   constructor(private service: ChecklistService,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar,
               private router: Router,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe) {
+  }
 
   ngOnInit() {
     this.loadChecklists();
   }
 
-  loadChecklists(){
-      return this.service.getChecklists(localStorage.getItem('current_user'), localStorage.getItem('current_household'), 'ASC').subscribe(
-        data => {
-          this.checklistsArray = data;
-        },
-        error => {
-          if (error.toString() == "403") {
-            this.router.navigate(['/login']);
-          }
-        })
+  sort_by(field, ascending, primer) {
+    var key = function (x) {
+      return primer ? primer(x[field]) : x[field]
+    };
+
+    return function (a, b) {
+      var A = key(a), B = key(b);
+      return ((A < B) ? -1 : ((A > B) ? 1 : 0)) * [-1, 1][+!!ascending];
+    }
+  };
+
+  loadChecklists() {
+    return this.service.getChecklists(localStorage.getItem('current_user'), localStorage.getItem('current_household'), 'ASC').subscribe(
+      data => {
+        this.checklistsArray = data;
+      },
+      error => {
+        if (error.toString() == "403") {
+          this.router.navigate(['/login']);
+        }
+      })
   }
 
   getHousehold(): string {
@@ -47,19 +69,76 @@ export class ChecklistsComponent implements OnInit {
   }
 
   openPopup() {
+    this.dialog.open(AddChecklistDialogComponent, {
+      panelClass: 'my-panel',
+      width: '600px',
+      autoFocus: false
+    }).afterClosed().subscribe(data => this.addNewChecklist(data));
+  }
+
+  addNewChecklist(data: any) {
+    if (data == null) {
+      return;
+    }
+    let checklist = data["data"] as Checklist;
+    checklist.creator = localStorage.getItem("current_user");
+    checklist.expirationDate = this.datePipe.transform(checklist.expirationDate, 'yyyy-MM-dd');
+    checklist.householdId = localStorage.getItem("current_household");
+    this.service.saveChecklist(checklist).subscribe(id => {
+      checklist.id = id;
+      this.checklistsArray.push(checklist);
+    });
+
   }
 
   deleteChecklistItem(checklist: Checklist, item: ChecklistItem) {
-      checklist.itemList = checklist.itemList.filter(i=>i!==item);
-      this.service.saveChecklist(checklist).subscribe();
+    checklist.itemList = checklist.itemList.filter(i => i !== item);
+    this.service.saveChecklist(checklist).subscribe();
 
   }
+
   dateFromObjectId(objectId: string): string {
     return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
   }
 
-  changeEditMode(checklist: Checklist) {
+  changeEditMode(checklist: Checklist, item: ChecklistItem) {
+    if (checklist.creator != localStorage.getItem('current_user')) {
+      return;
+    }
+    let itemHTMLElement = this.changeElementEditMode("item-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+    this.changeMenuIcon(itemHTMLElement.isContentEditable,checklist,item);
+    if (!itemHTMLElement.isContentEditable){
+      item.message=itemHTMLElement.innerText;
+      console.log("tut");
+      this.service.saveChecklist(checklist).subscribe();
+    }
+  }
 
+  changeElementEditMode(id: string): HTMLElement {
+    let element = document.getElementById(id);
+    element.contentEditable = String(!element.isContentEditable);
+    element.focus();
+    return element;
+  }
+
+  changeMenuIcon(editMode:boolean, checklist: Checklist, item: ChecklistItem) {
+    let menuIcon = document.getElementById("menu-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+    let applyIcon = document.getElementById("apply-" + checklist.id + "-" + checklist.itemList.indexOf(item));
+    if(editMode){
+      menuIcon.style.display="none";
+      applyIcon.style.display="inline-block";
+    }else{
+      menuIcon.style.display="inline-block";
+      applyIcon.style.display="none";
+    }
+  }
+
+  checkIfEditable(element: string, checklist: Checklist, item: ChecklistItem) {
+    //let elementId = element+'-'+checklist.id+'-'+checklist.itemList.indexOf(item);
+    let elementId = "item-" + checklist.id + "-" + checklist.itemList.indexOf(item);
+    console.log(elementId);
+    let htmlElement = document.getElementById(elementId);
+    return htmlElement.isContentEditable;
   }
 
   getTooltipEditMessage(creator: string): string {
@@ -75,14 +154,51 @@ export class ChecklistsComponent implements OnInit {
       return 'Delete the checklist'
     } else {
       return 'Only creator can delete a checklist!';
-    }  }
-  deleteChecklist(checklist: Checklist) {
-    if (checklist.creator == localStorage.getItem('current_user')){
-      this.checklistsArray.filter()
     }
   }
 
+  deleteChecklist(checklist: Checklist) {
+    if (checklist.creator == localStorage.getItem('current_user')) {
+      this.recentlyDeletedChecklist = checklist;
+      this.openSnackBar(checklist.title);
+      this.checklistsArray = this.checklistsArray.filter(c => c !== checklist);
+      this.service.deleteChecklist(checklist.id).subscribe();
+    }
+  }
+
+  openSnackBar(title: string) {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      duration: this.snackBarDuration,
+      data: "'" + title + "' note has been deleted!",
+    }).onAction().subscribe(() => {
+      this.reverseChecklistDeletion();
+    });
+  }
+
+  reverseChecklistDeletion() {
+    this.service.saveChecklist(this.recentlyDeletedChecklist).subscribe();
+    this.checklistsArray.push(this.recentlyDeletedChecklist);
+    this.checklistsArray.sort(this.sort_by("id", true, null));
+  }
+
   changeIsChecked(item: ChecklistItem) {
-    item.isChecked=!item.isChecked;
+    item.isChecked = !item.isChecked;
+  }
+
+  checkIfDisabled(checklist: Checklist): boolean {
+    let currDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    return currDate > checklist.expirationDate;
+  }
+
+  createNewChecklistItem(checklist: Checklist) {
+    let checklistItem = new ChecklistItem();
+    checklistItem.message="item";
+    checklistItem.isChecked=false;
+    checklist.itemList.push(checklistItem);
+    this.service.saveChecklist(checklist).subscribe(
+      value => {
+        this.changeEditMode(checklist,checklistItem);
+      }
+    );
   }
 }

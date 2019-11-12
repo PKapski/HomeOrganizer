@@ -1,21 +1,15 @@
 <h1 *ngIf="notesArray.length==0">Don't have any notes yet. Add some!</h1>
 <h1 *ngIf="notesArray.length>0">'{{getHousehold()}}' household notes:</h1>
 <div class="flex-container">
-  <div class="note" *ngFor="let note of notesArray">
-    <div id="title-{{note.id}}" class="title-div">
-      <a>{{note.title}}<br></a>
-    </div>
+  <div class="note" *ngFor="let note of notesArray" [attr.disabled]="checkIfDisabled(note)">
+    <div id="title-{{note.id}}" class="title-div">{{note.title}}</div>
     <div class="from-to-div">
       <a>From: {{note.creator}}</a><br>
       <a>To: {{note.recipent ? note.recipent : '-'}}</a><br>
-      <a>Expires: {{note.expirationDate ? note.expirationDate : '-'}}</a>
+      <a [attr.disabled]="checkIfDisabled(note)">Expires: {{note.expirationDate ? note.expirationDate : '-'}}</a>
     </div>
 
-    <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">
-      <span>
-        {{note.message}}
-      </span>
-    </div>
+    <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">{{note.message}}</div>
 
     <br>
     <div class="note-footer">
@@ -23,7 +17,8 @@
         <a>Created: {{dateFromObjectId(note.id)}}</a>
       </div>
       <div class="control-buttons">
-        <fa-icon id="edit-{{note.id}}" (click)="changeEditMode(note)"
+        <fa-icon *ngIf="!checkIfDisabled(note)"
+                 id="edit-{{note.id}}" (click)="changeEditMode(note)"
                  [icon]="currentlyEditedNote==note.id ? applyIcon:editIcon "
                  [matTooltip]="getTooltipEditMessage(note.creator)"></fa-icon>
         <fa-icon (click)="deleteNote(note)" [icon]="deleteIcon"

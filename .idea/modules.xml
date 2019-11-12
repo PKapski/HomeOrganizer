@@ -4,11 +4,22 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/services/api/api.iml" filepath="$PROJECT_DIR$/services/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/app/app.iml" filepath="$PROJECT_DIR$/services/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/checklist/checklist (1) (pl.polsl.api).iml" filepath="$PROJECT_DIR$/services/api/checklist/checklist (1) (pl.polsl.api).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/checklist/checklist (2) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/checklist/checklist (2) (pl.polsl).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/commons/commons.iml" filepath="$PROJECT_DIR$/services/logic/commons/commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/household/household.iml" filepath="$PROJECT_DIR$/services/api/household/household.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/household/household (1) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/household/household (1) (pl.polsl).iml" />
       <module fileurl="file://$PROJECT_DIR$/services/logic/logic.iml" filepath="$PROJECT_DIR$/services/logic/logic.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/logic/note/note.iml" filepath="$PROJECT_DIR$/services/logic/note/note.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/api/note/note (1).iml" filepath="$PROJECT_DIR$/services/api/note/note (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/note/note (1) (pl.polsl.api).iml" filepath="$PROJECT_DIR$/services/api/note/note (1) (pl.polsl.api).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/note/note (2) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/note/note (2) (pl.polsl).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/security/security.iml" filepath="$PROJECT_DIR$/services/security/security.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/services.iml" filepath="$PROJECT_DIR$/services/services.iml" />
       <module fileurl="file://$PROJECT_DIR$/swagger/swagger-codegen-maven-plugin.iml" filepath="$PROJECT_DIR$/swagger/swagger-codegen-maven-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/user/user.iml" filepath="$PROJECT_DIR$/services/api/user/user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/user/user (1) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/user/user (1) (pl.polsl).iml" />
     </modules>
   </component>
 </project>

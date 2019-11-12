@@ -7,11 +7,11 @@
   background: $dark;
   border: 2px solid $dark;
   border-radius: 4px;
-}
-
-.title-div a {
   color: $white-2;
   font-size: 25px;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 
 .title-div[contenteditable=true] {
@@ -23,20 +23,27 @@
   border-radius: 4px;
 }
 
+.from-to-div a[disabled=true]{
+  color: $error;
+}
 .text-block {
   overflow-wrap: break-word;
-
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 
 .text-block:focus {
   outline: none;
-
 }
 
 .text-block[contenteditable=true] {
   background-color: lighten($blue, 15%);
+
 }
 
+[contenteditable=true] br{
+  display:none;
+}
 
 .container img {
   width: 100%;
@@ -58,6 +65,9 @@
   //overflow: hidden;
   position: relative;
   height: fit-content;
+}
+.note[disabled=true]{
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.35);
 }
 
 .control-buttons fa-icon:hover {

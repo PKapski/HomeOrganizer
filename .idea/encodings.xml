@@ -4,17 +4,19 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/checklist" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/household" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/note" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/services/api/pet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/api/user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/logic" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic/checklist" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic/commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic/household" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/logic/note" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/logic/user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/security" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/swagger" charset="UTF-8" />
   </component>
 </project>

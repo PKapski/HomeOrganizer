@@ -1,26 +1,31 @@
 <h1 *ngIf="checklistsArray.length==0">Don't have any checklists yet. Add some!</h1>
 <h1 *ngIf="checklistsArray.length>0">'{{getHousehold()}}' household checklists:</h1>
 <div class="flex-container">
-  <div class="checklist" *ngFor="let checklist of checklistsArray">
-    <div id="title-{{checklist.id}}" class="title-div">
-      <a>{{checklist.title}}<br></a>
-    </div>
+  <div class="checklist" *ngFor="let checklist of checklistsArray" [attr.disabled]="checkIfDisabled(checklist)">
+    <div id="title-{{checklist.id}}" class="title-div">{{checklist.title}} </div>
+
     <div class="from-to-div">
       <a>From: {{checklist.creator}}</a><br>
       <a>To: {{checklist.recipent ? checklist.recipent : '-'}}</a><br>
-      <a>Expires: {{checklist.expirationDate ? checklist.expirationDate : '-'}}</a>
+      <a [attr.disabled]="checkIfDisabled(checklist)">Expires: {{checklist.expirationDate ? checklist.expirationDate : '-'}} </a>
     </div>
 
-    <div class="checklist-item" *ngFor="let item of checklist.itemList" (click)="changeIsChecked(item)">
-      <div class="checklist-item-text" >
-        <a [attr.isChecked]="item.isChecked">{{item.message}}</a>
-      </div>
+    <div class="checklist-item" *ngFor="let item of checklist.itemList">
+      <div id="item-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" [attr.isChecked]="item.isChecked" class="checklist-item-text">{{item.message}}</div>
+
       <div class="checklist-item-menu">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button  mat-icon-button id="menu-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
+        <button mat-icon-button id="apply-{{checklist.id}}-{{checklist.itemList.indexOf(item)}}" style="display: none" (click)="changeEditMode(checklist,item)">
+          <mat-icon>check</mat-icon>
+        </button>
         <mat-menu #menu=matMenu>
-          <button mat-menu-item >
+          <button mat-menu-item (click)="changeIsChecked(item)">
+            <mat-icon>check</mat-icon>
+            <span>{{item.isChecked ? 'Uncheck' : 'Check'}}</span>
+          </button>
+          <button mat-menu-item (click)="changeEditMode(checklist,item)">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>
@@ -31,8 +36,8 @@
         </mat-menu>
       </div>
     </div>
-    <div class="add-new-checklist-item">
-        <mat-icon>playlist_add</mat-icon>
+    <div class="add-new-checklist-item" (click)="createNewChecklistItem(checklist)">
+      <mat-icon>playlist_add</mat-icon>
     </div>
     <br>
     <div class="checklist-footer">
@@ -40,7 +45,8 @@
         <a>Created: {{dateFromObjectId(checklist.id)}}</a>
       </div>
       <div class="control-buttons">
-        <fa-icon id="edit-{{checklist.id}}" (click)="changeEditMode(checklist)"
+        <fa-icon *ngIf="!checkIfDisabled(checklist)"
+                 id="edit-{{checklist.id}}" (click)="changeEditMode(checklist)"
                  [icon]="currentlyEditedChecklist==checklist.id ? applyIcon:editIcon "
                  [matTooltip]="getTooltipEditMessage(checklist.creator)"></fa-icon>
         <fa-icon (click)="deleteChecklist(checklist)" [icon]="deleteIcon"

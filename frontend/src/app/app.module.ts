@@ -30,6 +30,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ChecklistsComponent } from './checklists/checklists.component';
 import {MatIconModule} from "@angular/material/icon";
 import {ChecklistService} from "./_services/checklist.service";
+import { AddChecklistDialogComponent } from './checklists/add-checklist-dialog/add-checklist-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {ChecklistService} from "./_services/checklist.service";
     SnackbarComponent,
     AddNoteDialogComponent,
     ChecklistsComponent,
+    AddChecklistDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ import {ChecklistService} from "./_services/checklist.service";
   ],
   entryComponents:[
     SnackbarComponent,
-    AddNoteDialogComponent
+    AddNoteDialogComponent,
+    AddChecklistDialogComponent
   ],
   providers: [
     {
