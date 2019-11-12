@@ -101,7 +101,7 @@ export class ChecklistsComponent implements OnInit {
     return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
   }
 
-  changeEditMode(checklist: Checklist, item: ChecklistItem) {
+  changeItemEditMode(checklist: Checklist, item: ChecklistItem) {
     if (checklist.creator != localStorage.getItem('current_user')) {
       return;
     }
@@ -109,9 +109,12 @@ export class ChecklistsComponent implements OnInit {
     this.changeMenuIcon(itemHTMLElement.isContentEditable,checklist,item);
     if (!itemHTMLElement.isContentEditable){
       item.message=itemHTMLElement.innerText;
-      console.log("tut");
       this.service.saveChecklist(checklist).subscribe();
     }
+  }
+
+  changeChecklistEditMode(checklist: Checklist) {
+
   }
 
   changeElementEditMode(id: string): HTMLElement {
@@ -131,14 +134,6 @@ export class ChecklistsComponent implements OnInit {
       menuIcon.style.display="inline-block";
       applyIcon.style.display="none";
     }
-  }
-
-  checkIfEditable(element: string, checklist: Checklist, item: ChecklistItem) {
-    //let elementId = element+'-'+checklist.id+'-'+checklist.itemList.indexOf(item);
-    let elementId = "item-" + checklist.id + "-" + checklist.itemList.indexOf(item);
-    console.log(elementId);
-    let htmlElement = document.getElementById(elementId);
-    return htmlElement.isContentEditable;
   }
 
   getTooltipEditMessage(creator: string): string {
@@ -181,8 +176,9 @@ export class ChecklistsComponent implements OnInit {
     this.checklistsArray.sort(this.sort_by("id", true, null));
   }
 
-  changeIsChecked(item: ChecklistItem) {
+  changeIsChecked(checklist: Checklist, item: ChecklistItem) {
     item.isChecked = !item.isChecked;
+    this.service.saveChecklist(checklist).subscribe();
   }
 
   checkIfDisabled(checklist: Checklist): boolean {
@@ -196,9 +192,11 @@ export class ChecklistsComponent implements OnInit {
     checklistItem.isChecked=false;
     checklist.itemList.push(checklistItem);
     this.service.saveChecklist(checklist).subscribe(
-      value => {
-        this.changeEditMode(checklist,checklistItem);
+      id => {
+        this.changeItemEditMode(checklist,checklistItem);
       }
     );
   }
+
+
 }
