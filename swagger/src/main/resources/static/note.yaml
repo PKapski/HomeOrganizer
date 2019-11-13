@@ -36,32 +36,35 @@ paths:
           enum:
             - ASC
             - DESC
+        - name: sortedField
+          in: query
+          type: string
+        - $ref: 'commons.yaml#/parameters/firstResult'
+        - $ref: 'commons.yaml#/parameters/maxResult'
       responses:
         200:
           description: List of notes
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Note'
+            $ref: '#/definitions/NotesPaging'
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
     post:
-      summary: Creates a new note
-      operationId: createNote
+      summary: Creates a note or patches if it already exists
+      operationId: saveNote
       parameters:
         - name: note
           in: body
-          description: Note to create
+          description: Note to save
           schema:
             $ref: '#/definitions/Note'
       responses:
         201:
-          description: Counter succesfully created.
+          description: Note succesfully saved.
           schema:
             type: string
         400:
-          description: Counter couldn't have been created.
+          description: Note couldn't have been saved.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
   /notes/{id}:
@@ -81,29 +84,6 @@ paths:
           description: Note couldn't have been deleted.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
-
-#    patch:
-#      summary: Modifies a note
-#      operationId: modifyNote
-#      parameters:
-#        - name: id
-#          in: path
-#          description: Id of note to delete
-#          type: string
-#          required: true
-#        - name: note
-#          in: body
-#          description: Modified note
-#          schema:
-#            $ref: '#/definitions/Note'
-#      responses:
-#        204:
-#          description: Note succesfully modified.
-#        400:
-#          description: Note couldn't have been modified.
-#        500:
-#          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
-
 
 definitions:
   Note:
@@ -141,5 +121,12 @@ definitions:
         type: boolean
         default: true
 
-
+  NotesPaging:
+    properties:
+      array:
+        type: array
+        items:
+          $ref: '#/definitions/Note'
+      maxItems:
+        type: integer
 

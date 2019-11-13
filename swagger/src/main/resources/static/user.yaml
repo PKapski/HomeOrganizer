@@ -20,8 +20,8 @@ produces:
 paths:
   /users:
     post:
-      summary: Creates a new user
-      operationId: createUser
+      summary: Creates a new user or patches existing
+      operationId: saveUser
       description: New user
       parameters:
         - name: user
@@ -91,6 +91,26 @@ paths:
           description: User couldn't have been modified.
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+  /users/{username}/sethousehold:
+    patch:
+      summary: Sets user household
+      operationId: setUserHousehold
+      parameters:
+        - name: username
+          in: path
+          type: string
+          required: true
+        - name: householdId
+          in: query
+          description: Users' new householdId
+          type: string
+      responses:
+        204:
+          description: Household succesfully changed.
+        400:
+          description: Household couldn't have been changed.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
   /users/household/{householdId}:
     get:
@@ -101,15 +121,22 @@ paths:
           in: path
           type: string
           required: true
+        - name: sortingDirection
+          in: query
+          type: string
+        - name: sortedField
+          in: query
+          type: string
+        - $ref: 'commons.yaml#/parameters/firstResult'
+        - $ref: 'commons.yaml#/parameters/maxResult'
       responses:
         200:
           description: List of household users
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
+            $ref: '#/definitions/UsersPaging'
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
 
 
 definitions:
@@ -147,4 +174,11 @@ definitions:
         description: Household id
         type: string
 
-
+  UsersPaging:
+    properties:
+      array:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      maxItems:
+        type: integer

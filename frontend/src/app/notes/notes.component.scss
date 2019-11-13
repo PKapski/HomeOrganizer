@@ -54,12 +54,14 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+  background: darken($background-brown,10%);
+
 }
 
 .note {
   min-height: 200px;
   min-width: 250px;
-  max-width: 450px;
+  max-width: 350px;
   background-color: $blue;
   margin: 5px;
   //overflow: hidden;
@@ -130,9 +132,11 @@
 h1 {
   margin-left: 20px;
   color: $dark;
+  text-align: center;
 }
 
 .mat-paginator{
-  background: $background-brown;
+  background: darken($background-brown,7%);
   color: $dark;
+  font-size: 16px;
 }

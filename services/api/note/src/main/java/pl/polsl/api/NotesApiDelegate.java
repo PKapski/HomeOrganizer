@@ -1,6 +1,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.Note;
+import pl.polsl.model.NotesPaging;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -36,25 +37,6 @@ public interface NotesApiDelegate {
     }
 
     /**
-     * @see NotesApi#createNote
-     */
-    default ResponseEntity<String> createNote( Note  note) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-            if (getAcceptHeader().get().contains("application/json")) {
-                try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
-                } catch (IOException e) {
-                    log.error("Couldn't serialize response for content type application/json", e);
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    /**
      * @see NotesApi#deleteNote
      */
     default ResponseEntity<Void> deleteNote( String  id) {
@@ -68,13 +50,35 @@ public interface NotesApiDelegate {
     /**
      * @see NotesApi#getNotes
      */
-    default ResponseEntity<List<Note>> getNotes( String  username,
+    default ResponseEntity<NotesPaging> getNotes( String  username,
          String  householdId,
-         String  sortingDirection) {
+         String  sortingDirection,
+         String  sortedField,
+         Integer  firstResult,
+         Integer  maxResults) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"id\" : \"id\",  \"title\" : \"title\",  \"message\" : \"message\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"maxItems\" : 0,  \"array\" : [ {    \"householdId\" : \"testHousehold\",    \"creator\" : \"creator\",    \"recipent\" : \"recipent\",    \"visibleToEveryone\" : true,    \"id\" : \"id\",    \"title\" : \"title\",    \"message\" : \"message\",    \"expirationDate\" : \"2000-01-23\"  }, {    \"householdId\" : \"testHousehold\",    \"creator\" : \"creator\",    \"recipent\" : \"recipent\",    \"visibleToEveryone\" : true,    \"id\" : \"id\",    \"title\" : \"title\",    \"message\" : \"message\",    \"expirationDate\" : \"2000-01-23\"  } ]}", NotesPaging.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default NotesApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see NotesApi#saveNote
+     */
+    default ResponseEntity<String> saveNote( Note  note) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

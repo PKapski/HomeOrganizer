@@ -13,7 +13,7 @@ export class HouseholdsComponent implements OnInit {
 
   }
 
-  checkIfInHousehold(){
+  checkIfInHousehold(): boolean{
     return localStorage.getItem('current_household')!=null;
   }
 }

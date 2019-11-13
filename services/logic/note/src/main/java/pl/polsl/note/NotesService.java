@@ -6,9 +6,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import pl.polsl.exceptions.QueryService;
 import pl.polsl.model.Note;
+import pl.polsl.model.NotesPaging;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,10 +17,12 @@ public class NotesService {
 
     private final NotesMongoRepository repository;
     private final MongoTemplate mongoTemplate;
+    private final QueryService queryService;
 
-    public NotesService(NotesMongoRepository repository, MongoTemplate mongoTemplate) {
+    public NotesService(NotesMongoRepository repository, MongoTemplate mongoTemplate, QueryService queryService) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
+        this.queryService = queryService;
     }
 
     String saveNote(Note note) {
@@ -35,7 +38,8 @@ public class NotesService {
         return false;
     }
 
-    List<Note> getFilteredNotes(String username, String householdId, String sortingDirection) {
+    NotesPaging getFilteredNotesPaging(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+        NotesPaging paging = new NotesPaging();
         Query query = new Query();
         if (StringUtils.isNotEmpty(username)) {
             Criteria criteria = new Criteria();
@@ -45,13 +49,13 @@ public class NotesService {
         if (StringUtils.isNotEmpty(householdId)) {
             query.addCriteria(Criteria.where("householdId").is(householdId));
         }
-        if (StringUtils.isNotEmpty(sortingDirection)) {
-            if (sortingDirection.equals("ASC")) {
-                query.with(new Sort(Sort.Direction.ASC, "_id"));
-            } else {
-                query.with(new Sort(Sort.Direction.DESC, "_id"));
-            }
-        }
-        return mongoTemplate.find(query, Note.class);
+
+        queryService.addSorting(query,sortingDirection,sortedField);
+        paging.setMaxItems(queryService.getMaxItems(query,Note.class));
+        queryService.addPagination(query,firstResult,maxResults);
+        paging.setArray(mongoTemplate.find(query, Note.class));
+        return paging;
     }
+
+
 }

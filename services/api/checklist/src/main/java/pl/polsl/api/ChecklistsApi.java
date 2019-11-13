@@ -6,6 +6,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.Checklist;
+import pl.polsl.model.ChecklistsPaging;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,20 +40,20 @@ public interface ChecklistsApi {
     }
 
 
-    @ApiOperation(value = "Get all checklists", nickname = "getChecklists", notes = "Return list of checklists", response = Checklist.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Get all checklists", nickname = "getChecklists", notes = "Return list of checklists", response = ChecklistsPaging.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "List of checklists", response = Checklist.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "List of checklists with paging", response = ChecklistsPaging.class),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/checklists",
         method = RequestMethod.GET)
-    default ResponseEntity<List<Checklist>> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection) {
-        return getDelegate().getChecklists(username, householdId, sortingDirection);
+    default ResponseEntity<ChecklistsPaging> getChecklists(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection,@ApiParam(value = "") @Valid @RequestParam(value = "sortedField", required = false) String sortedField,@ApiParam(value = "") @Valid @RequestParam(value = "firstResult", required = false) Integer firstResult,@ApiParam(value = "") @Valid @RequestParam(value = "maxResults", required = false) Integer maxResults) {
+        return getDelegate().getChecklists(username, householdId, sortingDirection, sortedField, firstResult, maxResults);
     }
 
 
-    @ApiOperation(value = "Creates or modifies checklist", nickname = "saveChecklist", notes = "", response = String.class, tags={  })
+    @ApiOperation(value = "Creates or modifies checklist if it already exists", nickname = "saveChecklist", notes = "", response = String.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "Counter succesfully created.", response = String.class),
+        @ApiResponse(code = 201, message = "Checklist succesfully created.", response = String.class),
         @ApiResponse(code = 400, message = "Checklist couldn't have been saved."),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/checklists",

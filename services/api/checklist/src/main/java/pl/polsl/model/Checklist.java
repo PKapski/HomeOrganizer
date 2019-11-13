@@ -56,7 +56,7 @@ public class Checklist   {
    * Checklist Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Checklist Id providing uniqueness in database", hidden = true)
+  @ApiModelProperty(readOnly = true, value = "Checklist Id providing uniqueness in database")
 
 
   public String getId() {

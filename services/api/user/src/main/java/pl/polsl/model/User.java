@@ -44,7 +44,7 @@ public class User implements UserDetails {
   private String phoneNumber = null;
 
   @JsonProperty("householdId")
-  private String householdId = "testHousehold";
+  private String householdId = null;
 
   public User id(String id) {
     this.id = id;

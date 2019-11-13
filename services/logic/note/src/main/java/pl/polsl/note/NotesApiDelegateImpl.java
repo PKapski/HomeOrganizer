@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.polsl.api.NotesApiDelegate;
 import pl.polsl.model.Note;
-
-import java.util.List;
-import java.util.Optional;
+import pl.polsl.model.NotesPaging;
 
 @Service
 public class NotesApiDelegateImpl implements NotesApiDelegate {
@@ -21,7 +19,7 @@ public class NotesApiDelegateImpl implements NotesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<String> createNote(Note note) {
+    public ResponseEntity<String> saveNote(Note note) {
         String noteId = service.saveNote(note);
         return new ResponseEntity<>(noteId, HttpStatus.OK);
     }
@@ -36,8 +34,8 @@ public class NotesApiDelegateImpl implements NotesApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<Note>> getNotes(String username, String householdId, String sortingDirection) {
-        List<Note> notes = service.getFilteredNotes(username,householdId,sortingDirection);
-        return new ResponseEntity<>(notes, HttpStatus.OK);
+    public ResponseEntity<NotesPaging> getNotes(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+        NotesPaging notePaging = service.getFilteredNotesPaging(username,householdId,sortingDirection,sortedField, firstResult, maxResults);
+        return new ResponseEntity<>(notePaging, HttpStatus.OK);
     }
 }

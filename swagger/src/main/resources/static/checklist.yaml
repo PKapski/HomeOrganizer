@@ -36,18 +36,21 @@ paths:
           enum:
             - ASC
             - DESC
+        - name: sortedField
+          in: query
+          type: string
+        - $ref: 'commons.yaml#/parameters/firstResult'
+        - $ref: 'commons.yaml#/parameters/maxResult'
       responses:
         200:
-          description: List of checklists
+          description: List of checklists with paging
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Checklist'
+            $ref: '#/definitions/ChecklistsPaging'
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
     post:
-      summary: Creates or modifies checklist
+      summary: Creates or modifies checklist if it already exists
       operationId: saveChecklist
       parameters:
         - name: checklist
@@ -57,7 +60,7 @@ paths:
             $ref: '#/definitions/Checklist'
       responses:
         201:
-          description: Counter succesfully created.
+          description: Checklist succesfully created.
           schema:
             type: string
         400:
@@ -83,27 +86,6 @@ paths:
         500:
           $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 
-#    patch:
-#      summary: Modifies a checklist
-#      operationId: modifyChecklist
-#      parameters:
-#        - name: id
-#          in: path
-#          description: Id of checklist to delete
-#          type: string
-#          required: true
-#        - name: checklist
-#          in: body
-#          description: Modified checklist
-#          schema:
-#            $ref: '#/definitions/Checklist'
-#      responses:
-#        204:
-#          description: Checklist succesfully modified.
-#        400:
-#          description: Checklist couldn't have been modified.
-#        500:
-#          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
 definitions:
   Checklist:
     required:
@@ -158,3 +140,12 @@ definitions:
         description: Describes if item is done or not
         type: boolean
         default: false
+
+  ChecklistsPaging:
+    properties:
+      array:
+        type: array
+        items:
+          $ref: '#/definitions/Checklist'
+      maxItems:
+        type: integer

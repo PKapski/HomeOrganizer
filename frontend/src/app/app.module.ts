@@ -38,6 +38,7 @@ import { NewHouseholdComponent } from './households/new-household/new-household.
 import { MyHouseholdComponent } from './households/my-household/my-household.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
+import { ConfirmationDialogComponent } from './households/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {MatTableModule} from "@angular/material/table";
     FindHouseholdComponent,
     NewHouseholdComponent,
     MyHouseholdComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ import {MatTableModule} from "@angular/material/table";
   entryComponents:[
     SnackbarComponent,
     AddNoteDialogComponent,
-    AddChecklistDialogComponent
+    AddChecklistDialogComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     {

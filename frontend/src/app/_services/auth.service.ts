@@ -27,7 +27,9 @@ export class AuthService {
     localStorage.setItem('auth_token',data.headers.get("Authorization"));
     localStorage.setItem('token_exp_time', JSON.stringify(expiresAt.valueOf()));
     localStorage.setItem('current_user',data.headers.get("Username"));
-    localStorage.setItem('current_household',data.headers.get("Household"));
+    if (data.headers.get("Household")!=null) {
+      localStorage.setItem('current_household', data.headers.get("Household"));
+    }
   }
 
   logout(){

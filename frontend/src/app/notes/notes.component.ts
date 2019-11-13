@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddNoteDialogComponent} from "./add-note-dialog/add-note-dialog.component";
 import {DatePipe} from '@angular/common';
 import {Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-notes',
@@ -26,6 +27,11 @@ export class NotesComponent implements OnInit {
   recentlyDeletedNote: Note;
 
   @ViewChild('text-block', {static: false}) textBox: ElementRef;
+  pageSize: number = 10;
+  maxItems: number;
+  pageEvent: PageEvent;
+  firstResult: number = 0;
+  pageSizeOptions = [5, 10,15,20];
 
   constructor(public notesService: NotesService,
               private snackBar: MatSnackBar,
@@ -35,21 +41,27 @@ export class NotesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadNotes();
+    this.getPaginatedNotes();
   }
 
-  loadNotes() {
-    return this.notesService.getNotes(localStorage.getItem('current_user'), localStorage.getItem('current_household'), 'ASC').subscribe(
+
+  getPaginatedNotes(event?: PageEvent) {
+    if (event != null) {
+      this.firstResult = event.pageIndex * event.pageSize;
+      this.pageSize = event.pageSize;
+    }
+    this.notesService.getNotes(localStorage.getItem('current_user'), localStorage.getItem('current_household'), this.firstResult, this.pageSize,"DESC").subscribe(
       data => {
-        this.notesArray = data;
+        this.notesArray = data.array;
+        this.maxItems = data.maxItems;
       },
       error => {
         if (error.toString() == "403") {
           this.router.navigate(['/login']);
         }
-      })
+      });
+    return event;
   }
-
 
   sort_by(field, ascending, primer) {
     var key = function (x) {
@@ -63,7 +75,6 @@ export class NotesComponent implements OnInit {
   };
 
 
-
   changeEditMode(note: Note) {
     if (note.creator != localStorage.getItem('current_user')) {
       return;
@@ -71,13 +82,13 @@ export class NotesComponent implements OnInit {
     let messageHTMLElement = this.changeElementEditMode("msg-" + note.id);
     let titleHTMLElement = this.changeElementEditMode("title-" + note.id);
     let editIcon = document.getElementById("edit-" + note.id);
-    let applyIcon = document.getElementById("apply-" + note.id)
-    this.changeMenuIcon(messageHTMLElement.isContentEditable,editIcon,applyIcon);
+    let applyIcon = document.getElementById("apply-" + note.id);
+    this.changeMenuIcon(messageHTMLElement.isContentEditable, editIcon, applyIcon);
     if (!messageHTMLElement.isContentEditable) {
       note.title = titleHTMLElement.innerText;
-      titleHTMLElement.innerText=note.title;
+      titleHTMLElement.innerText = note.title;
       note.message = messageHTMLElement.innerText;
-      messageHTMLElement.innerText=note.message;
+      messageHTMLElement.innerText = note.message;
       this.notesService.postNote(note).subscribe();
     }
   }
@@ -89,13 +100,13 @@ export class NotesComponent implements OnInit {
     return element;
   }
 
-  changeMenuIcon(editMode:boolean, nonEditIcon: HTMLElement, editIcon: HTMLElement) {
-    if(editMode){
-      nonEditIcon.style.display="none";
-      editIcon.style.display="initial";
-    }else{
-      nonEditIcon.style.display="initial";
-      editIcon.style.display="none";
+  changeMenuIcon(editMode: boolean, nonEditIcon: HTMLElement, editIcon: HTMLElement) {
+    if (editMode) {
+      nonEditIcon.style.display = "none";
+      editIcon.style.display = "initial";
+    } else {
+      nonEditIcon.style.display = "initial";
+      editIcon.style.display = "none";
     }
   }
 
@@ -105,7 +116,11 @@ export class NotesComponent implements OnInit {
     }
     this.openSnackBar(note.title);
     this.notesArray = this.notesArray.filter(n => n !== note);
-    this.notesService.deleteNote(note.id).subscribe();
+    this.notesService.deleteNote(note.id).subscribe(
+      data=>{
+        this.getPaginatedNotes();
+      }
+    );
     this.recentlyDeletedNote = note;
   }
 
@@ -146,10 +161,11 @@ export class NotesComponent implements OnInit {
     let note = data["data"] as Note;
     note.creator = localStorage.getItem("current_user");
     note.expirationDate = this.datePipe.transform(note.expirationDate, 'yyyy-MM-dd');
-    note.householdId=localStorage.getItem("current_household");
+    note.householdId = localStorage.getItem("current_household");
     this.notesService.postNote(note).subscribe(id => {
       note.id = id;
       this.notesArray.push(note);
+      this.getPaginatedNotes();
     });
 
   }
@@ -175,13 +191,20 @@ export class NotesComponent implements OnInit {
       return 'Delete the note'
     } else {
       return 'Only creator can delete a note!';
-    }  }
+    }
+  }
 
   checkIfDisabled(note: Note): boolean {
     let currDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    return currDate> note.expirationDate;
+    return currDate > note.expirationDate;
   }
 
 
-
+  onKeyDownMessage(event: KeyboardEvent, message: HTMLDivElement) {
+    if (event.key=="Backspace"){
+      return true;
+    }else{
+      return message.innerText.length<25;
+    }
+  }
 }

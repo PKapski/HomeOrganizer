@@ -13,7 +13,15 @@ consumes:
   - application/json
 
 paths: {}
-
+parameters:
+  firstResult:
+    type: integer
+    name: firstResult
+    in: query
+  maxResult:
+    type: integer
+    name: maxResults
+    in: query
 responses:
   Standard500ErrorResponse:
     description: An unexpected error occured.
@@ -26,3 +34,9 @@ responses:
           type: string
         message:
           type: string
+
+definitions:
+  Paging:
+    properties:
+      maxItems:
+        type: integer

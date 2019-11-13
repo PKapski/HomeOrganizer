@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.polsl.api.UsersApiDelegate;
 import pl.polsl.model.User;
+import pl.polsl.model.UsersPaging;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> createUser(User user) {
+    public ResponseEntity<Void> saveUser(User user) {
         service.validateAndSaveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -33,9 +34,9 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<User>> getHouseholdUsers(String householdId) {
-        List<User> listOfUsers = service.getHouseholdUsers(householdId);
-        return new ResponseEntity<>(listOfUsers, HttpStatus.OK);
+    public ResponseEntity<UsersPaging> getHouseholdUsers(String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+        UsersPaging usersPaging = service.getHouseholdUsers(householdId,sortingDirection,sortedField, firstResult, maxResults);
+        return new ResponseEntity<>(usersPaging, HttpStatus.OK);
     }
 
     @Override
@@ -51,6 +52,14 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
     @Override
     public ResponseEntity<Void> modifyUser(String username, User user) {
         if (service.modifyUser(username, user)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<Void> setUserHousehold(String username, String householdId) {
+        if (service.setUserHousehold(username,householdId)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

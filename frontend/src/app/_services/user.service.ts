@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {User} from "../user/user";
 import {catchError, retry} from "rxjs/operators";
+import {ModelPaging} from "../_commons/model/model-paging";
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,43 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  httpHeader = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
   postUser(user: User) {
-    return this.http.post(this.baseurl, user, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.post(this.baseurl, user, {headers: this.httpHeader}).pipe(retry(1), catchError(this.errorHandler));
   }
 
   getUser(username: string): Observable<User> {
-    return this.http.get<User>(this.baseurl + username, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.get<User>(this.baseurl + username, {headers: this.httpHeader}).pipe(retry(1), catchError(this.errorHandler));
   }
 
   modifyUser(username: string, user: User) {
-    return this.http.patch(this.baseurl + username, user, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.patch(this.baseurl + username, user, {headers: this.httpHeader}).pipe(retry(1), catchError(this.errorHandler));
   }
 
-  getHouseholdUsers(householdId: string): Observable<User[]> {
-    return this.http.get<User[]>(this.baseurl + 'household/' + householdId, this.httpOptions).pipe(retry(1), catchError(this.errorHandler));
+  getHouseholdUsers(householdId: string, firstResult?: number, maxResults?: number, sortingDirection?: string, sortedField?: string): Observable<ModelPaging> {
+    let params = new HttpParams();
+    if (firstResult != null) params = params.append('firstResult', String(firstResult));
+    if (maxResults != null) params = params.append('maxResults', String(maxResults));
+    if (sortingDirection != null) params = params.append('sortingDirection', sortingDirection);
+    if (sortedField != null) params = params.append('sortedField', sortedField);
+    return this.http.get<ModelPaging>(this.baseurl + 'household/' + householdId, {
+      headers: this.httpHeader,
+      params: params
+    }).pipe(retry(1), catchError(this.errorHandler));
+  }
+
+  setUserHousehold(username: string, householdId?: string) {
+    let params = new HttpParams();
+    if (householdId != null) {
+      params.set("householdId", householdId);
+    }
+    return this.http.patch(this.baseurl + username + '/sethousehold', {}, {
+      headers: this.httpHeader,
+      params: params
+    }).pipe(retry(1), catchError(this.errorHandler));
   }
 
 

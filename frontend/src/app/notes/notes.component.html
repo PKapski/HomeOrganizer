@@ -1,6 +1,9 @@
 <h1 *ngIf="notesArray.length==0">Don't have any notes yet. Add some!</h1>
 <h1 *ngIf="notesArray.length>0">'{{getHousehold()}}' household notes:</h1>
 <div class="flex-container">
+  <div class="add-new" *ngIf="firstResult==0">
+    <span (click)="openPopup()"><fa-icon [icon]="addIcon"></fa-icon></span>
+  </div>
   <div class="note" *ngFor="let note of notesArray" [attr.disabled]="checkIfDisabled(note)">
     <div id="title-{{note.id}}" class="title-div">{{note.title}}</div>
     <div class="from-to-div">
@@ -9,7 +12,7 @@
       <a [attr.disabled]="checkIfDisabled(note)">Expires: {{note.expirationDate ? note.expirationDate : '-'}}</a>
     </div>
 
-    <div id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block">{{note.message}}</div>
+    <div #message id="msg-{{note.id}}" (paste)="onPaste($event,note)" class="text-block" (keydown)="onKeyDownMessage($event, message)" >{{note.message}}</div>
 
     <br>
     <div class="note-footer">
@@ -29,8 +32,5 @@
     </div>
   </div>
 
-  <div class="add-new">
-    <span (click)="openPopup()"><fa-icon [icon]="addIcon"></fa-icon></span>
-  </div>
-
 </div>
+<mat-paginator *ngIf="maxItems>10" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="maxItems" (page)="pageEvent = getPaginatedNotes($event)" showFirstLastButtons></mat-paginator>

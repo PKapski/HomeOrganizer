@@ -26,7 +26,7 @@ export class AddChecklistDialogComponent implements OnInit {
 
     this.usersService.getHouseholdUsers(localStorage.getItem("current_household")).subscribe(
       data => {
-        this.usersList=data.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
+        this.usersList=data.array.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
       });
   }
 

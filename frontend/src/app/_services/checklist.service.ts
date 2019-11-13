@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
 import {Checklist} from "../checklists/checklist";
+import {ModelPaging} from "../_commons/model/model-paging";
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,17 @@ export class ChecklistService {
     responseType: 'text' as 'text'
   };
 
-  getChecklists(username: string, householdId: string, sortingDirection: string): Observable<Checklist> {
-    const params = new HttpParams()
+  getChecklists(username: string, householdId: string, firstResult?: number, maxResults?: number, sortingDirection?: string, sortedField?: string): Observable<ModelPaging> {
+    let params = new HttpParams()
       .set('username', username)
-      .set('householdId', householdId)
-      .set('sortingDirection', sortingDirection);
+      .set('householdId', householdId);
 
-    return this.http.get<Checklist>(this.baseurl, {headers: this.httpHeader, params: params}).pipe(retry(1), catchError(this.errorHandler));
+    if(firstResult!=null)params=params.append('firstResult',String(firstResult));
+    if(maxResults!=null)params=params.append('maxResults',String(maxResults));
+    if (sortingDirection != null) params = params.append('sortingDirection', sortingDirection);
+    if (sortedField != null) params = params.append('sortedField', sortedField);
+
+    return this.http.get<ModelPaging>(this.baseurl, {headers: this.httpHeader, params: params}).pipe(retry(1), catchError(this.errorHandler));
   }
 
   deleteChecklist(id: string) {

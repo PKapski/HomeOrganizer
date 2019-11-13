@@ -1,6 +1,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.User;
+import pl.polsl.model.UsersPaging;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -36,17 +37,6 @@ public interface UsersApiDelegate {
     }
 
     /**
-     * @see UsersApi#createUser
-     */
-    default ResponseEntity<Void> createUser( User  user) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default UsersApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    /**
      * @see UsersApi#deleteUser
      */
     default ResponseEntity<Void> deleteUser( String  username) {
@@ -60,11 +50,15 @@ public interface UsersApiDelegate {
     /**
      * @see UsersApi#getHouseholdUsers
      */
-    default ResponseEntity<List<User>> getHouseholdUsers( String  householdId) {
+    default ResponseEntity<UsersPaging> getHouseholdUsers( String  householdId,
+         String  sortingDirection,
+         String  sortedField,
+         Integer  firstResult,
+         Integer  maxResults) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"householdId\",  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"password\" : \"password\",  \"phoneNumber\" : \"phoneNumber\",  \"id\" : \"id\",  \"email\" : \"email\",  \"username\" : \"username\"}, {  \"householdId\" : \"householdId\",  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"password\" : \"password\",  \"phoneNumber\" : \"phoneNumber\",  \"id\" : \"id\",  \"email\" : \"email\",  \"username\" : \"username\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"maxItems\" : 0,  \"array\" : [ {    \"householdId\" : \"householdId\",    \"firstName\" : \"firstName\",    \"lastName\" : \"lastName\",    \"password\" : \"password\",    \"phoneNumber\" : \"phoneNumber\",    \"id\" : \"id\",    \"email\" : \"email\",    \"username\" : \"username\"  }, {    \"householdId\" : \"householdId\",    \"firstName\" : \"firstName\",    \"lastName\" : \"lastName\",    \"password\" : \"password\",    \"phoneNumber\" : \"phoneNumber\",    \"id\" : \"id\",    \"email\" : \"email\",    \"username\" : \"username\"  } ]}", UsersPaging.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,6 +94,29 @@ public interface UsersApiDelegate {
      */
     default ResponseEntity<Void> modifyUser( String  username,
          User  user) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default UsersApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see UsersApi#saveUser
+     */
+    default ResponseEntity<Void> saveUser( User  user) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default UsersApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see UsersApi#setUserHousehold
+     */
+    default ResponseEntity<Void> setUserHousehold( String  username,
+         String  householdId) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default UsersApi interface so no example is generated");

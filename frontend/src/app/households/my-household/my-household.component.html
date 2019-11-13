@@ -3,6 +3,7 @@
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{myHousehold?.name}}</mat-card-title>
     <mat-card-subtitle>{{myHousehold?.id}}</mat-card-subtitle>
+    <fa-icon [icon]="exitIcon" matTooltip="Leave household" (click)="openConfirmationDialog()"></fa-icon>
   </mat-card-header>
   <mat-card-content>
     <p class="description">
@@ -30,10 +31,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSize]="5"></mat-paginator>
+    <mat-paginator [pageSize]="pageSize" [length]="maxItems" (page)="pageEvent = getHouseholdUsers($event) "></mat-paginator>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
 </mat-card>

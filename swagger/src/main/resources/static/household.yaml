@@ -112,3 +112,12 @@ definitions:
         description: Household image
         type: string
         format: binary
+
+  HouseholdsPaging:
+    properties:
+      array:
+        type: array
+        items:
+          $ref: '#/definitions/Household'
+      maxItems:
+        type: integer

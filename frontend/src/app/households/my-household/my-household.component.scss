@@ -1,6 +1,6 @@
 @import "src/app/_commons/commons";
 
-.household-card{
+.household-card {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -9,17 +9,19 @@
   overflow: hidden;
 
 }
-.header-image{
+
+.header-image {
   background-image: url("/assets/img/house3.png");
   background-size: cover;
   background-position: center;
 }
 
-.content{
+.content {
   display: table-cell;
   vertical-align: middle;
 }
-.centered-households{
+
+.centered-households {
   display: table;
   position: absolute;
   top: 0;
@@ -27,28 +29,62 @@
   height: 100%;
   width: 100%;
 }
-.mat-card-content p{
+
+.mat-card-content p {
   padding: 2px;
   color: $dark;
 }
-.description{
+
+.description {
   border-bottom: 1px solid $dark;
 }
-.mat-paginator{
+
+.mat-paginator {
   background: $blue;
   color: $dark;
 }
-table{
+
+table {
   width: 100%;
   background-color: $blue;
-  border: 2px solid $dark;
-  border-radius: 2px;
+  border: 1px solid $dark;
 }
 
-th{
+th {
   font-size: 16px;
+  background-color: $brown;
+  border-bottom: 1px solid $dark;
 }
-.household-members-text{
+
+.household-members-text {
   font-size: 18px;
   font-weight: bold;
+}
+
+mat-header-row {
+}
+
+.mat-cell {
+  font-size: 14px;
+  min-height: 24px;
+  text-align: center;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+.mat-card-title {
+  color: $dark;
+}
+
+fa-icon.ng-fa-icon {
+  font-size: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+::ng-deep .mat-tooltip{
+  background-color: $dark;
 }

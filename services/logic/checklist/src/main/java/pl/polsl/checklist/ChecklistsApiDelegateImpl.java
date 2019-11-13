@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.polsl.api.ChecklistsApiDelegate;
 import pl.polsl.model.Checklist;
+import pl.polsl.model.ChecklistsPaging;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +43,9 @@ public class ChecklistsApiDelegateImpl implements ChecklistsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<Checklist>> getChecklists(String username, String householdId, String sortingDirection) {
-        List<Checklist> checklists = service.getFilteredNotes(username,householdId,sortingDirection);
-        return new ResponseEntity<>(checklists, HttpStatus.OK);
+    public ResponseEntity<ChecklistsPaging> getChecklists(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+        ChecklistsPaging checklistsPaging = service.getFilteredNotesPaging(username,householdId,sortingDirection,sortedField, firstResult, maxResults);
+        return new ResponseEntity<>(checklistsPaging, HttpStatus.OK);
     }
 
 }

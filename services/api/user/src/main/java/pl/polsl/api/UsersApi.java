@@ -6,6 +6,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.User;
+import pl.polsl.model.UsersPaging;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,18 +28,6 @@ public interface UsersApi {
 
     UsersApiDelegate getDelegate();
 
-    @ApiOperation(value = "Creates a new user", nickname = "createUser", notes = "New user", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "User succesfully created."),
-        @ApiResponse(code = 400, message = "User couldn't have been created."),
-        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/users",
-        method = RequestMethod.POST)
-    default ResponseEntity<Void> createUser(@ApiParam(value = "User to create"  )  @Valid @RequestBody User user) {
-        return getDelegate().createUser(user);
-    }
-
-
     @ApiOperation(value = "Deletes a user", nickname = "deleteUser", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "User succesfully deleted."),
@@ -51,14 +40,14 @@ public interface UsersApi {
     }
 
 
-    @ApiOperation(value = "Gets users belonging to given household", nickname = "getHouseholdUsers", notes = "", response = User.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Gets users belonging to given household", nickname = "getHouseholdUsers", notes = "", response = UsersPaging.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "List of household users", response = User.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "List of household users", response = UsersPaging.class),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/users/household/{householdId}",
         method = RequestMethod.GET)
-    default ResponseEntity<List<User>> getHouseholdUsers(@ApiParam(value = "",required=true) @PathVariable("householdId") String householdId) {
-        return getDelegate().getHouseholdUsers(householdId);
+    default ResponseEntity<UsersPaging> getHouseholdUsers(@ApiParam(value = "",required=true) @PathVariable("householdId") String householdId,@ApiParam(value = "") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection,@ApiParam(value = "") @Valid @RequestParam(value = "sortedField", required = false) String sortedField,@ApiParam(value = "") @Valid @RequestParam(value = "firstResult", required = false) Integer firstResult,@ApiParam(value = "") @Valid @RequestParam(value = "maxResults", required = false) Integer maxResults) {
+        return getDelegate().getHouseholdUsers(householdId, sortingDirection, sortedField, firstResult, maxResults);
     }
 
 
@@ -83,6 +72,30 @@ public interface UsersApi {
         method = RequestMethod.PATCH)
     default ResponseEntity<Void> modifyUser(@ApiParam(value = "",required=true) @PathVariable("username") String username,@ApiParam(value = "Modified user"  )  @Valid @RequestBody User user) {
         return getDelegate().modifyUser(username, user);
+    }
+
+
+    @ApiOperation(value = "Creates a new user or patches existing", nickname = "saveUser", notes = "New user", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 204, message = "User succesfully created."),
+        @ApiResponse(code = 400, message = "User couldn't have been created."),
+        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
+    @RequestMapping(value = "/users",
+        method = RequestMethod.POST)
+    default ResponseEntity<Void> saveUser(@ApiParam(value = "User to create"  )  @Valid @RequestBody User user) {
+        return getDelegate().saveUser(user);
+    }
+
+
+    @ApiOperation(value = "Sets user household", nickname = "setUserHousehold", notes = "", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 204, message = "Household succesfully changed."),
+        @ApiResponse(code = 400, message = "Household couldn't have been changed."),
+        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
+    @RequestMapping(value = "/users/{username}/sethousehold",
+        method = RequestMethod.PATCH)
+    default ResponseEntity<Void> setUserHousehold(@ApiParam(value = "",required=true) @PathVariable("username") String username,@ApiParam(value = "Users' new householdId") @Valid @RequestParam(value = "householdId", required = false) String householdId) {
+        return getDelegate().setUserHousehold(username, householdId);
     }
 
 }

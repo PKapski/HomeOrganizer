@@ -1,6 +1,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.Checklist;
+import pl.polsl.model.ChecklistsPaging;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -49,13 +50,16 @@ public interface ChecklistsApiDelegate {
     /**
      * @see ChecklistsApi#getChecklists
      */
-    default ResponseEntity<List<Checklist>> getChecklists( String  username,
+    default ResponseEntity<ChecklistsPaging> getChecklists( String  username,
          String  householdId,
-         String  sortingDirection) {
+         String  sortingDirection,
+         String  sortedField,
+         Integer  firstResult,
+         Integer  maxResults) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"itemList\" : [ {    \"message\" : \"message\",    \"isChecked\" : false  }, {    \"message\" : \"message\",    \"isChecked\" : false  } ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"}, {  \"householdId\" : \"testHousehold\",  \"creator\" : \"creator\",  \"recipent\" : \"recipent\",  \"visibleToEveryone\" : true,  \"itemList\" : [ {    \"message\" : \"message\",    \"isChecked\" : false  }, {    \"message\" : \"message\",    \"isChecked\" : false  } ],  \"id\" : \"id\",  \"title\" : \"title\",  \"creationDate\" : \"2000-01-23\",  \"expirationDate\" : \"2000-01-23\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"maxItems\" : 0,  \"array\" : [ {    \"householdId\" : \"testHousehold\",    \"creator\" : \"creator\",    \"recipent\" : \"recipent\",    \"visibleToEveryone\" : true,    \"itemList\" : [ {      \"message\" : \"message\",      \"isChecked\" : false    }, {      \"message\" : \"message\",      \"isChecked\" : false    } ],    \"id\" : \"id\",    \"title\" : \"title\",    \"creationDate\" : \"2000-01-23\",    \"expirationDate\" : \"2000-01-23\"  }, {    \"householdId\" : \"testHousehold\",    \"creator\" : \"creator\",    \"recipent\" : \"recipent\",    \"visibleToEveryone\" : true,    \"itemList\" : [ {      \"message\" : \"message\",      \"isChecked\" : false    }, {      \"message\" : \"message\",      \"isChecked\" : false    } ],    \"id\" : \"id\",    \"title\" : \"title\",    \"creationDate\" : \"2000-01-23\",    \"expirationDate\" : \"2000-01-23\"  } ]}", ChecklistsPaging.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

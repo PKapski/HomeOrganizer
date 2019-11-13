@@ -6,9 +6,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import pl.polsl.exceptions.QueryService;
 import pl.polsl.model.Checklist;
+import pl.polsl.model.ChecklistsPaging;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,10 +17,12 @@ public class ChecklistsService {
 
     private final ChecklistsMongoRepository repository;
     private final MongoTemplate mongoTemplate;
+    private final QueryService queryService;
 
-    public ChecklistsService(ChecklistsMongoRepository repository, MongoTemplate mongoTemplate) {
+    public ChecklistsService(ChecklistsMongoRepository repository, MongoTemplate mongoTemplate, QueryService queryService) {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
+        this.queryService = queryService;
     }
 
     String saveChecklist(Checklist checklist) {
@@ -35,7 +38,8 @@ public class ChecklistsService {
         return false;
     }
 
-    List<Checklist> getFilteredNotes(String username, String householdId, String sortingDirection) {
+    ChecklistsPaging getFilteredNotesPaging(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+        ChecklistsPaging paging = new ChecklistsPaging();
         Query query = new Query();
         if (StringUtils.isNotEmpty(username)) {
             Criteria criteria = new Criteria();
@@ -45,14 +49,12 @@ public class ChecklistsService {
         if (StringUtils.isNotEmpty(householdId)) {
             query.addCriteria(Criteria.where("householdId").is(householdId));
         }
-        if (StringUtils.isNotEmpty(sortingDirection)) {
-            if (sortingDirection.equals("ASC")) {
-                query.with(new Sort(Sort.Direction.ASC, "_id"));
-            } else {
-                query.with(new Sort(Sort.Direction.DESC, "_id"));
-            }
-        }
-        return mongoTemplate.find(query, Checklist.class);
+
+        queryService.addSorting(query,sortingDirection,sortedField);
+        paging.setMaxItems(queryService.getMaxItems(query,Checklist.class));
+        queryService.addPagination(query,firstResult,maxResults);
+        paging.setArray(mongoTemplate.find(query, Checklist.class));
+        return paging;
     }
 
 }

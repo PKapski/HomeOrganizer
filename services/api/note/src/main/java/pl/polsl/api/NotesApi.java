@@ -6,6 +6,7 @@
 package pl.polsl.api;
 
 import pl.polsl.model.Note;
+import pl.polsl.model.NotesPaging;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,18 +28,6 @@ public interface NotesApi {
 
     NotesApiDelegate getDelegate();
 
-    @ApiOperation(value = "Creates a new note", nickname = "createNote", notes = "", response = String.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "Counter succesfully created.", response = String.class),
-        @ApiResponse(code = 400, message = "Counter couldn't have been created."),
-        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/notes",
-        method = RequestMethod.POST)
-    default ResponseEntity<String> createNote(@ApiParam(value = "Note to create"  )  @Valid @RequestBody Note note) {
-        return getDelegate().createNote(note);
-    }
-
-
     @ApiOperation(value = "Deletes a note", nickname = "deleteNote", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "Note succesfully deleted."),
@@ -51,14 +40,26 @@ public interface NotesApi {
     }
 
 
-    @ApiOperation(value = "Gets notes", nickname = "getNotes", notes = "Return list of notes", response = Note.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Gets notes", nickname = "getNotes", notes = "Return list of notes", response = NotesPaging.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "List of notes", response = Note.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "List of notes", response = NotesPaging.class),
         @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
     @RequestMapping(value = "/notes",
         method = RequestMethod.GET)
-    default ResponseEntity<List<Note>> getNotes(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection) {
-        return getDelegate().getNotes(username, householdId, sortingDirection);
+    default ResponseEntity<NotesPaging> getNotes(@ApiParam(value = "") @Valid @RequestParam(value = "username", required = false) String username,@ApiParam(value = "") @Valid @RequestParam(value = "householdId", required = false) String householdId,@ApiParam(value = "", allowableValues = "ASC, DESC") @Valid @RequestParam(value = "sortingDirection", required = false) String sortingDirection,@ApiParam(value = "") @Valid @RequestParam(value = "sortedField", required = false) String sortedField,@ApiParam(value = "") @Valid @RequestParam(value = "firstResult", required = false) Integer firstResult,@ApiParam(value = "") @Valid @RequestParam(value = "maxResults", required = false) Integer maxResults) {
+        return getDelegate().getNotes(username, householdId, sortingDirection, sortedField, firstResult, maxResults);
+    }
+
+
+    @ApiOperation(value = "Creates a note or patches if it already exists", nickname = "saveNote", notes = "", response = String.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "Note succesfully saved.", response = String.class),
+        @ApiResponse(code = 400, message = "Note couldn't have been saved."),
+        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
+    @RequestMapping(value = "/notes",
+        method = RequestMethod.POST)
+    default ResponseEntity<String> saveNote(@ApiParam(value = "Note to save"  )  @Valid @RequestBody Note note) {
+        return getDelegate().saveNote(note);
     }
 
 }

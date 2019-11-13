@@ -10,6 +10,7 @@ import {AddChecklistDialogComponent} from "./add-checklist-dialog/add-checklist-
 import {MatDialog} from "@angular/material/dialog";
 import {SnackbarComponent} from "../snackbar/snackbar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-checklists',
@@ -29,7 +30,11 @@ export class ChecklistsComponent implements OnInit {
   applyIcon = faCheck;
   recentlyDeletedChecklist: Checklist;
   snackBarDuration = 5000;
-
+  pageSize: number = 10;
+  maxItems: number;
+  pageEvent: PageEvent;
+  firstResult: number = 0;
+  pageSizeOptions = [5, 10,15,20];
   constructor(private service: ChecklistService,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
@@ -38,7 +43,7 @@ export class ChecklistsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadChecklists();
+    this.getPaginatedChecklists();
   }
 
   sort_by(field, ascending, primer) {
@@ -52,16 +57,22 @@ export class ChecklistsComponent implements OnInit {
     }
   };
 
-  loadChecklists() {
-    return this.service.getChecklists(localStorage.getItem('current_user'), localStorage.getItem('current_household'), 'ASC').subscribe(
+  getPaginatedChecklists(event?: PageEvent) {
+    if (event != null) {
+      this.firstResult = event.pageIndex * event.pageSize;
+      this.pageSize = event.pageSize;
+    }
+    this.service.getChecklists(localStorage.getItem('current_user'), localStorage.getItem('current_household'), this.firstResult, this.pageSize,"DESC").subscribe(
       data => {
-        this.checklistsArray = data;
+        this.checklistsArray = data.array;
+        this.maxItems=data.maxItems;
       },
       error => {
         if (error.toString() == "403") {
           this.router.navigate(['/login']);
         }
-      })
+      });
+    return event;
   }
 
   getHousehold(): string {
@@ -88,6 +99,7 @@ export class ChecklistsComponent implements OnInit {
     this.service.saveChecklist(checklist).subscribe(id => {
       checklist.id = id;
       this.checklistsArray.push(checklist);
+      this.getPaginatedChecklists();
     });
 
   }
@@ -173,7 +185,11 @@ export class ChecklistsComponent implements OnInit {
       this.recentlyDeletedChecklist = checklist;
       this.openSnackBar(checklist.title);
       this.checklistsArray = this.checklistsArray.filter(c => c !== checklist);
-      this.service.deleteChecklist(checklist.id).subscribe();
+      this.service.deleteChecklist(checklist.id).subscribe(
+        data=>{
+          this.getPaginatedChecklists();
+        }
+      );
     }
   }
 
@@ -213,6 +229,7 @@ export class ChecklistsComponent implements OnInit {
       }
     );
   }
+
 
 
 }

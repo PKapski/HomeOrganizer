@@ -3,6 +3,7 @@
 h1 {
   margin-left: 20px;
   color: $dark;
+  text-align: center;
 }
 
 .checklist {
@@ -21,6 +22,7 @@ h1 {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+  background: darken($background-brown,10%);
 }
 
 .add-new {
@@ -144,4 +146,9 @@ h1 {
 .add-new-checklist-item mat-icon:hover{
   cursor: pointer;
 
+}
+.mat-paginator{
+  background: darken($background-brown,7%);
+  color: $dark;
+  font-size: 16px;
 }
