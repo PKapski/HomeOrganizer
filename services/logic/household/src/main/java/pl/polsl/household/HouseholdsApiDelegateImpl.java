@@ -16,9 +16,9 @@ public class  HouseholdsApiDelegateImpl implements HouseholdsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> createHousehold(Household household) {
-        service.saveHousehold(household);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> saveHousehold(Household household) {
+        String householdId = service.saveHousehold(household);
+        return new ResponseEntity<>(householdId,HttpStatus.OK);
     }
 
     @Override

@@ -12,8 +12,8 @@ public class HouseholdsService {
         this.repository = repository;
     }
 
-    void saveHousehold(Household household){
-        repository.save(household);
+    String saveHousehold(Household household){
+       return repository.save(household).getId();
     }
 
     boolean deleteHousehold(String householdId){

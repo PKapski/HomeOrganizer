@@ -45,7 +45,7 @@ export class UserService {
   setUserHousehold(username: string, householdId?: string) {
     let params = new HttpParams();
     if (householdId != null) {
-      params.set("householdId", householdId);
+      params = params.set("householdId", householdId);
     }
     return this.http.patch(this.baseurl + username + '/sethousehold', {}, {
       headers: this.httpHeader,

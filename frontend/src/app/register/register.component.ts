@@ -85,7 +85,6 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     this.formGroup.patchValue({username: this.username.value.toString().toLowerCase()});
-    console.log(this.formGroup);
 
     this.userService.postUser(this.formGroup.value).pipe(first()).subscribe(
       data => {

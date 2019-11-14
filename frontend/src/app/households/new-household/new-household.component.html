@@ -1,1 +1,21 @@
-<p>new-household works!</p>
+<div class="new-form">
+  <form  (ngSubmit)="createHousehold()" novalidate>
+    <h1>Create household</h1>
+    <mat-form-field class="form-field">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" name="name" placeholder="Household name" [(ngModel)]="household.name" autocomplete="off" maxlength="30" [formControl]="nameControl" required>
+      <mat-error *ngIf="nameControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="household.description" #msgInput [maxlength]="maxMessageLength" placeholder="Description" [formControl]="descriptionControl" rows="3"></textarea>
+      <mat-error *ngIf="descriptionControl.invalid">{{getErrorMessage()}}</mat-error>
+      <mat-hint align="start">Please, enter Your household description</mat-hint>
+      <mat-hint align="end">{{msgInput.value.length}} / {{maxMessageLength}}</mat-hint>
+
+    </mat-form-field>
+    <button class="button" type="submit"><span>Create! </span></button>
+    <a class="login-error-text" *ngIf="error">Unexpected error occured!</a>
+  </form>
+
+</div>

@@ -92,10 +92,12 @@ h1{
 .sign-in-text a{
   color: $dark;
 }
+
 .link{
   color: $brown;
   text-decoration: none;
 }
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px $blue inset;
 }

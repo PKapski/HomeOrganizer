@@ -20,8 +20,8 @@ produces:
 paths:
   /households:
     post:
-      summary: Creates a new household
-      operationId: createHousehold
+      summary: Creates a new household or patches existing
+      operationId: saveHousehold
       description: New household
       parameters:
         - name: household
@@ -30,8 +30,10 @@ paths:
           schema:
             $ref: '#/definitions/Household'
       responses:
-        204:
-          description: Household succesfully created.
+        201:
+          description: Household succesfully saved.
+          schema:
+            type: string
         400:
           description: Household couldn't have been created.
         500:

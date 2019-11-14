@@ -88,3 +88,9 @@ fa-icon.ng-fa-icon {
 ::ng-deep .mat-tooltip{
   background-color: $dark;
 }
+.mat-card-subtitle .mat-icon {
+  font-size: 14px;
+}
+.mat-card-subtitle .mat-icon:hover{
+  cursor: pointer;
+}

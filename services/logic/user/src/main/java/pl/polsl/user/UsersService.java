@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.polsl.exceptions.ItemNotUniqueException;
 import pl.polsl.exceptions.QueryService;
+import pl.polsl.household.HouseholdsMongoRepository;
 import pl.polsl.model.User;
 import pl.polsl.model.UsersPaging;
 
@@ -22,12 +23,14 @@ public class UsersService implements UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final QueryService queryService;
     private final MongoTemplate mongoTemplate;
+    private final HouseholdsMongoRepository householdRepository;
 
-    public UsersService(UsersMongoRepository repository, BCryptPasswordEncoder passwordEncoder, QueryService queryService, MongoTemplate mongoTemplate) {
+    public UsersService(UsersMongoRepository repository, BCryptPasswordEncoder passwordEncoder, QueryService queryService, MongoTemplate mongoTemplate, HouseholdsMongoRepository householdRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.queryService = queryService;
         this.mongoTemplate = mongoTemplate;
+        this.householdRepository = householdRepository;
     }
 
     void validateAndSaveUser(User user) {
@@ -84,6 +87,11 @@ public class UsersService implements UserDetailsService {
     boolean setUserHousehold(String username, String householdId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
+        if (householdId!=null){
+            if (householdRepository.findById(householdId)==null){
+                return false;
+            }
+        }
         return mongoTemplate.updateFirst(query, Update.update("householdId", householdId), User.class).wasAcknowledged();
     }
 

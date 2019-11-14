@@ -39,6 +39,8 @@ import { MyHouseholdComponent } from './households/my-household/my-household.com
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import { ConfirmationDialogComponent } from './households/confirmation-dialog/confirmation-dialog.component';
+import {MatRadioModule} from "@angular/material/radio";
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,8 @@ import { ConfirmationDialogComponent } from './households/confirmation-dialog/co
     MatIconModule,
     MatPaginatorModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatRadioModule
   ],
   entryComponents:[
     SnackbarComponent,

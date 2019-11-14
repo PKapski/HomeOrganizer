@@ -2,7 +2,17 @@
   <mat-card-header>
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title>{{myHousehold?.name}}</mat-card-title>
-    <mat-card-subtitle>{{myHousehold?.id}}</mat-card-subtitle>
+    <mat-card-subtitle>
+      Id: {{myHousehold?.id}}
+      <mat-icon matTooltip="Id copied to clipboard!"
+                matTooltipPosition="below"
+                #tooltip="matTooltip"
+                (click)="copyId(myHousehold?.id);this.tooltip.toggle()"
+                (mouseenter)="$event.stopImmediatePropagation()"
+                (mouseleave)="this.tooltip.toggle()"
+                [matTooltipHideDelay]="1500">file_copy
+      </mat-icon>
+    </mat-card-subtitle>
     <fa-icon [icon]="exitIcon" matTooltip="Leave household" (click)="openConfirmationDialog()"></fa-icon>
   </mat-card-header>
   <mat-card-content>
@@ -31,6 +41,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSize]="pageSize" [length]="maxItems" (page)="pageEvent = getHouseholdUsers($event) "></mat-paginator>
+    <mat-paginator [pageSize]="pageSize" [length]="maxItems"
+                   (page)="pageEvent = getHouseholdUsers($event) "></mat-paginator>
   </mat-card-content>
 </mat-card>

@@ -36,17 +36,6 @@ public interface HouseholdsApiDelegate {
     }
 
     /**
-     * @see HouseholdsApi#createHousehold
-     */
-    default ResponseEntity<Void> createHousehold( Household  household) {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default HouseholdsApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    /**
      * @see HouseholdsApi#deleteHousehold
      */
     default ResponseEntity<Void> deleteHousehold( String  householdId) {
@@ -82,6 +71,25 @@ public interface HouseholdsApiDelegate {
     default ResponseEntity<Void> modifyHousehold( String  householdId,
          Household  household) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default HouseholdsApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see HouseholdsApi#saveHousehold
+     */
+    default ResponseEntity<String> saveHousehold( Household  household) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("\"\"", String.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default HouseholdsApi interface so no example is generated");
         }

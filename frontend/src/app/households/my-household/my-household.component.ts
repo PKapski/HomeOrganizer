@@ -62,8 +62,8 @@ export class MyHouseholdComponent implements OnInit {
     this.dialog.open(ConfirmationDialogComponent,{
       width:'400px'
     }).afterClosed().subscribe(
-      (result: boolean)=>{
-        if (result){
+      (result)=>{
+        if (result=='leave'){
           this.leaveHousehold();
         }
       }
@@ -74,5 +74,19 @@ export class MyHouseholdComponent implements OnInit {
     localStorage.removeItem('current_household');
     this.userService.setUserHousehold(localStorage.getItem('current_user'),null).subscribe();
     this.router.navigate(['/myhousehold']);
+  }
+
+  copyId(id: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = id;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 }

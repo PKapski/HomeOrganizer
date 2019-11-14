@@ -27,18 +27,6 @@ public interface HouseholdsApi {
 
     HouseholdsApiDelegate getDelegate();
 
-    @ApiOperation(value = "Creates a new household", nickname = "createHousehold", notes = "New household", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "Household succesfully created."),
-        @ApiResponse(code = 400, message = "Household couldn't have been created."),
-        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
-    @RequestMapping(value = "/households",
-        method = RequestMethod.POST)
-    default ResponseEntity<Void> createHousehold(@ApiParam(value = "Household to create"  )  @Valid @RequestBody Household household) {
-        return getDelegate().createHousehold(household);
-    }
-
-
     @ApiOperation(value = "Deletes a household", nickname = "deleteHousehold", notes = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "Household succesfully deleted."),
@@ -71,6 +59,18 @@ public interface HouseholdsApi {
         method = RequestMethod.PATCH)
     default ResponseEntity<Void> modifyHousehold(@ApiParam(value = "",required=true) @PathVariable("householdId") String householdId,@ApiParam(value = "Modified household"  )  @Valid @RequestBody Household household) {
         return getDelegate().modifyHousehold(householdId, household);
+    }
+
+
+    @ApiOperation(value = "Creates a new household or patches existing", nickname = "saveHousehold", notes = "New household", response = String.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "Household succesfully saved.", response = String.class),
+        @ApiResponse(code = 400, message = "Household couldn't have been created."),
+        @ApiResponse(code = 500, message = "An unexpected error occured.", response = Object.class) })
+    @RequestMapping(value = "/households",
+        method = RequestMethod.POST)
+    default ResponseEntity<String> saveHousehold(@ApiParam(value = "Household to create"  )  @Valid @RequestBody Household household) {
+        return getDelegate().saveHousehold(household);
     }
 
 }

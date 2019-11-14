@@ -1,1 +1,17 @@
-<p>find-household works!</p>
+<div class="find-form">
+  <form (ngSubmit)="joinHousehold()">
+    <h1>Join household</h1>
+    <mat-form-field class="form-field" appearance="outline" >
+      <mat-label>Household Id</mat-label>
+      <input matInput type="text" placeholder="Household Id" [(ngModel)]="householdId" autocomplete="off" maxlength="50" [formControl]="idControl" required (keydown.enter)="joinHousehold()">
+      <mat-error *ngIf="idControl.invalid">{{getErrorMessage()}}</mat-error>
+      <button mat-button *ngIf="householdId" matSuffix mat-icon-button aria-label="Clear" (click)="householdId=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint>Paste household <strong>Id</strong> not name!</mat-hint>
+    </mat-form-field>
+    <button class="button"><span>Join! </span></button>
+    <a class="login-error-text" *ngIf="error">Household with given Id doesn't exist!</a>
+  </form>
+
+</div>

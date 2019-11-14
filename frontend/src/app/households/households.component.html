@@ -1,3 +1,12 @@
-<div *ngIf="checkIfInHousehold()==true">
+<div *ngIf="checkIfInHousehold()">
   <app-my-household></app-my-household>
+</div>
+<div *ngIf="!checkIfInHousehold()" class="new-household">
+  <h1>Join or create a household!</h1>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedButton">
+    <mat-radio-button value="new">Create new</mat-radio-button>
+    <mat-radio-button value="join">Join existing</mat-radio-button>
+  </mat-radio-group>
+  <app-new-household *ngIf="selectedButton=='new'"></app-new-household>
+  <app-find-household *ngIf="selectedButton=='join'"></app-find-household>
 </div>
