@@ -16,5 +16,6 @@
         <module>user</module>
         <module>household</module>
         <module>commons</module>
+        <module>calendar</module>
     </modules>
 </project>

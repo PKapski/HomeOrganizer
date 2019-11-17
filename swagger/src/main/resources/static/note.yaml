@@ -95,7 +95,7 @@ definitions:
         type: string
         readOnly: true
       title:
-        description: Note tile
+        description: Note title
         type: string
         default: ""
       message:

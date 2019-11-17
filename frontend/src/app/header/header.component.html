@@ -5,7 +5,7 @@
   <div class="header-left" *ngIf="auth.isLoggedIn()">
     <a routerLink="/notes"><fa-icon [icon]="faNote"></fa-icon> Notes</a>
     <a routerLink="/checklists"><fa-icon [icon]="faChecklist"></fa-icon> Checklists</a>
-    <a routerLink="/"><fa-icon [icon]="faCalendar"></fa-icon> Calendar</a>
+    <a routerLink="/calendar"><fa-icon [icon]="faCalendar"></fa-icon> Calendar</a>
   </div>
   <div class="header-right">
     <nav *ngIf="auth.isLoggedOut()">

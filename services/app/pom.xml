@@ -50,6 +50,12 @@
             <artifactId>security</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>pl.polsl</groupId>
+            <artifactId>calendar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

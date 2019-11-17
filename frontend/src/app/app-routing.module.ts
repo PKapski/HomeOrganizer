@@ -5,6 +5,7 @@ import {RegisterComponent} from "./register/register.component";
 import {NotesComponent} from "./notes/notes.component";
 import {ChecklistsComponent} from "./checklists/checklists.component";
 import {HouseholdsComponent} from "./households/households.component";
+import {CalendarComponent} from "./calendar/calendar.component";
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'notes', component: NotesComponent, runGuardsAndResolvers: 'always'},
   {path: 'checklists',component: ChecklistsComponent},
-  {path: 'myhousehold',component: HouseholdsComponent}
+  {path: 'myhousehold',component: HouseholdsComponent},
+  {path: 'calendar', component: CalendarComponent}
 ];
 
 @NgModule({

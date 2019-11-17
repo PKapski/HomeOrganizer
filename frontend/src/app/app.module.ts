@@ -41,6 +41,14 @@ import {MatTableModule} from "@angular/material/table";
 import { ConfirmationDialogComponent } from './households/confirmation-dialog/confirmation-dialog.component';
 import {MatRadioModule} from "@angular/material/radio";
 import 'hammerjs';
+import { CalendarComponent } from './calendar/calendar.component';
+import { DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarModule } from 'angular-calendar';
+import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
+import {MatColorPickerModule} from "mat-color-picker";
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
+import {CalendarService} from "./_services/calendar.service";
 
 @NgModule({
   declarations: [
@@ -59,6 +67,8 @@ import 'hammerjs';
     NewHouseholdComponent,
     MyHouseholdComponent,
     ConfirmationDialogComponent,
+    CalendarComponent,
+    CalendarHeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +93,11 @@ import 'hammerjs';
     MatPaginatorModule,
     MatCardModule,
     MatTableModule,
-    MatRadioModule
+    MatRadioModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    MatColorPickerModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   entryComponents:[
     SnackbarComponent,
@@ -98,7 +112,8 @@ import 'hammerjs';
       multi: true
     },
     NotesService,
-    ChecklistService
+    ChecklistService,
+    CalendarService
   ],
   bootstrap: [AppComponent]
 })

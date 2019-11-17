@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+  import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NotesService} from "../_services/notes.service";
 import {Note} from "./note";
 import {faEdit, faPlusSquare, faTrashAlt} from '@fortawesome/free-regular-svg-icons';

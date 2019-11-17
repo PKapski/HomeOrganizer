@@ -1,0 +1,96 @@
+@import "src/app/_commons/commons";
+
+fa-icon{
+  cursor: pointer;
+}
+.calendar-header{
+  //text-align: center;
+  display: table;
+  width: 100%;
+}
+
+.calendar-header .header-text{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+h1{
+  color: $dark;
+}
+.btn-group{
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+}
+.btn-group button{
+  background-color: $blue;
+  border: 1px solid $dark;
+  color: $dark;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 10px 24px; /* Some padding */
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+}
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+.btn-group button:hover{
+  background-color: darken($blue,10%);
+}
+.btn-group button.active{
+  background-color: darken($blue,15%);
+}
+.header-title{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: table-cell;
+  width: 33%;
+  text-align: center;
+}
+.form-field{
+  width: 100%;
+}
+.mat-cell{
+  padding: 8px;
+  text-align: center;
+}
+.mat-header-cell{
+  padding: 8px;
+  text-align: center;
+}
+
+.apply-button{
+  background-color: darken($blue,30%);
+}
+table {
+  width: 100%;
+  background-color: $blue;
+  border: 1px solid $dark;
+}
+th {
+  font-size: 16px;
+  background-color: $brown;
+  border-bottom: 1px solid $dark;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: $brown !important;
+}
+
+// overwrite the ripple overlay on hover and click
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $brown !important;
+}
+.calendar{
+  margin-bottom: 30px;
+}
+.color{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}

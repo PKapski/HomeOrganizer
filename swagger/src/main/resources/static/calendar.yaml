@@ -1,0 +1,131 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Checklist API
+
+schemes:
+  - http
+basePath:
+  $ref: 'commons.yaml#/basePath'
+
+securityDefinitions:
+  $ref: 'commons.yaml#/securityDefinitions'
+
+consumes:
+  $ref: 'commons.yaml#/consumes'
+produces:
+  $ref: 'commons.yaml#/produces'
+
+paths:
+  /calendar/{householdId}:
+    get:
+      summary: Gets all calendar events for given household
+      operationId: getCalendarEvents
+      description: Returns all calendar events for given household
+      parameters:
+        - name: householdId
+          in: path
+          type: string
+          required: true
+      responses:
+        200:
+          description: List of calendar events
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CalendarEvent'
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+    post:
+      summary: Creates a calendar event or patches if it already exists
+      operationId: saveCalendarEvent
+      parameters:
+        - name: householdId
+          in: path
+          type: string
+          required: true
+        - name: event
+          in: body
+          description: Event to save
+          schema:
+            $ref: '#/definitions/CalendarEvent'
+      responses:
+        201:
+          description: Event succesfully saved.
+          schema:
+            type: string
+        400:
+          description: Event couldn't have been saved.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+  /calendar/{id}:
+    delete:
+      summary: Deletes a calendar event
+      operationId: deleteCalendarEvent
+      parameters:
+        - name: id
+          in: path
+          description: Id of event to delete
+          type: string
+          required: true
+      responses:
+        204:
+          description: Event succesfully deleted.
+        400:
+          description: Event couldn't have been deleted.
+        500:
+          $ref: 'commons.yaml#/responses/Standard500ErrorResponse'
+
+definitions:
+  CalendarEvent:
+    required:
+      - title
+      - start
+    properties:
+      id:
+        description: Event Id providing uniqueness in database
+        type: string
+        readOnly: true
+      householdId:
+        description: Household that event is created in
+        type: string
+      title:
+        description: Event title
+        type: string
+        default: ""
+      start:
+        description: Event start date
+        type: string
+        format: 'date-time'
+      end:
+        description: Event end date
+        type: string
+        format: 'date-time'
+      color:
+        $ref: '#/definitions/EventColor'
+      allDay:
+        description: Describes if event should be counter in full days
+        type: boolean
+      draggable:
+        description: Describes if even should be draggable
+        type: boolean
+      resizable:
+        $ref: '#/definitions/Resizable'
+
+  EventColor:
+    properties:
+      primary:
+        description: Event primary color
+        type: string
+      secondary:
+        description: Event secondary color
+        type: string
+
+  Resizable:
+    properties:
+      beforeStart:
+        type: boolean
+      afterEnd:
+        type: boolean

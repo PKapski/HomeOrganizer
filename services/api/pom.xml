@@ -16,6 +16,7 @@
         <module>checklist</module>
         <module>user</module>
         <module>household</module>
+        <module>calendar</module>
     </modules>
 
 </project>
