@@ -28,38 +28,7 @@ export class CalendarComponent implements OnInit {
 
   viewDateChange: EventEmitter<Date> = new EventEmitter();
 
-  // events: CalendarEvent[] = [{
-  //   start: subDays(startOfDay(new Date()), 1),
-  //   end: addDays(new Date(), 1),
-  //   title: 'A 3 day event',
-  //   allDay: true,
-  //   resizable: {
-  //     beforeStart: true,
-  //     afterEnd: true
-  //   },
-  //   draggable: true
-  // },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'An event with no end date',
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true
-  //     },
-  //     draggable: true
-  //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     end: endOfDay(new Date()),
-  //     title: 'Whole day event',
-  //     draggable: true,
-  //     resizable: {
-  //       beforeStart: false,
-  //       afterEnd: true
-  //     }
-  //   }];
   events: CalendarEvent[];
-  // allEvents: CalendarEvent[]=[];
 
   refresh: Subject<any> = new Subject();
 
@@ -121,21 +90,10 @@ export class CalendarComponent implements OnInit {
                       newStart,
                       newEnd
                     }: CalendarEventTimesChangedEvent): void {
-    // this.events = this.events.map(iEvent => {
-    //   if (iEvent === event) {
-    //     return {
-    //       ...event,
-    //       start: newStart,
-    //       end: newEnd
-    //     };
-    //   }
-    //   return iEvent;
-    // });
-    // console.log(event.id);
-    event.start=newStart;
-    event.end=newEnd;
-    this.service.saveCalendarEvent(event,localStorage.getItem('current_household')).subscribe(
-      data=>{
+    event.start = newStart;
+    event.end = newEnd;
+    this.service.saveCalendarEvent(event, localStorage.getItem('current_household')).subscribe(
+      data => {
         this.refresh.next();
       }
     );
@@ -149,7 +107,7 @@ export class CalendarComponent implements OnInit {
     this.service.saveCalendarEvent(event, localStorage.getItem('current_household')).subscribe(
       data => {
         let element = document.getElementById(event.id as string);
-        (element as HTMLButtonElement).disabled=true;
+        (element as HTMLButtonElement).disabled = true;
         this.refresh.next();
       }
     );
@@ -188,6 +146,6 @@ export class CalendarComponent implements OnInit {
 
   changeApplyIcon(id: string) {
     let element = document.getElementById(id);
-    (element as HTMLButtonElement).disabled=false;
+    (element as HTMLButtonElement).disabled = false;
   }
 }
