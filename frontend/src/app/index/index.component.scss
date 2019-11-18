@@ -1,0 +1,52 @@
+@import "src/app/_commons/commons";
+
+.grid{
+  display: grid;
+  grid-template-columns: auto auto;
+  height: 85vh;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}
+.note-image{
+  background-image: url("/assets/img/note-image.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative;
+  text-align: center;
+ }
+.checklist-image{
+  background-image: url("/assets/img/checklist-image.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.calendar-image{
+  background-image: url("/assets/img/calendar-image.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative;
+  text-align: center;
+ }
+.household-image{
+  background-image: url("/assets/img/household-image.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  }
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 56px;
+  color: lighten($dark,10%);
+  font-weight: bold;
+}
+
+

@@ -1,5 +1,5 @@
 <h1 *ngIf="notesArray.length==0">Don't have any notes yet. Add some!</h1>
-<h1 *ngIf="notesArray.length>0">'{{getHousehold()}}' household notes:</h1>
+<h1 *ngIf="notesArray.length>0"><span class="household-name">{{householdName}}</span> household notes:</h1>
 <div class="flex-container">
   <div class="add-new" *ngIf="firstResult==0">
     <span (click)="openPopup()"><fa-icon [icon]="addIcon"></fa-icon></span>
@@ -33,4 +33,4 @@
   </div>
 
 </div>
-<mat-paginator *ngIf="maxItems>10" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="maxItems" (page)="pageEvent = getPaginatedNotes($event)" showFirstLastButtons></mat-paginator>
+<mat-paginator  [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="maxItems" (page)="pageEvent = getPaginatedNotes($event)" showFirstLastButtons></mat-paginator>

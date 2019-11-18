@@ -1,10 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit} from '@angular/core';
-import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {isSameDay, isSameMonth, startOfDay} from 'date-fns';
 import {Subject} from "rxjs";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {CalendarService} from "../_services/calendar.service";
 import {Router} from "@angular/router";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-calendar',
@@ -24,8 +26,6 @@ export class CalendarComponent implements OnInit {
 
   locale: string = 'en';
 
-  viewChange: EventEmitter<string> = new EventEmitter();
-
   viewDateChange: EventEmitter<Date> = new EventEmitter();
 
   events: CalendarEvent[];
@@ -37,10 +37,16 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
   displayedColumns = ['color', 'title', 'startTime', 'endTime', 'allDay', 'apply', 'delete'];
 
+  dataSource: MatTableDataSource<CalendarEvent>;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private service: CalendarService,
               private router: Router) {
 
+    if (localStorage.getItem('current_household')==null){
+      this.router.navigate(['/myhousehold']);
+    }
   }
 
   ngOnInit() {
@@ -60,7 +66,7 @@ export class CalendarComponent implements OnInit {
           return x;
         });
         this.events = data;
-        this.refresh.next();
+        this.refreshContext();
       },
       error => {
         if (error.toString() == "403") {
@@ -68,6 +74,12 @@ export class CalendarComponent implements OnInit {
         }
       }
     )
+  }
+
+  refreshContext(){
+    this.dataSource= new MatTableDataSource<CalendarEvent>(this.events);
+    this.dataSource.paginator=this.paginator;
+    this.refresh.next();
   }
 
 
@@ -117,7 +129,7 @@ export class CalendarComponent implements OnInit {
     this.service.deleteCalendarEvent(event.id as string).subscribe(
       data => {
         this.events = this.events.filter(ev => ev !== event);
-        this.refresh.next();
+        this.refreshContext();
       }
     );
   }
@@ -133,8 +145,8 @@ export class CalendarComponent implements OnInit {
     this.service.saveCalendarEvent(event, localStorage.getItem('current_household')).subscribe(
       data => {
         event.id = data;
-        this.events = [...this.events, event];
-        this.refresh.next();
+        this.events = [event, ...this.events];
+        this.refreshContext();
       }
     )
   }

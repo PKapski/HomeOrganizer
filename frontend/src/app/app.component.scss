@@ -11,7 +11,7 @@
 //  overflow: auto;
 //}
 .wrapper {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   background-color: $background-brown;
   /* Direction of the items, can be row or column */
@@ -23,6 +23,5 @@ footer {
 }
 
 main {
-  flex: 1;
   padding: 20px;
 }

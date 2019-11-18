@@ -11,6 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {SnackbarComponent} from "../snackbar/snackbar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PageEvent} from "@angular/material/paginator";
+import {HouseholdService} from "../_services/household.service";
 
 @Component({
   selector: 'app-checklists',
@@ -35,15 +36,21 @@ export class ChecklistsComponent implements OnInit {
   pageEvent: PageEvent;
   firstResult: number = 0;
   pageSizeOptions = [5, 10,15,20];
+  householdName: string;
   constructor(private service: ChecklistService,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private householdService: HouseholdService) {
+    if (localStorage.getItem('current_household')==null){
+      this.router.navigate(['/myhousehold']);
+    }
   }
 
   ngOnInit() {
     this.getPaginatedChecklists();
+    this.getHouseholdName();
   }
 
   sort_by(field, ascending, primer) {
@@ -57,6 +64,12 @@ export class ChecklistsComponent implements OnInit {
     }
   };
 
+  getHouseholdName(){
+    this.householdService.getHousehold(localStorage.getItem("current_household")).subscribe(
+      data=>{
+        this.householdName=data.name;
+      })
+  }
   getPaginatedChecklists(event?: PageEvent) {
     if (event != null) {
       this.firstResult = event.pageIndex * event.pageSize;

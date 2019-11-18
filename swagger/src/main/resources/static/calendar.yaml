@@ -113,6 +113,11 @@ definitions:
         type: boolean
       resizable:
         $ref: '#/definitions/Resizable'
+      actions:
+        description: Actions avaible to every event
+        type: array
+        items:
+          $ref:
 
   EventColor:
     properties:

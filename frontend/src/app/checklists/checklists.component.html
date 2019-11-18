@@ -1,5 +1,5 @@
 <h1 *ngIf="checklistsArray.length==0">Don't have any checklists yet. Add some!</h1>
-<h1 *ngIf="checklistsArray.length>0">'{{getHousehold()}}' household checklists:</h1>
+<h1 *ngIf="checklistsArray.length>0"><span class="household-name">{{householdName}}</span> household checklists:</h1>
 <div class="flex-container">
 
   <div class="add-new" *ngIf="firstResult==0">
@@ -62,5 +62,5 @@
     </div>
   </div>
 </div>
-<mat-paginator *ngIf="maxItems>=5" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="maxItems" (page)="pageEvent = getPaginatedChecklists($event)" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="maxItems" (page)="pageEvent = getPaginatedChecklists($event)" showFirstLastButtons></mat-paginator>
 

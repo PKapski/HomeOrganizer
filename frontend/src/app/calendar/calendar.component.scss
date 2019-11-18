@@ -1,27 +1,31 @@
 @import "src/app/_commons/commons";
 
-fa-icon{
+fa-icon {
   cursor: pointer;
 }
-.calendar-header{
+
+.calendar-header {
   //text-align: center;
   display: table;
   width: 100%;
 }
 
-.calendar-header .header-text{
+.calendar-header .header-text {
   margin-left: 5px;
   margin-right: 5px;
 }
-h1{
+
+h1 {
   color: $dark;
 }
-.btn-group{
+
+.btn-group {
   display: table-cell;
   text-align: right;
   vertical-align: middle;
 }
-.btn-group button{
+
+.btn-group button {
   background-color: $blue;
   border: 1px solid $dark;
   color: $dark;
@@ -31,16 +35,20 @@ h1{
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-weight: bold;
 }
+
 .btn-group button:not(:last-child) {
   border-right: none; /* Prevent double borders */
 }
-.btn-group button:hover{
-  background-color: darken($blue,10%);
+
+.btn-group button:hover {
+  background-color: darken($blue, 10%);
 }
-.btn-group button.active{
-  background-color: darken($blue,15%);
+
+.btn-group button.active {
+  background-color: darken($blue, 15%);
 }
-.header-title{
+
+.header-title {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -51,26 +59,31 @@ h1{
   width: 33%;
   text-align: center;
 }
-.form-field{
+
+.form-field {
   width: 100%;
 }
-.mat-cell{
-  padding: 8px;
-  text-align: center;
-}
-.mat-header-cell{
+
+.mat-cell {
   padding: 8px;
   text-align: center;
 }
 
-.apply-button{
-  background-color: darken($blue,30%);
+.mat-header-cell {
+  padding: 8px;
+  text-align: center;
 }
+
+.apply-button {
+  background-color: darken($blue, 30%);
+}
+
 table {
   width: 100%;
   background-color: $blue;
   border: 1px solid $dark;
 }
+
 th {
   font-size: 16px;
   background-color: $brown;
@@ -85,12 +98,21 @@ th {
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
   background-color: $brown !important;
 }
-.calendar{
+
+.calendar {
   margin-bottom: 30px;
 }
-.color{
+
+.color {
   height: 25px;
   width: 25px;
   border-radius: 50%;
   display: inline-block;
 }
+
+.mat-paginator {
+  background: $brown;
+  color: $dark;
+  font-size: 16px;
+}
+

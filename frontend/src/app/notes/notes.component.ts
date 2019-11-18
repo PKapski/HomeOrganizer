@@ -10,6 +10,7 @@ import {AddNoteDialogComponent} from "./add-note-dialog/add-note-dialog.componen
 import {DatePipe} from '@angular/common';
 import {Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
+  import {HouseholdService} from "../_services/household.service";
 
 @Component({
   selector: 'app-notes',
@@ -25,6 +26,7 @@ export class NotesComponent implements OnInit {
   applyIcon = faCheck;
   snackBarDuration = 5000;//in seconds
   recentlyDeletedNote: Note;
+  householdName: string;
 
   @ViewChild('text-block', {static: false}) textBox: ElementRef;
   pageSize: number = 10;
@@ -37,11 +39,16 @@ export class NotesComponent implements OnInit {
               private snackBar: MatSnackBar,
               public dialog: MatDialog,
               private datePipe: DatePipe,
-              private router: Router) {
+              private router: Router,
+              private householdService: HouseholdService) {
+    if (localStorage.getItem('current_household')==null){
+      this.router.navigate(['/myhousehold']);
+    }
   }
 
   ngOnInit() {
     this.getPaginatedNotes();
+    this.getHouseholdName();
   }
 
 
@@ -174,8 +181,11 @@ export class NotesComponent implements OnInit {
     return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
   }
 
-  getHousehold(): string {
-    return localStorage.getItem("current_household");
+  getHouseholdName(){
+    this.householdService.getHousehold(localStorage.getItem("current_household")).subscribe(
+      data=>{
+      this.householdName=data.name;
+    })
   }
 
   getTooltipEditMessage(creator: string): string {

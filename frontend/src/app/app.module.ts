@@ -49,6 +49,8 @@ import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-hea
 import {MatColorPickerModule} from "mat-color-picker";
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
 import {CalendarService} from "./_services/calendar.service";
+import { IndexComponent } from './index/index.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import {CalendarService} from "./_services/calendar.service";
     ConfirmationDialogComponent,
     CalendarComponent,
     CalendarHeaderComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,10 +97,11 @@ import {CalendarService} from "./_services/calendar.service";
     MatCardModule,
     MatTableModule,
     MatRadioModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     MatColorPickerModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    MatGridListModule,
   ],
   entryComponents:[
     SnackbarComponent,
