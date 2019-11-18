@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-households',
@@ -9,7 +10,11 @@ export class HouseholdsComponent implements OnInit {
 
   selectedButton='new';
 
-  constructor() { }
+  constructor(private router: Router) {
+    if (localStorage.getItem('current_user')==null){
+      this.router.navigate(['/login']);
+    }
+  }
 
   ngOnInit() {
 

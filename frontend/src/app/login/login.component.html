@@ -3,11 +3,11 @@
     <h1>Sign in!</h1>
     <p>
       <mat-form-field class="login-full-width">
-        <input  matInput placeholder="Username" formControlName="username">
+        <input  matInput placeholder="Username*" formControlName="username">
         <mat-error *ngIf="username.hasError('required')">Username is <strong>required</strong></mat-error>
       </mat-form-field>
       <mat-form-field class="login-full-width">
-        <input matInput type="password" placeholder="Password" formControlName="password">
+        <input matInput type="password" placeholder="Password*" formControlName="password">
         <mat-error *ngIf="password.hasError('required')">Password is <strong>required</strong></mat-error>
       </mat-form-field>
     </p>

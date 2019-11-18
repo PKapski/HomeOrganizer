@@ -15,6 +15,7 @@
     <nav class = "account-dropdown" *ngIf="auth.isLoggedIn()">
       <a [matMenuTriggerFor]="menu"><fa-icon [icon]="faUser"> </fa-icon> {{getUsername()}} <fa-icon [icon]="faAngleDown"></fa-icon></a>
       <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/myaccount" routerLinkActive="active">My account</button>
         <button mat-menu-item routerLink="/myhousehold" routerLinkActive="active">My household</button>
         <button mat-menu-item (click)="auth.logout()" routerLink="/" routerLinkActive="active">Logout</button>
       </mat-menu>

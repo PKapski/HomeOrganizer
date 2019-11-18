@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
 export class MyHouseholdComponent implements OnInit {
 
   pageEvent: PageEvent;
-  displayedColumns: string[] = ['username', 'email', 'firstName'];
+  displayedColumns: string[] = ['username', 'email', 'firstName','lastName'];
   myHousehold: Household;
   householdUsers: any = [];
   maxItems: number;
@@ -30,6 +30,7 @@ export class MyHouseholdComponent implements OnInit {
               private userService: UserService,
               private dialog: MatDialog,
               private router: Router) {
+
   }
 
   ngOnInit() {

@@ -51,7 +51,9 @@ export class RegisterComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(this.minPwLength)]],
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(this.minPwLength)]],
-      password2: ['', [Validators.required]]
+      password2: ['', [Validators.required]],
+      firstName: '',
+      lastName: ''
     }, {validator: passwordMatchValidator});
   }
 
@@ -93,7 +95,6 @@ export class RegisterComponent implements OnInit {
       error => {
         this.loading = false;
         this.errorText = "Username and/or email are already taken!"
-        //#FIXME: this.errorText=error.toString(); always returns the same message
       }
     )
   }

@@ -78,10 +78,23 @@ public class UsersService implements UserDetailsService {
         if (oldUser == null) {
             return false;
         }
-        validateUser(user);
+        validateIfDifferent(oldUser,user);
         user.setId(oldUser.getId());
         repository.save(user);
         return true;
+    }
+
+    private void validateIfDifferent(User oldUser, User user){
+        if (!oldUser.getUsername().equals(user.getUsername())){
+            if (repository.findByUsername(user.getUsername()) != null) {
+                throw new ItemNotUniqueException(ItemNotUniqueException.ExceptionType.NAME_NOT_UNIQUE);
+            }
+        }
+        if (!oldUser.getEmail().equals(user.getEmail())){
+            if (repository.findByEmail(user.getEmail()) != null) {
+                throw new ItemNotUniqueException(ItemNotUniqueException.ExceptionType.EMAIL_NOT_UNIQUE);
+            }
+        }
     }
 
     boolean setUserHousehold(String username, String householdId) {

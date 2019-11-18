@@ -51,6 +51,7 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
 import {CalendarService} from "./_services/calendar.service";
 import { IndexComponent } from './index/index.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
     CalendarComponent,
     CalendarHeaderComponent,
     IndexComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

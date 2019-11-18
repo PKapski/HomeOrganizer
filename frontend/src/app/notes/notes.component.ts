@@ -134,7 +134,7 @@ export class NotesComponent implements OnInit {
   openSnackBar(title: string) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: this.snackBarDuration,
-      data: "'" + title + "' note has been deleted!",
+      data: {msg: "'" + title + "' note has been deleted!", reversible: true},
     }).onAction().subscribe(() => {
       this.reverseNoteDeletion();
     });
