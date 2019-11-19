@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../_services/user.service";
 import {ChecklistService} from "../../_services/checklist.service";
+import {AuthService} from "../../_services/auth.service";
 
 @Component({
   selector: 'app-add-checklist-dialog',
@@ -27,6 +28,11 @@ export class AddChecklistDialogComponent implements OnInit {
     this.usersService.getHouseholdUsers(localStorage.getItem("current_household")).subscribe(
       data => {
         this.usersList=data.array.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       });
   }
 

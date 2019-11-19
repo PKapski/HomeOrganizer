@@ -13,6 +13,7 @@ import {ErrorStateMatcher} from "@angular/material/core";
 import {UserService} from "../_services/user.service";
 import {first} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {AuthService} from "../_services/auth.service";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -95,6 +96,9 @@ export class RegisterComponent implements OnInit {
       error => {
         this.loading = false;
         this.errorText = "Username and/or email are already taken!"
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     )
   }

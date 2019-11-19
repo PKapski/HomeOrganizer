@@ -7,6 +7,7 @@ import {CalendarService} from "../_services/calendar.service";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {AuthService} from "../_services/auth.service";
 
 @Component({
   selector: 'app-calendar',
@@ -107,6 +108,11 @@ export class CalendarComponent implements OnInit {
     this.service.saveCalendarEvent(event, localStorage.getItem('current_household')).subscribe(
       data => {
         this.refresh.next();
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
   }
@@ -121,6 +127,11 @@ export class CalendarComponent implements OnInit {
         let element = document.getElementById(event.id as string);
         (element as HTMLButtonElement).disabled = true;
         this.refresh.next();
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
   }
@@ -130,6 +141,11 @@ export class CalendarComponent implements OnInit {
       data => {
         this.events = this.events.filter(ev => ev !== event);
         this.refreshContext();
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
   }
@@ -147,6 +163,11 @@ export class CalendarComponent implements OnInit {
         event.id = data;
         this.events = [event, ...this.events];
         this.refreshContext();
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     )
   }

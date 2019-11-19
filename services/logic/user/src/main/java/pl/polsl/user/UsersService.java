@@ -79,6 +79,9 @@ public class UsersService implements UserDetailsService {
             return false;
         }
         validateIfDifferent(oldUser,user);
+        if (!user.getPassword().equals(oldUser.getPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         user.setId(oldUser.getId());
         repository.save(user);
         return true;

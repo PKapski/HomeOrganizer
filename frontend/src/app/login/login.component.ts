@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this.loading=true;
 
     this.formGroup.patchValue({username: this.username.value.toString().toLowerCase()});
-    console.log(this.formGroup);
 
     this.authService.authenticate(this.formGroup.value).subscribe(
       data=>{
