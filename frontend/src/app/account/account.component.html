@@ -2,38 +2,58 @@
   <form autocomplete="off" class="register-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <h1>Edit your account</h1>
     <p>
-      <mat-form-field class="register-full-width">
-        <input matInput placeholder="Username*" formControlName="username">
-        <mat-error *ngIf="username.hasError('required')">Username is <strong>required</strong></mat-error>
-        <mat-error *ngIf="username.hasError('minlength')">Username must have at least {{minPwLength}} characters</mat-error>
-      </mat-form-field>
-      <mat-form-field class="register-full-width">
-        <input matInput placeholder="Email*" formControlName="email"
-               [errorStateMatcher]="matcher">
-        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="email.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="register-full-width">
-        <input matInput placeholder="First name" formControlName="firstName">
-      </mat-form-field>
-      <mat-form-field class="register-full-width">
-        <input matInput placeholder="Last name" formControlName="lastName">
-      </mat-form-field>
-      <mat-form-field class="register-full-width">
-        <input matInput type="password" placeholder="Password*" formControlName="password" (input)="onPasswordInput()">
-        <mat-error *ngIf="password.hasError('required')">Password is <strong>required</strong></mat-error>
-        <mat-error *ngIf="password.hasError('minlength')">Password must have at least {{minPwLength}} characters</mat-error>
-      </mat-form-field>
-      <mat-form-field class="register-full-width">
-        <input matInput type="password" placeholder="Repeat password*" formControlName="password2"
-               (input)="onPasswordInput()">
-        <mat-error *ngIf="password2.hasError('required')">Please confirm your password</mat-error>
-        <mat-error *ngIf="password2.invalid && !password2.hasError('required')">Passwords don't match</mat-error>
-      </mat-form-field>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Edit personal information
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field class="register-full-width">
+          <input matInput placeholder="Username*" formControlName="username">
+          <mat-error *ngIf="username.hasError('required')">Username is <strong>required</strong></mat-error>
+          <mat-error *ngIf="username.hasError('minlength')">Username must have at least {{minPwLength}}characters
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="register-full-width">
+          <input matInput placeholder="Email*" formControlName="email"
+                 [errorStateMatcher]="matcher">
+          <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="email.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="register-full-width">
+          <input matInput placeholder="First name" formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field class="register-full-width">
+          <input matInput placeholder="Last name" formControlName="lastName">
+        </mat-form-field>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="editPassword=true"
+                           (closed)="editPassword=false"
+                          (click)="changePasswordValidation()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Change password
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field class="register-full-width" *ngIf="editPassword">
+          <input matInput type="password" placeholder="Password*" formControlName="password"
+                 (input)="onPasswordInput()">
+          <mat-error *ngIf="password.hasError('required')">Password is <strong>required</strong></mat-error>
+          <mat-error *ngIf="password.hasError('minlength')">Password must have at least {{minPwLength}}characters
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="register-full-width" >
+          <input matInput type="password" placeholder="Repeat password*" formControlName="password2"
+                 (input)="onPasswordInput()">
+          <mat-error *ngIf="password2.hasError('required')">Please confirm your password</mat-error>
+          <mat-error *ngIf="password2.invalid && !password2.hasError('required')">Passwords don't match</mat-error>
+        </mat-form-field>
+      </mat-expansion-panel>
+
     </p>
     <button class="button"><span>Apply</span></button>
     <div *ngIf="errorText!=null" class="register-error-text">

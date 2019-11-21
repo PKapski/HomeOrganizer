@@ -12,6 +12,7 @@ import {SnackbarComponent} from "../snackbar/snackbar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PageEvent} from "@angular/material/paginator";
 import {HouseholdService} from "../_services/household.service";
+import {AuthService} from "../_services/auth.service";
 
 @Component({
   selector: 'app-checklists',
@@ -68,6 +69,10 @@ export class ChecklistsComponent implements OnInit {
     this.householdService.getHousehold(localStorage.getItem("current_household")).subscribe(
       data=>{
         this.householdName=data.name;
+      },error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       })
   }
   getPaginatedChecklists(event?: PageEvent) {
@@ -201,6 +206,10 @@ export class ChecklistsComponent implements OnInit {
       this.service.deleteChecklist(checklist.id).subscribe(
         data=>{
           this.getPaginatedChecklists();
+        },error => {
+          if (error.toString() == "403") {
+            AuthService.logout();
+          }
         }
       );
     }

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../_services/user.service";
 import {User} from "../../user/user";
+import {AuthService} from "../../_services/auth.service";
 
 
 @Component({
@@ -32,6 +33,11 @@ export class AddNoteDialogComponent implements OnInit {
     this.usersService.getHouseholdUsers(localStorage.getItem("current_household")).subscribe(
       data => {
         this.usersList=data.array.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
+      },
+      error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       });
   }
 
@@ -51,10 +57,8 @@ export class AddNoteDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formGroup.value);
     if (this.formGroup.valid) {
       this.dialogRef.close({data: this.formGroup.value});
     }
-    console.log(this.recipent);
   }
 }

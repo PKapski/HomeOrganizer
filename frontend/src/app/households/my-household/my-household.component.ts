@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Household} from "../household";
 import {HouseholdService} from "../../_services/household.service";
 import {UserService} from "../../_services/user.service";
@@ -7,6 +7,7 @@ import {faDoorOpen} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {Router} from "@angular/router";
+import {AuthService} from "../../_services/auth.service";
 
 @Component({
   selector: 'app-my-household',
@@ -16,7 +17,7 @@ import {Router} from "@angular/router";
 export class MyHouseholdComponent implements OnInit {
 
   pageEvent: PageEvent;
-  displayedColumns: string[] = ['username', 'email', 'firstName','lastName'];
+  displayedColumns: string[] = ['username', 'email', 'firstName', 'lastName'];
   myHousehold: Household;
   householdUsers: any = [];
   maxItems: number;
@@ -24,7 +25,7 @@ export class MyHouseholdComponent implements OnInit {
   firstResult: number = 0;
   sortedField: String;
   sortingDirection: String;
-  exitIcon=faDoorOpen;
+  exitIcon = faDoorOpen;
 
   constructor(private householdService: HouseholdService,
               private userService: UserService,
@@ -40,6 +41,10 @@ export class MyHouseholdComponent implements OnInit {
           this.myHousehold = data;
 
         }
+      }, error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
     this.getHouseholdUsers();
@@ -47,24 +52,28 @@ export class MyHouseholdComponent implements OnInit {
   }
 
   getHouseholdUsers(event?: PageEvent) {
-    if (event!=null) {
+    if (event != null) {
       this.firstResult = event.pageIndex * event.pageSize;
     }
-    this.userService.getHouseholdUsers(localStorage.getItem('current_household'),this.firstResult,this.pageSize).subscribe(
+    this.userService.getHouseholdUsers(localStorage.getItem('current_household'), this.firstResult, this.pageSize).subscribe(
       data => {
         this.householdUsers = data.array;
         this.maxItems = data.maxItems;
+      }, error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
     return event;
   }
 
   openConfirmationDialog() {
-    this.dialog.open(ConfirmationDialogComponent,{
-      width:'400px'
+    this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px'
     }).afterClosed().subscribe(
-      (result)=>{
-        if (result=='leave'){
+      (result) => {
+        if (result == 'leave') {
           this.leaveHousehold();
         }
       }
@@ -73,7 +82,7 @@ export class MyHouseholdComponent implements OnInit {
 
   private leaveHousehold() {
     localStorage.removeItem('current_household');
-    this.userService.setUserHousehold(localStorage.getItem('current_user'),null).subscribe();
+    this.userService.setUserHousehold(localStorage.getItem('current_user'), null).subscribe();
     this.router.navigate(['/myhousehold']);
   }
 

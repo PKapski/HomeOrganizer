@@ -1,4 +1,4 @@
-  import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NotesService} from "../_services/notes.service";
 import {Note} from "./note";
 import {faEdit, faPlusSquare, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
@@ -10,7 +10,8 @@ import {AddNoteDialogComponent} from "./add-note-dialog/add-note-dialog.componen
 import {DatePipe} from '@angular/common';
 import {Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
-  import {HouseholdService} from "../_services/household.service";
+import {HouseholdService} from "../_services/household.service";
+import {AuthService} from "../_services/auth.service";
 
 @Component({
   selector: 'app-notes',
@@ -33,7 +34,7 @@ export class NotesComponent implements OnInit {
   maxItems: number;
   pageEvent: PageEvent;
   firstResult: number = 0;
-  pageSizeOptions = [5, 10,15,20];
+  pageSizeOptions = [5, 10, 15, 20];
 
   constructor(public notesService: NotesService,
               private snackBar: MatSnackBar,
@@ -41,7 +42,7 @@ export class NotesComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               private householdService: HouseholdService) {
-    if (localStorage.getItem('current_household')==null){
+    if (localStorage.getItem('current_household') == null) {
       this.router.navigate(['/myhousehold']);
     }
   }
@@ -57,14 +58,14 @@ export class NotesComponent implements OnInit {
       this.firstResult = event.pageIndex * event.pageSize;
       this.pageSize = event.pageSize;
     }
-    this.notesService.getNotes(localStorage.getItem('current_user'), localStorage.getItem('current_household'), this.firstResult, this.pageSize,"DESC").subscribe(
+    this.notesService.getNotes(localStorage.getItem('current_user'), localStorage.getItem('current_household'), this.firstResult, this.pageSize, "DESC").subscribe(
       data => {
         this.notesArray = data.array;
         this.maxItems = data.maxItems;
       },
       error => {
         if (error.toString() == "403") {
-          this.router.navigate(['/login']);
+          AuthService.logout();
         }
       });
     return event;
@@ -124,8 +125,12 @@ export class NotesComponent implements OnInit {
     this.openSnackBar(note.title);
     this.notesArray = this.notesArray.filter(n => n !== note);
     this.notesService.deleteNote(note.id).subscribe(
-      data=>{
+      data => {
         this.getPaginatedNotes();
+      }, error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
     this.recentlyDeletedNote = note;
@@ -181,11 +186,16 @@ export class NotesComponent implements OnInit {
     return this.datePipe.transform(new Date(parseInt(objectId.substring(0, 8), 16) * 1000), 'yyyy-MM-dd HH:mm:ss');
   }
 
-  getHouseholdName(){
+  getHouseholdName() {
     this.householdService.getHousehold(localStorage.getItem("current_household")).subscribe(
-      data=>{
-      this.householdName=data.name;
-    })
+      data => {
+        this.householdName = data.name;
+      },error => {
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
+      }
+      )
   }
 
   getTooltipEditMessage(creator: string): string {
@@ -211,10 +221,10 @@ export class NotesComponent implements OnInit {
 
 
   onKeyDownMessage(event: KeyboardEvent, message: HTMLDivElement) {
-    if (event.key=="Backspace"){
+    if (event.key == "Backspace") {
       return true;
-    }else{
-      return message.innerText.length<25;
+    } else {
+      return message.innerText.length < 25;
     }
   }
 }

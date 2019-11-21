@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common
 import * as moment from "moment";
 import {catchError, map} from "rxjs/operators";
 import {throwError} from "rxjs";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -10,7 +11,12 @@ import {throwError} from "rxjs";
 })
 export class AuthService {
   baseurl = 'http://localhost:8080/users/auth';
-  constructor(private http: HttpClient) { }
+  private static router: Router;
+
+  constructor(private http: HttpClient,
+              private router: Router) {
+    AuthService.router = this.router;
+  }
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -32,11 +38,12 @@ export class AuthService {
     }
   }
 
-  logout(){
+  public static logout(){
     localStorage.removeItem('auth_token');
     localStorage.removeItem('token_exp_time');
     localStorage.removeItem('current_user');
     localStorage.removeItem('current_household');
+    this.router.navigate(['/login'])
   }
 
   public isLoggedIn() {
@@ -62,6 +69,6 @@ export class AuthService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error.status);
   }
 }

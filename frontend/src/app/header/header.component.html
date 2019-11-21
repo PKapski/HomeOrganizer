@@ -6,6 +6,7 @@
     <a routerLink="/notes"><fa-icon [icon]="faNote"></fa-icon> Notes</a>
     <a routerLink="/checklists"><fa-icon [icon]="faChecklist"></fa-icon> Checklists</a>
     <a routerLink="/calendar"><fa-icon [icon]="faCalendar"></fa-icon> Calendar</a>
+    <a routerLink="/myhousehold" routerLinkActive="active"><fa-icon [icon]="faHome"></fa-icon> My household</a>
   </div>
   <div class="header-right">
     <nav *ngIf="auth.isLoggedOut()">
@@ -16,8 +17,7 @@
       <a [matMenuTriggerFor]="menu"><fa-icon [icon]="faUser"> </fa-icon> {{getUsername()}} <fa-icon [icon]="faAngleDown"></fa-icon></a>
       <mat-menu #menu="matMenu" xPosition="before">
         <button mat-menu-item routerLink="/myaccount" routerLinkActive="active">My account</button>
-        <button mat-menu-item routerLink="/myhousehold" routerLinkActive="active">My household</button>
-        <button mat-menu-item (click)="auth.logout()" routerLink="/" routerLinkActive="active">Logout</button>
+        <button mat-menu-item (click)="logout()" routerLink="/" routerLinkActive="active">Logout</button>
       </mat-menu>
     </nav>
   </div>

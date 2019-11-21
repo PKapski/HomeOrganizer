@@ -89,4 +89,8 @@ h1{
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px $blue inset;
 }
+.mat-expansion-panel{
+  background-color: darken($blue,10%);
+}
+
 

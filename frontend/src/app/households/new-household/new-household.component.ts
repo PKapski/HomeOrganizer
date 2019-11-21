@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Household} from "../household";
-import {FormControl, NgForm, Validators} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {HouseholdService} from "../../_services/household.service";
 import {UserService} from "../../_services/user.service";
+import {AuthService} from "../../_services/auth.service";
 
 @Component({
   selector: 'app-new-household',
@@ -26,30 +27,37 @@ export class NewHouseholdComponent implements OnInit {
   }
 
   createHousehold() {
-    if (this.nameControl.invalid && this.descriptionControl.invalid){
+    if (this.nameControl.invalid && this.descriptionControl.invalid) {
       return;
     }
     this.householdService.saveHousehold(this.household).subscribe(
-      data=>{
+      data => {
         console.log(data);
         this.joinCreatedHousehold(data);
       },
-      error=>{
-        this.error=true;
+      error => {
+        this.error = true;
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     )
   }
 
-  joinCreatedHousehold(householdId: string){
-    this.userService.setUserHousehold(localStorage.getItem('current_user'),householdId).subscribe(
-      data=>{
-        localStorage.setItem('current_household',householdId);
+  joinCreatedHousehold(householdId: string) {
+    this.userService.setUserHousehold(localStorage.getItem('current_user'), householdId).subscribe(
+      data => {
+        localStorage.setItem('current_household', householdId);
       },
       error => {
-        this.error=true;
+        this.error = true;
+        if (error.toString() == "403") {
+          AuthService.logout();
+        }
       }
     );
   }
+
   getErrorMessage() {
     return this.nameControl.hasError('required') ? 'You must enter a value' : '';
   }

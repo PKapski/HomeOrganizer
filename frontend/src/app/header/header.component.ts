@@ -28,4 +28,8 @@ export class HeaderComponent implements OnInit {
   getUsername(): string {
     return localStorage.getItem("current_user");
   }
+
+  logout() {
+    AuthService.logout();
+  }
 }
