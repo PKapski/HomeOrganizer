@@ -19,12 +19,16 @@
         <module name="note (2) (pl.polsl)" />
         <module name="note (1)" />
         <module name="commons" />
+        <module name="calendar (1) (pl.polsl.api)" />
         <module name="checklist (1) (pl.polsl.api)" />
+        <module name="calendar (2) (pl.polsl)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="12" />
       <module name="app" target="12" />
+      <module name="calendar (1) (pl.polsl.api)" target="1.8" />
+      <module name="calendar (2) (pl.polsl)" target="12" />
       <module name="checklist (1) (pl.polsl.api)" target="1.8" />
       <module name="checklist (2) (pl.polsl)" target="12" />
       <module name="common" target="1.8" />

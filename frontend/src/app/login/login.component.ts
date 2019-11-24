@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.authenticate(this.formGroup.value).subscribe(
       data=>{
-        this.router.navigate(['/notes']);
+        this.router.navigate(['/']);
       },
       error=>{
         this.error=true;

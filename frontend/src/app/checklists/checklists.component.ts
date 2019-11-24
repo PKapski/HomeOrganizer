@@ -132,7 +132,7 @@ export class ChecklistsComponent implements OnInit {
   }
 
   changeItemEditMode(checklist: Checklist, item: ChecklistItem) {
-    if ((checklist.creator != localStorage.getItem('current_user') && (checklist.recipent != localStorage.getItem('current_user')))) {
+    if ((checklist.creator != localStorage.getItem('current_user') && (checklist.recipent!=null) && (checklist.recipent != localStorage.getItem('current_user')))) {
       return;
     }
     let itemHTMLElement = this.changeElementEditMode("item-" + checklist.id + "-" + checklist.itemList.indexOf(item));
@@ -241,6 +241,9 @@ export class ChecklistsComponent implements OnInit {
   }
 
   createNewChecklistItem(checklist: Checklist) {
+    if ((checklist.creator != localStorage.getItem('current_user') && (checklist.recipent!=null) && (checklist.recipent != localStorage.getItem('current_user')))) {
+      return;
+    }
     let checklistItem = new ChecklistItem();
     checklistItem.message=" ";
     checklistItem.isChecked=false;

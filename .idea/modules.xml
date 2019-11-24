@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/services/api/api.iml" filepath="$PROJECT_DIR$/services/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/app/app.iml" filepath="$PROJECT_DIR$/services/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api/calendar/calendar (1) (pl.polsl.api).iml" filepath="$PROJECT_DIR$/services/api/calendar/calendar (1) (pl.polsl.api).iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/logic/calendar/calendar (2) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/calendar/calendar (2) (pl.polsl).iml" />
       <module fileurl="file://$PROJECT_DIR$/services/api/checklist/checklist (1) (pl.polsl.api).iml" filepath="$PROJECT_DIR$/services/api/checklist/checklist (1) (pl.polsl.api).iml" />
       <module fileurl="file://$PROJECT_DIR$/services/logic/checklist/checklist (2) (pl.polsl).iml" filepath="$PROJECT_DIR$/services/logic/checklist/checklist (2) (pl.polsl).iml" />
       <module fileurl="file://$PROJECT_DIR$/services/logic/commons/commons.iml" filepath="$PROJECT_DIR$/services/logic/commons/commons.iml" />

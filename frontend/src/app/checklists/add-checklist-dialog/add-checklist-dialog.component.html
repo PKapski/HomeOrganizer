@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Add new checklist!</h1>
 <form autocomplete="off" class="add-checklist-form"  [formGroup]="formGroup">
   <mat-form-field class="title">
-    <input matInput placeholder="Title" formControlName="title">
+    <input matInput placeholder="Title*" formControlName="title">
     <mat-error *ngIf="title.hasError('required')">Title is <strong>required</strong></mat-error>
   </mat-form-field>
   <br>

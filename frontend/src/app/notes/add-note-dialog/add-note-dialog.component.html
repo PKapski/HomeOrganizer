@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Add new note!</h1>
   <form autocomplete="off" class="add-note-form"  [formGroup]="formGroup">
     <mat-form-field class="title">
-      <input matInput placeholder="Title" formControlName="title">
+      <input matInput placeholder="Title*" formControlName="title">
           <mat-error *ngIf="title.hasError('required')">Title is <strong>required</strong></mat-error>
     </mat-form-field>
     <br>
@@ -23,7 +23,7 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput #msgInput [maxlength]="maxMessageLength" placeholder="Message" formControlName="message"></textarea>
+      <textarea matInput #msgInput [maxlength]="maxMessageLength" placeholder="Message*" formControlName="message"></textarea>
       <mat-hint align="end">{{msgInput.value.length}} / {{maxMessageLength}}</mat-hint>
       <mat-error *ngIf="message.hasError('required')">Message is <strong>required</strong></mat-error>
     </mat-form-field>
