@@ -110,10 +110,6 @@ definitions:
         description: Description of a household
         type: string
         maxLength: 250
-      image:
-        description: Household image
-        type: string
-        format: binary
 
   HouseholdsPaging:
     properties:
