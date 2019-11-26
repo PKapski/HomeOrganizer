@@ -36,6 +36,7 @@
       <module name="homeorganizer" target="12" />
       <module name="household" target="1.8" />
       <module name="household (1) (pl.polsl)" target="12" />
+      <module name="integration-test" target="12" />
       <module name="logic" target="12" />
       <module name="note" target="12" />
       <module name="note (1)" target="1.8" />

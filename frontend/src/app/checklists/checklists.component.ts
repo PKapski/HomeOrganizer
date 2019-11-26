@@ -93,10 +93,6 @@ export class ChecklistsComponent implements OnInit {
     return event;
   }
 
-  getHousehold(): string {
-    return localStorage.getItem("current_household");
-  }
-
   openPopup() {
     this.dialog.open(AddChecklistDialogComponent, {
       panelClass: 'my-panel',

@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { NotesComponent } from './notes/notes.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NotesService} from "./_services/notes.service";
@@ -33,7 +32,7 @@ import {ChecklistService} from "./_services/checklist.service";
 import { AddChecklistDialogComponent } from './checklists/add-checklist-dialog/add-checklist-dialog.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { HouseholdsComponent } from './households/households.component';
-import { FindHouseholdComponent } from './households/find-household/find-household.component';
+import { JoinHouseholdComponent } from './households/join-household/join-household.component';
 import { NewHouseholdComponent } from './households/new-household/new-household.component';
 import { MyHouseholdComponent } from './households/my-household/my-household.component';
 import {MatCardModule} from "@angular/material/card";
@@ -45,7 +44,6 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarModule } from 'angular-calendar';
-import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
 import {MatColorPickerModule} from "mat-color-picker";
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
 import {CalendarService} from "./_services/calendar.service";
@@ -58,7 +56,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
     NotesComponent,
     LoginComponent,
     RegisterComponent,
@@ -67,12 +64,11 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ChecklistsComponent,
     AddChecklistDialogComponent,
     HouseholdsComponent,
-    FindHouseholdComponent,
+    JoinHouseholdComponent,
     NewHouseholdComponent,
     MyHouseholdComponent,
     ConfirmationDialogComponent,
     CalendarComponent,
-    CalendarHeaderComponent,
     IndexComponent,
     AccountComponent,
   ],

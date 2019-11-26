@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+  import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {isSameDay, isSameMonth, startOfDay} from 'date-fns';
 import {Subject} from "rxjs";

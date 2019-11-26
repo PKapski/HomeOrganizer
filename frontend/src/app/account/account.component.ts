@@ -138,6 +138,5 @@ export class AccountComponent implements OnInit {
   changePasswordValidation() {
     this.editPassword ? this.password.enable() : this.password.disable();
     this.editPassword ? this.password2.enable() : this.password2.disable();
-
   }
 }

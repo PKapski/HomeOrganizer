@@ -5,10 +5,10 @@ import {AuthService} from "../../_services/auth.service";
 
 @Component({
   selector: 'app-find-household',
-  templateUrl: './find-household.component.html',
-  styleUrls: ['./find-household.component.scss']
+  templateUrl: './join-household.component.html',
+  styleUrls: ['./join-household.component.scss']
 })
-export class FindHouseholdComponent implements OnInit {
+export class JoinHouseholdComponent implements OnInit {
   householdId: string;
   idControl = new FormControl('', [Validators.required]);
   error: boolean;

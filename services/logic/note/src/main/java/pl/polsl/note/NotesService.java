@@ -25,11 +25,11 @@ public class NotesService {
         this.queryService = queryService;
     }
 
-    String saveNote(Note note) {
+    public String saveNote(Note note) {
         return repository.save(note).getId();
     }
 
-    boolean deleteNote(String id) {
+    public boolean deleteNote(String id) {
         Optional<Note> note = repository.findById(id);
         if (note.isPresent()) {
             repository.delete(note.get());
@@ -38,7 +38,7 @@ public class NotesService {
         return false;
     }
 
-    NotesPaging getFilteredNotesPaging(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
+    public NotesPaging getFilteredNotesPaging(String username, String householdId, String sortingDirection, String sortedField, Integer  firstResult, Integer  maxResults) {
         NotesPaging paging = new NotesPaging();
         Query query = new Query();
         if (StringUtils.isNotEmpty(username)) {

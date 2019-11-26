@@ -55,7 +55,7 @@ public class User implements UserDetails {
    * Note Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database")
+  @ApiModelProperty(readOnly = true, value = "Note Id providing uniqueness in database", hidden = true)
 
 
   public String getId() {

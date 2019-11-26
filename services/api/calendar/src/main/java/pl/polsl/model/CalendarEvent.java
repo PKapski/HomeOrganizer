@@ -54,7 +54,7 @@ public class CalendarEvent   {
    * Event Id providing uniqueness in database
    * @return id
   **/
-  @ApiModelProperty(readOnly = true, value = "Event Id providing uniqueness in database")
+  @ApiModelProperty(readOnly = true, value = "Event Id providing uniqueness in database", hidden = true)
 
 
   public String getId() {

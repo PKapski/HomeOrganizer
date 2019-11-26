@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../_services/user.service";
-import {ChecklistService} from "../../_services/checklist.service";
 import {AuthService} from "../../_services/auth.service";
 
 @Component({
@@ -13,21 +12,23 @@ import {AuthService} from "../../_services/auth.service";
 export class AddChecklistDialogComponent implements OnInit {
   usersList: string[];
   formGroup: FormGroup;
+
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<AddChecklistDialogComponent>,
-              private usersService: UserService) { }
+              private usersService: UserService) {
+  }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-    title: ['', [Validators.required]],
-    recipent: [],
-    visibleToEveryone: [true],
-    expirationDate: []
-  });
+      title: ['', [Validators.required]],
+      recipent: [],
+      visibleToEveryone: [true],
+      expirationDate: []
+    });
 
     this.usersService.getHouseholdUsers(localStorage.getItem("current_household")).subscribe(
       data => {
-        this.usersList=data.array.map(user=>user.username).filter(name=>name!=localStorage.getItem("current_user"));
+        this.usersList = data.array.map(user => user.username).filter(name => name != localStorage.getItem("current_user"));
       },
       error => {
         if (error.toString() == "403") {
@@ -44,9 +45,10 @@ export class AddChecklistDialogComponent implements OnInit {
     return this.formGroup.get('message');
   }
 
-  get recipent(){
+  get recipent() {
     return this.formGroup.get('recipent');
   }
+
   onCancel(): void {
     this.dialogRef.close();
   }
