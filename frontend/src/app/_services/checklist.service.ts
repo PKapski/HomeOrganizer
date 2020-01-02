@@ -4,13 +4,14 @@ import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
 import {Checklist} from "../checklists/checklist";
 import {ModelPaging} from "../_commons/model/model-paging";
+import {server} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChecklistService {
 
-  baseurl = 'http://localhost:8080/checklists';
+  baseurl = server+'checklists';
 
   constructor(private http: HttpClient) {
   }

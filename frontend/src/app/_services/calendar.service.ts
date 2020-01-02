@@ -3,11 +3,12 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {CalendarEvent} from 'angular-calendar';
 import {catchError, retry} from "rxjs/operators";
+import {server} from "../../globals";
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  baseurl = 'http://localhost:8080/calendar/';
+  baseurl = server+'calendar/';
 
   constructor(private http: HttpClient) {
   }

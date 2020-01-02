@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5e0dddaeaa117c125887606a"},"_class":"pl.polsl.model.User","username":"testuser","password":"$2a$10$JqLXZTwl5jzZSok9Yki74uXNW7z7SIG.Zlupeoe4YkXnAGHzw1RoS","email":"testUser@gmail.com","firstName":"Test","lastName":"User","householdId":"5e0dde7aaa117c2c50ec551a"}
+{"_id":{"$oid":"5e0dde37aa117c2c50ec5519"},"_class":"pl.polsl.model.User","username":"testuser2","password":"$2a$10$T3TeBRnLROKxdAhZJ5an9.8p93aJ.NOHHaTWVvMnr4ew05dFW7j5C","email":"testUser2@gmail.com","firstName":"Test","lastName":"User","householdId":"5e0dde7aaa117c2c50ec551a"}

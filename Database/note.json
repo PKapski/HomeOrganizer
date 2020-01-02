@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5e0ddeb3aa117c2c50ec551b"},"_class":"pl.polsl.model.Note","title":"Pierwsza notatka","message":"Pierwsza testowa notatka!","creator":"testuser","householdId":"5e0dde7aaa117c2c50ec551a","visibleToEveryone":true}
+{"_id":{"$oid":"5e0ddecaaa117c2c50ec551c"},"_class":"pl.polsl.model.Note","title":"Druga notatka do testuser2","message":"Witaj testUserze!","recipent":"testuser2","creator":"testuser","householdId":"5e0dde7aaa117c2c50ec551a","expirationDate":{"$date":"2020-01-30T23:00:00Z"},"visibleToEveryone":false}

@@ -17,6 +17,5 @@
         <module>household</module>
         <module>commons</module>
         <module>calendar</module>
-        <module>integration-test</module>
     </modules>
 </project>

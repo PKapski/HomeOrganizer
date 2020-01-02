@@ -4,12 +4,13 @@ import {Observable, throwError} from "rxjs";
 import {User} from "../user/user";
 import {catchError, retry} from "rxjs/operators";
 import {ModelPaging} from "../_commons/model/model-paging";
+import {server} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  baseurl = 'http://localhost:8080/users/';
+  baseurl = server+'users/';
 
   constructor(private http: HttpClient) {
   }

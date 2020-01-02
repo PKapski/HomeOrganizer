@@ -34,8 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui.html",
-            "/webjars/**",
-            "/checklists/**"
+            "/webjars/**"
             // other public endpoints of your API may be appended to this array
     };
 
@@ -47,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/users/").permitAll()
+                .antMatchers(HttpMethod.POST,"/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

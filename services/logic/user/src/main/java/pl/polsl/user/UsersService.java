@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import pl.polsl.exceptions.ItemNotUniqueException;
 import pl.polsl.exceptions.QueryService;
 import pl.polsl.household.HouseholdsMongoRepository;
+import pl.polsl.model.Checklist;
+import pl.polsl.model.Note;
 import pl.polsl.model.User;
 import pl.polsl.model.UsersPaging;
 
@@ -84,7 +86,28 @@ public class UsersService implements UserDetailsService {
         }
         user.setId(oldUser.getId());
         repository.save(user);
+        if (!username.equals(user.getUsername())){
+            updateCreatorDocuments(username, user.getUsername());
+            updateRecipentDocuments(username,user.getUsername());
+        }
         return true;
+    }
+    private void updateCreatorDocuments(String oldUsername, String newUsername) {
+        Query query  = new Query();
+        query.addCriteria(Criteria.where("creator").is(oldUsername));
+        Update update = new Update();
+        update.set("creator",newUsername);
+        mongoTemplate.updateMulti(query,update, Note.class);
+        mongoTemplate.updateMulti(query,update, Checklist.class);
+    }
+
+    private void updateRecipentDocuments(String oldUsername, String newUsername) {
+        Query query  = new Query();
+        query.addCriteria(Criteria.where("recipent").is(oldUsername));
+        Update update = new Update();
+        update.set("recipent",newUsername);
+        mongoTemplate.updateMulti(query,update, Note.class);
+        mongoTemplate.updateMulti(query,update, Checklist.class);
     }
 
     private void validateIfDifferent(User oldUser, User user){

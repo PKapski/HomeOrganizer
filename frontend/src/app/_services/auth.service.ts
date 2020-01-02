@@ -4,13 +4,14 @@ import * as moment from "moment";
 import {catchError, map} from "rxjs/operators";
 import {throwError} from "rxjs";
 import {Router} from "@angular/router";
+import {server} from "../../globals";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseurl = 'http://localhost:8080/users/auth';
+  baseurl = server+'users/auth';
   private static router: Router;
 
   constructor(private http: HttpClient,
@@ -35,6 +36,8 @@ export class AuthService {
     localStorage.setItem('current_user',data.headers.get("Username"));
     if (data.headers.get("Household")!=null) {
       localStorage.setItem('current_household', data.headers.get("Household"));
+    }else{
+      localStorage.removeItem('current_household');
     }
   }
 

@@ -4,13 +4,14 @@ import {Observable, throwError} from "rxjs";
 import {Household} from "../households/household";
 import {catchError, retry} from "rxjs/operators";
 import {Note} from "../notes/note";
+import {server} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HouseholdService {
 
-  baseurl = 'http://localhost:8080/households';
+  baseurl = server+'households';
 
   constructor(private http: HttpClient) { }
 

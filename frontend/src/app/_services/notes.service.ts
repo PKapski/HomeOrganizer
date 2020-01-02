@@ -4,12 +4,13 @@ import {Note} from "../notes/note";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
 import {ModelPaging} from "../_commons/model/model-paging";
+import {server} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
-  baseurl = 'http://localhost:8080/notes';
+  baseurl = server+'notes';
 
   constructor(private http: HttpClient) {
   }

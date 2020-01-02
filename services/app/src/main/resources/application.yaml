@@ -4,3 +4,7 @@ spring:
       database: database
       uri: mongodb://localhost:27017
 
+server:
+  address: localhost
+  #my ip: 192.168.0.248
+  port: 8080
